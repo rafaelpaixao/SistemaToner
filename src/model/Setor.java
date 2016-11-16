@@ -7,8 +7,10 @@ package model;
 
 /**
  *
- * @author Rafael
+ * @author diegocruzalves
  */
 public class Setor {
+    
+    String nome;
     
 }
