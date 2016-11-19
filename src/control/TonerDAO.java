@@ -68,5 +68,9 @@ public class TonerDAO {
         }
 
     }
+    
+    public void editarToner(){
+        
+    }
 
 }
