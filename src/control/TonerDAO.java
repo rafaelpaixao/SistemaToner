@@ -69,7 +69,23 @@ public class TonerDAO {
 
     }
     
-    public void editarToner(){
+    public void editarToner(Toner toner){
+        
+        connection = new ConnectionFactory().getConnection();
+        
+        sql = "UPDATE TONER SET MODELO = ?, NUM_SERIE = ?, BP = ?, EMPRESA = ?, PRECO = ?, TIPO_TONER = ? WHERE ID = ?";
+        
+        try {
+            stmt = connection.prepareStatement(sql);
+            
+            
+            
+            
+            stmt.execute();
+            stmt.close();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         
     }
 

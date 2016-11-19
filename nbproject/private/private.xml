@@ -3,7 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/Users/diegocruzalves/Documents/Github/SistemaToner/src/control/TonerDAO.java</file>
+            <file>file:/Users/diegocruzalves/Documents/Github/SistemaToner/src/model/Toner.java</file>
+            <file>file:/Users/diegocruzalves/Documents/Github/SistemaToner/src/view/JEditarToner.java</file>
             <file>file:/Users/diegocruzalves/Documents/Github/SistemaToner/src/view/JanelaPrincipal.java</file>
+            <file>file:/Users/diegocruzalves/Documents/Github/SistemaToner/src/view/JCadastrarToner.java</file>
         </group>
     </open-files>
 </project-private>
