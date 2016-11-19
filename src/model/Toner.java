@@ -15,10 +15,11 @@ public class Toner {
     private String modelo;
     private String num_serie;
     private int bp;
+    private String setor;
     private double preco;
     private String empresa;
     private String TipoToner;
-    
+    private String status;
 
     public int getId() {
         return id;
@@ -52,6 +53,14 @@ public class Toner {
         this.bp = bp;
     }
 
+    public String getSetor() {
+        return setor;
+    }
+
+    public void setSetor(String setor) {
+        this.setor = setor;
+    }
+
     public double getPreco() {
         return preco;
     }
@@ -67,7 +76,7 @@ public class Toner {
     public void setEmpresa(String empresa) {
         this.empresa = empresa;
     }
-    
+
     public String getTipoToner() {
         return TipoToner;
     }
@@ -75,6 +84,13 @@ public class Toner {
     public void setTipoToner(String TipoToner) {
         this.TipoToner = TipoToner;
     }
-    
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
 }
