@@ -216,14 +216,21 @@ public class JCadastrarToner extends javax.swing.JFrame {
         toner.setPreco(Double.parseDouble(entPreco.getText()));
         toner.setTipoToner(entTipoToner.getSelectedItem().toString());
 
-        // fazendo a validação dos dados
-        /*if ((entModelo.getText().isEmpty()) || (entNs.getText().isEmpty()) || (entBp.getText().isEmpty()) || (entEmpresa.getText().isEmpty())) {
-            JOptionPane.showMessageDialog(null, "Os campos não podem retornar vazios");
+        // Validação de dados
+        if ((entModelo.getText().isEmpty()) || (entNs.getText().isEmpty()) || (Integer.parseInt(entBp.getText()) == 0) || (entEmpresa.getText().isEmpty()) || (Double.parseDouble(entPreco.getText()) == 0) || (entTipoToner.getSelectedItem().toString()).isEmpty()) {
+            JOptionPane.showMessageDialog(null, "O preenchimento de todos os campos é obrigatório!");
         } else { // instanciando a classe*/
             TonerDAO dao = new TonerDAO();
             dao.cadastrarToner(toner);
-            JOptionPane.showMessageDialog(null, "Impressora cadastrada com sucesso!");
-        //}
+            JOptionPane.showMessageDialog(null, "Toner cadastrado com sucesso!");
+        }
+
+        entModelo.setText("");
+        entNs.setText("");
+        entBp.setText("");
+        entEmpresa.setText("");
+        entPreco.setText("");
+        entTipoToner.setSelectedItem("-");
 
     }//GEN-LAST:event_btnGravar_cadTonerActionPerformed
 
