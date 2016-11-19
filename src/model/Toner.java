@@ -12,6 +12,7 @@ package model;
 public class Toner {
 
     private int id;
+    private String fabricante;
     private String modelo;
     private String num_serie;
     private int bp;
@@ -27,6 +28,14 @@ public class Toner {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getFabricante() {
+        return fabricante;
+    }
+
+    public void setFabricante(String fabricante) {
+        this.fabricante = fabricante;
     }
 
     public String getModelo() {

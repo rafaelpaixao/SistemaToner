@@ -26,11 +26,14 @@ public class TonerDAO {
 
         sql = "CREATE TABLE if not exists TONER ("
                 + "ID INT PRIMARY KEY NOT NULL AUTO_INCREMENT, "
+                + "FABRICANTE VARCHAR(50) NOT NULL, "
                 + "MODELO VARCHAR(50) NOT NULL, "
                 + "NUM_SERIE VARCHAR(50) NOT NULL, "
                 + "BP INT NOT NULL, "
-                + "EMPRESA VARCHAR(50) NOT NULL, "
+                + "SETOR VARCHAR(50) NOT NULL, "
                 + "PRECO DOUBLE NOT NULL, "
+                + "EMPRESA VARCHAR(50) NOT NULL, "
+                + "STATUS VARCHAR(50) NOT NULL, "
                 + "TIPO_TONER VARCHAR(50) NOT NULL);";
 
         try {
@@ -47,19 +50,21 @@ public class TonerDAO {
 
         connection = new ConnectionFactory().getConnection();
         
-        sql = "INSERT INTO TONER (MODELO, NUM_SERIE, BP, EMPRESA, PRECO, TIPO_TONER)"
-                    + " VALUES (?,?,?,?,?,?);";
+        sql = "INSERT INTO TONER (FABRICANTE, MODELO, NUM_SERIE, BP, SETOR, PRECO, EMPRESA, STATUS, TIPO_TONER)"
+                    + " VALUES (?,?,?,?,?,?,?,?,?);";
 
         try {
             stmt = connection.prepareStatement(sql);
             
-            stmt.setString(1, toner.getModelo());
-            stmt.setString(2, toner.getNum_serie());
-            stmt.setInt(3, toner.getBp());
-            stmt.setString(4, toner.getEmpresa());
-            stmt.setDouble(5, toner.getPreco());
-            stmt.setString(6, toner.getTipoToner());
-            
+            stmt.setString(1, toner.getFabricante());
+            stmt.setString(2, toner.getModelo());
+            stmt.setString(3, toner.getNum_serie());
+            stmt.setInt(4, toner.getBp());
+            stmt.setString(5, toner.getSetor());
+            stmt.setDouble(6, toner.getPreco());
+            stmt.setString(7, toner.getEmpresa());
+            stmt.setString(8, toner.getStatus());
+            stmt.setString(9, toner.getTipoToner());
             
             stmt.execute();
             stmt.close();
