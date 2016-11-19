@@ -13,10 +13,10 @@ import model.Toner;
  *
  * @author diegocruzalves
  */
-public class JCadastrarToner extends javax.swing.JFrame {
+public class JCadastrarToner extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form JCadastrarToner
+     * Creates new form JCadastrarToner2
      */
     public JCadastrarToner() {
         initComponents();
@@ -31,62 +31,53 @@ public class JCadastrarToner extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        entId = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        idLabel = new javax.swing.JLabel();
+        modelLabel = new javax.swing.JLabel();
+        nsLabel = new javax.swing.JLabel();
+        empresaLabel = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        entTipoToner = new javax.swing.JComboBox<>();
+        bpLabel = new javax.swing.JLabel();
+        tipotonerLabel = new javax.swing.JLabel();
+        setorLabel = new javax.swing.JLabel();
+        entId = new javax.swing.JTextField();
         entModelo = new javax.swing.JTextField();
         entNs = new javax.swing.JTextField();
         entBp = new javax.swing.JTextField();
         entEmpresa = new javax.swing.JTextField();
         entPreco = new javax.swing.JTextField();
+        entTipoToner = new javax.swing.JComboBox<>();
         btnGravar_cadToner = new javax.swing.JButton();
         btnCancelar_cadToner = new javax.swing.JButton();
+        statusLabel = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastrar Toner");
-        setBounds(new java.awt.Rectangle(10, 0, 0, 0));
-        setResizable(false);
+        idLabel.setText("ID");
+        idLabel.setBounds(new java.awt.Rectangle(10, 0, 0, 0));
 
-        jLabel1.setText("ID");
-        jLabel1.setBounds(new java.awt.Rectangle(10, 0, 0, 0));
+        modelLabel.setText("Modelo");
+        modelLabel.setBounds(new java.awt.Rectangle(10, 0, 0, 0));
+
+        nsLabel.setText("Número de Série");
+        nsLabel.setBounds(new java.awt.Rectangle(10, 0, 0, 0));
+
+        empresaLabel.setText("Empresa");
+        empresaLabel.setBounds(new java.awt.Rectangle(10, 0, 0, 0));
+
+        jLabel6.setText("Preço");
+        jLabel6.setBounds(new java.awt.Rectangle(10, 0, 0, 0));
+
+        bpLabel.setText("Bem Patrimonial");
+        bpLabel.setBounds(new java.awt.Rectangle(10, 0, 0, 0));
+
+        tipotonerLabel.setText("Tipo do Toner");
+        tipotonerLabel.setBounds(new java.awt.Rectangle(10, 0, 0, 0));
+
+        setorLabel.setText("Setor");
 
         entId.setEnabled(false);
         entId.setSize(new java.awt.Dimension(100, 0));
         entId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 entIdActionPerformed(evt);
-            }
-        });
-
-        jLabel2.setText("Modelo");
-        jLabel2.setBounds(new java.awt.Rectangle(10, 0, 0, 0));
-
-        jLabel3.setText("Número de Série");
-        jLabel3.setBounds(new java.awt.Rectangle(10, 0, 0, 0));
-
-        jLabel4.setText("Bem Patrimonial");
-        jLabel4.setBounds(new java.awt.Rectangle(10, 0, 0, 0));
-
-        jLabel5.setText("Empresa");
-        jLabel5.setBounds(new java.awt.Rectangle(10, 0, 0, 0));
-
-        jLabel6.setText("Preço");
-        jLabel6.setBounds(new java.awt.Rectangle(10, 0, 0, 0));
-
-        jLabel7.setText("Tipo do Toner");
-        jLabel7.setBounds(new java.awt.Rectangle(10, 0, 0, 0));
-
-        entTipoToner.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "Consignado", "Recarga" }));
-        entTipoToner.setSize(new java.awt.Dimension(100, 0));
-        entTipoToner.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                entTipoTonerActionPerformed(evt);
             }
         });
 
@@ -99,6 +90,14 @@ public class JCadastrarToner extends javax.swing.JFrame {
         entEmpresa.setSize(new java.awt.Dimension(100, 0));
 
         entPreco.setSize(new java.awt.Dimension(100, 0));
+
+        entTipoToner.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-", "Consignado", "Recarga" }));
+        entTipoToner.setSize(new java.awt.Dimension(100, 0));
+        entTipoToner.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                entTipoTonerActionPerformed(evt);
+            }
+        });
 
         btnGravar_cadToner.setText("Gravar");
         btnGravar_cadToner.addActionListener(new java.awt.event.ActionListener() {
@@ -114,6 +113,8 @@ public class JCadastrarToner extends javax.swing.JFrame {
             }
         });
 
+        statusLabel.setText("Status");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -123,79 +124,113 @@ public class JCadastrarToner extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7))
-                        .addGap(29, 29, 29)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(entNs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(entBp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(entEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(entPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(entTipoToner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(entModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(entId, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 27, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(idLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(modelLabel)
+                                    .addComponent(nsLabel)
+                                    .addComponent(bpLabel)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(empresaLabel)
+                                    .addComponent(setorLabel)
+                                    .addComponent(tipotonerLabel))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(68, 68, 68)
+                                        .addComponent(entEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(42, 42, 42)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(entPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(entId, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(51, 51, 51)
+                                        .addComponent(entNs, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(21, 237, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(33, 33, 33)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(entBp, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(entTipoToner, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnGravar_cadToner)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnCancelar_cadToner)
-                        .addGap(73, 73, 73))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(59, 59, 59)
+                                .addComponent(btnGravar_cadToner)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnCancelar_cadToner))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(36, 36, 36)
+                                .addComponent(entModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(statusLabel))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel1, jLabel2, jLabel3, jLabel4, jLabel5, jLabel6, jLabel7});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {entBp, entEmpresa, entModelo, entNs, entPreco});
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {entBp, entEmpresa, entId, entModelo, entNs, entPreco, entTipoToner});
-
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnCancelar_cadToner, btnGravar_cadToner});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {bpLabel, empresaLabel, idLabel, jLabel6, modelLabel, nsLabel, tipotonerLabel});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(9, 9, 9)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(entId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(entModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(entNs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(entBp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(entEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(entPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(entTipoToner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnGravar_cadToner)
-                    .addComponent(btnCancelar_cadToner))
-                .addGap(18, 18, 18))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(idLabel)
+                        .addGap(12, 12, 12)
+                        .addComponent(modelLabel)
+                        .addGap(11, 11, 11)
+                        .addComponent(nsLabel))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(entId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(entPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(entEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(bpLabel))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(setorLabel)
+                            .addComponent(entNs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(jLabel6))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(entModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(statusLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                        .addComponent(empresaLabel))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(entTipoToner, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(tipotonerLabel)
+                            .addComponent(entBp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(47, 47, 47))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnCancelar_cadToner)
+                        .addComponent(btnGravar_cadToner)))
+                .addContainerGap())
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {entBp, entEmpresa, entId, entModelo, entNs, entPreco, entTipoToner});
-
         pack();
-        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void entIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entIdActionPerformed
@@ -231,25 +266,18 @@ public class JCadastrarToner extends javax.swing.JFrame {
         entEmpresa.setText("");
         entPreco.setText("");
         entTipoToner.setSelectedItem("-");
-
     }//GEN-LAST:event_btnGravar_cadTonerActionPerformed
 
     private void btnCancelar_cadTonerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelar_cadTonerActionPerformed
         dispose();
     }//GEN-LAST:event_btnCancelar_cadTonerActionPerformed
 
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new JCadastrarToner().setVisible(true);
-            }
-        });
-    }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel bpLabel;
     private javax.swing.JButton btnCancelar_cadToner;
     private javax.swing.JButton btnGravar_cadToner;
+    private javax.swing.JLabel empresaLabel;
     private javax.swing.JTextField entBp;
     private javax.swing.JTextField entEmpresa;
     private javax.swing.JTextField entId;
@@ -257,13 +285,12 @@ public class JCadastrarToner extends javax.swing.JFrame {
     private javax.swing.JTextField entNs;
     private javax.swing.JTextField entPreco;
     private javax.swing.JComboBox<String> entTipoToner;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel idLabel;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel modelLabel;
+    private javax.swing.JLabel nsLabel;
+    private javax.swing.JLabel setorLabel;
+    private javax.swing.JLabel statusLabel;
+    private javax.swing.JLabel tipotonerLabel;
     // End of variables declaration//GEN-END:variables
-
 }
