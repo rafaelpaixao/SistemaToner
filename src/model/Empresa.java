@@ -11,23 +11,33 @@ package model;
  */
 public class Empresa {
     
+    private int id;
     private String nome;
-    private int cnpj;
+    private String cnpj;
 
     public String getNome() {
         return nome;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     public void setNome(String nome) {
         this.nome = nome;
     }
 
-    public int getCnpj() {
+    public String getCnpj() {
         return cnpj;
     }
 
-    public void setCnpj(int cnpj) {
+    public void setCnpj(String cnpj) {
         this.cnpj = cnpj;
     }
+    
     
 }

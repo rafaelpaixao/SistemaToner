@@ -6,6 +6,8 @@
 package view;
 
 import control.ConnectionFactory;
+import control.EmpresaDAO;
+import control.SetorDAO;
 import control.TonerDAO;
 import java.sql.Connection;
 
@@ -22,7 +24,10 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         initComponents();
         Connection connection = new ConnectionFactory().getConnection();
         TonerDAO tonerDao = new TonerDAO();
+        EmpresaDAO empresaDao = new EmpresaDAO();
+        SetorDAO setorDAO = new SetorDAO();
         tonerDao.criarTabela();
+        empresaDao.criarTabela();
     }
 
     /**
@@ -36,9 +41,9 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        menuCadastro = new javax.swing.JMenu();
+        menuCadToner = new javax.swing.JMenuItem();
+        menuCadEmpresa = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem6 = new javax.swing.JMenuItem();
@@ -72,23 +77,28 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.setSize(new java.awt.Dimension(600, 400));
 
-        jMenu1.setText("Cadastrar");
+        menuCadastro.setText("Cadastrar");
 
-        jMenuItem3.setText("Toner");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        menuCadToner.setText("Toner");
+        menuCadToner.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                menuCadTonerActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem3);
+        menuCadastro.add(menuCadToner);
 
-        jMenuItem4.setText("Empresa");
-        jMenu1.add(jMenuItem4);
+        menuCadEmpresa.setText("Empresa");
+        menuCadEmpresa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuCadEmpresaActionPerformed(evt);
+            }
+        });
+        menuCadastro.add(menuCadEmpresa);
 
         jMenuItem5.setText("Setor");
-        jMenu1.add(jMenuItem5);
+        menuCadastro.add(jMenuItem5);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(menuCadastro);
 
         jMenu2.setText("Editar");
 
@@ -177,13 +187,19 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private void menuCadTonerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCadTonerActionPerformed
         
         JCadastrarToner frm = new JCadastrarToner();
         jDesktopPane1.add(frm);
         frm.setVisible(true);
-        //new JCadastrarToner2().setVisible(true);
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+        
+    }//GEN-LAST:event_menuCadTonerActionPerformed
+
+    private void menuCadEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCadEmpresaActionPerformed
+        JCadastrarEmpresa frm = new JCadastrarEmpresa();
+        jDesktopPane1.add(frm);
+        frm.setVisible(true);
+    }//GEN-LAST:event_menuCadEmpresaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -222,7 +238,6 @@ public class JanelaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane jDesktopPane1;
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
@@ -231,12 +246,13 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
+    private javax.swing.JMenuItem menuCadEmpresa;
+    private javax.swing.JMenuItem menuCadToner;
+    private javax.swing.JMenu menuCadastro;
     // End of variables declaration//GEN-END:variables
 }
