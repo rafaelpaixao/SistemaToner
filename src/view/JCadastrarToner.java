@@ -16,7 +16,7 @@ import model.Toner;
 public class JCadastrarToner extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form JCadastrarToner2
+     * Creates new form JCadastrarToner
      */
     public JCadastrarToner() {
         initComponents();
