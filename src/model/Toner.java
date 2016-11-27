@@ -3,7 +3,7 @@ package model;
 
 public class Toner {
     private int id;
-    private Impressora impressora;
+    private int idImpressora;
     private String tipo;
     private int qtdEstoqueCheio;
     private int qtdEstoqueVazio;
@@ -20,12 +20,12 @@ public class Toner {
         this.id = id;
     }
 
-    public Impressora getImpressora() {
-        return impressora;
+    public int getIdImpressora() {
+        return idImpressora;
     }
 
-    public void setImpressora(Impressora impressora) {
-        this.impressora = impressora;
+    public void setIdImpressora(int idImpressora) {
+        this.idImpressora = idImpressora;
     }
 
     public String getTipo() {

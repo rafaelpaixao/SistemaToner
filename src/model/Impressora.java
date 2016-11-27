@@ -3,10 +3,10 @@ package model;
 
 public class Impressora {
     private int id;
-    private Setor setor;
+    private int idSetor;
     private String modelo;
     private String modeloToner;
-    private double preco;
+    private double precoToner;
 
     public int getId() {
         return id;
@@ -16,12 +16,12 @@ public class Impressora {
         this.id = id;
     }
 
-    public Setor getSetor() {
-        return setor;
+    public int getIdSetor() {
+        return idSetor;
     }
 
-    public void setSetor(Setor setor) {
-        this.setor = setor;
+    public void setIdSetor(int idSetor) {
+        this.idSetor = idSetor;
     }
 
     public String getModelo() {
@@ -40,12 +40,12 @@ public class Impressora {
         this.modeloToner = modeloToner;
     }
 
-    public double getPreco() {
-        return preco;
+    public double getPrecoToner() {
+        return precoToner;
     }
 
-    public void setPreco(double preco) {
-        this.preco = preco;
+    public void setPrecoToner(double precoToner) {
+        this.precoToner = precoToner;
     }
     
     

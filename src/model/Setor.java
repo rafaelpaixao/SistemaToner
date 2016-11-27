@@ -7,6 +7,8 @@ public class Setor {
     private String nome;
     private String empresa;
 
+    
+    
     public int getId() {
         return id;
     }

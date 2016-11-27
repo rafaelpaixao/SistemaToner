@@ -31,7 +31,7 @@ create table impressoras(
 create table toners(
     idToner int auto_increment,
     idImpressora int,
-    tipo varchar(50),
+    tipoDeToner varchar(50),
     qtdEstoqueCheio int,
     qtdEstoqueVazio int,
     qtdForaCheio int,
@@ -47,7 +47,7 @@ create table entradas(
     idToner int,
     idUsuario int,
     dataEntrada date,
-    descricao varchar(255),
+    tipoDeEntrada varchar(50),
     qtdCheio int,
     qtdVazio int,
     primary key(idEntrada),
@@ -59,11 +59,15 @@ create table saidas(
     idSaida int auto_increment,
     idToner int,
     idUsuario int,
+    idSetor int,
     dataSaida date,
-    descricao varchar(255),
     qtdCheio int,
     qtdVazio int,
     primary key(idSaida),
     foreign key(idToner) references toners(idToner),
     foreign key(idUsuario) references usuarios(idUsuario)
 );
+
+
+
+insert into usuarios (login,senha) values ('joao','123');

@@ -1,119 +1,150 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package control;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import model.Toner;
 
-/**
- *
- * @author diegocruzalves
- */
 public class TonerDAO {
 
-    Connection connection;
-    PreparedStatement stmt;
-    String sql;
-
-    public void criarTabela() {
-
-        connection = new ConnectionFactory().getConnection();
-
-        sql = "CREATE TABLE if not exists TONER ("
-                + "ID INT PRIMARY KEY NOT NULL AUTO_INCREMENT, "
-                + "FABRICANTE VARCHAR(50) NOT NULL, "
-                + "MODELO VARCHAR(50) NOT NULL, "
-                + "NUM_SERIE VARCHAR(50) NOT NULL, "
-                + "BP INT NOT NULL, "
-                + "SETOR VARCHAR(50) NOT NULL, "
-                + "PRECO DOUBLE NOT NULL, "
-                + "EMPRESA VARCHAR(50) NOT NULL, "
-                + "STATUS VARCHAR(50) NOT NULL, "
-                + "TIPO_TONER VARCHAR(50) NOT NULL);";
-
-        try {
-            stmt = connection.prepareStatement(sql);
-            stmt.execute();
-            stmt.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
+Connection conexao;
+    
+    public TonerDAO(Connection conexao){
+        this.conexao = conexao;
     }
-
-    public void cadastrarToner(Toner toner) {
-        connection = new ConnectionFactory().getConnection();
-        sql = "INSERT INTO TONER (FABRICANTE, MODELO, NUM_SERIE, BP, SETOR, PRECO, EMPRESA, STATUS, TIPO_TONER)"
-                + " VALUES (?,?,?,?,?,?,?,?,?);";
-
+    
+    public void cadastrar(Toner toner){
+        String comandoSql = ""
+                + "insert into toners ("
+                + "idImpressora,"
+                + "tipoDeToner,"
+                + "qtdEstoqueCheio,"
+                + "qtdEstoqueVazio,"
+                + "qtdForaCheio,"
+                + "qtdForaVazio,"
+                + "qtdDesabilitadoCheio,"
+                + "qtdDesabilitadoVazio)"
+                + "values (?,?,0,0,0,0,0,0);";
         try {
-            stmt = connection.prepareStatement(sql);
-            stmt.setString(1, toner.getFabricante());
-            stmt.setString(2, toner.getModelo());
-            stmt.setString(3, toner.getNum_serie());
-            stmt.setInt(4, toner.getBp());
-            stmt.setString(5, toner.getSetor());
-            stmt.setDouble(6, toner.getPreco());
-            stmt.setString(7, toner.getEmpresa());
-            stmt.setString(8, toner.getStatus());
-            stmt.setString(9, toner.getTipoToner());
-            stmt.execute();
-            stmt.close();
+            PreparedStatement cadastro = conexao.prepareStatement(comandoSql);
+            cadastro.setInt(1, toner.getIdImpressora());
+            cadastro.setString(2, toner.getTipo());
+            cadastro.executeUpdate();
+            cadastro.close();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
     }
-
-    public void editarToner(Toner toner) {
-        connection = new ConnectionFactory().getConnection();
-        sql = "UPDATE TONER SET MODELO = ?, NUM_SERIE = ?, BP = ?, EMPRESA = ?, PRECO = ?, TIPO_TONER = ? WHERE ID = ?";
+    
+    public void atualizar(Toner toner){
+        String comandoSql = ""
+                + "update toners "
+                + "set "
+                + "idImpressora=?,"
+                + "tipoDeToner=?,"
+                + "qtdEstoqueCheio=?,"
+                + "qtdEstoqueVazio=?,"
+                + "qtdForaCheio=?,"
+                + "qtdForaVazio=?,"
+                + "qtdDesabilitadoCheio=?,"
+                + "qtdDesabilitadoVazio=?"
+                + "where idToner=?";
         try {
-            stmt = connection.prepareStatement(sql);
-
-            stmt.execute();
-            stmt.close();
+            PreparedStatement atualizacao = conexao.prepareStatement(comandoSql);
+            atualizacao.setInt(1, toner.getIdImpressora());
+            atualizacao.setString(2, toner.getTipo());
+            atualizacao.setInt(3, toner.getQtdEstoqueCheio());
+            atualizacao.setInt(4, toner.getQtdEstoqueVazio());
+            atualizacao.setInt(5, toner.getQtdForaCheio());
+            atualizacao.setInt(6, toner.getQtdForaVazio());
+            atualizacao.setInt(7, toner.getQtdDesabilitadoCheio());
+            atualizacao.setInt(8, toner.getQtdDesabilitadoVazio());
+            atualizacao.setInt(9, toner.getId());
+            atualizacao.executeUpdate();
+            atualizacao.close();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
     }
-
-    public ArrayList<Toner> exibirToner(Toner toner) {
-        connection = new ConnectionFactory().getConnection();
+    
+    public void deletar(Toner toner){
+        String comandoSql = ""
+                + "delete from toners "
+                + "where idToner=?";
+        try {
+            PreparedStatement atualizacao = conexao.prepareStatement(comandoSql);
+            atualizacao.setInt(1, toner.getId());
+            atualizacao.executeUpdate();
+            atualizacao.close();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
+    public ArrayList<Toner> getTodosToners(Toner toner){
+        
         ArrayList<Toner> lista = new ArrayList<>();
-        sql = "SELECT * FROM TONER ORDER BY ID ASC";
-        try {
-            stmt = connection.prepareStatement(sql);
-            
-            ResultSet rs = stmt.executeQuery();
+        
+        String comandoSql = "select * from toners";
 
-            while (rs.next()) {
-                toner = new Toner();
-                toner.setId(rs.getInt("ID"));
-                toner.setFabricante(rs.getString("FABRICANTE"));
-                toner.setModelo(rs.getString("MODELO"));
-                toner.setNum_serie(rs.getString("NUM_SERIE"));
-                toner.setBp(rs.getInt("BP"));
-                toner.setSetor(rs.getString("SETOR"));
-                toner.setPreco(rs.getDouble("PRECO"));
-                toner.setEmpresa(rs.getString("EMPRESA"));
-                toner.setStatus(rs.getString("STATUS"));
-                toner.setTipoToner(rs.getString("TIPO_TONER"));
-                lista.add(toner);
+        try {
+            PreparedStatement selecao = conexao.prepareStatement(comandoSql);
+            ResultSet resultado = selecao.executeQuery();
+            
+            while(resultado.next()){
+                Toner t = new Toner();
+                t.setId(resultado.getInt("idToner"));
+                t.setTipo(resultado.getString("tipoDeToner"));
+                t.setQtdEstoqueCheio(resultado.getInt("qtdEstoqueCheio"));
+                t.setQtdEstoqueVazio(resultado.getInt("qtdEstoqueVazio"));
+                t.setQtdForaCheio(resultado.getInt("qtdForaCheio"));
+                t.setQtdForaVazio(resultado.getInt("qtdForaVazio"));
+                t.setQtdDesabilitadoCheio(resultado.getInt("qtdDesabilitadoCheio"));
+                t.setQtdDesabilitadoVazio(resultado.getInt("qtdDesabilitadoVazio"));
+                t.setIdImpressora(resultado.getInt("idImpressora"));
+                lista.add(t);
             }
-            return lista;
-        } catch (SQLException e) {
+            
+            selecao.close();
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        
+        return lista;
+    }
+    
+    public Toner getToner(int idToner){
+        
+        Toner t = null;
+        
+        String comandoSql = "select * from toners where idToner=?";
 
+        try {
+            PreparedStatement selecao = conexao.prepareStatement(comandoSql);
+            selecao.setInt(1, idToner);
+            ResultSet resultado = selecao.executeQuery();
+            
+            if(resultado.next()){
+                t = new Toner();
+                t.setId(resultado.getInt("idToner"));
+                t.setTipo(resultado.getString("tipoDeToner"));
+                t.setQtdEstoqueCheio(resultado.getInt("qtdEstoqueCheio"));
+                t.setQtdEstoqueVazio(resultado.getInt("qtdEstoqueVazio"));
+                t.setQtdForaCheio(resultado.getInt("qtdForaCheio"));
+                t.setQtdForaVazio(resultado.getInt("qtdForaVazio"));
+                t.setQtdDesabilitadoCheio(resultado.getInt("qtdDesabilitadoCheio"));
+                t.setQtdDesabilitadoVazio(resultado.getInt("qtdDesabilitadoVazio"));
+                t.setIdImpressora(resultado.getInt("idImpressora"));
+            }
+            
+            selecao.close();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        
+        return t;
     }
 
 }
