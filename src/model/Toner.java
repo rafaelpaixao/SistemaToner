@@ -1,26 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package model;
 
-/**
- *
- * @author diegocruzalves
- */
 public class Toner {
-
     private int id;
-    private String fabricante;
-    private String modelo;
-    private String num_serie;
-    private int bp;
-    private String setor;
-    private double preco;
-    private String empresa;
-    private String TipoToner;
-    private String status;
+    private Impressora impressora;
+    private String tipo;
+    private int qtdEstoqueCheio;
+    private int qtdEstoqueVazio;
+    private int qtdForaCheio;
+    private int qtdForaVazio;
+    private int qtdDesabilitadoCheio;
+    private int qtdDesabilitadoVazio;
 
     public int getId() {
         return id;
@@ -30,76 +20,68 @@ public class Toner {
         this.id = id;
     }
 
-    public String getFabricante() {
-        return fabricante;
+    public Impressora getImpressora() {
+        return impressora;
     }
 
-    public void setFabricante(String fabricante) {
-        this.fabricante = fabricante;
+    public void setImpressora(Impressora impressora) {
+        this.impressora = impressora;
     }
 
-    public String getModelo() {
-        return modelo;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setModelo(String modelo) {
-        this.modelo = modelo;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
-    public String getNum_serie() {
-        return num_serie;
+    public int getQtdEstoqueCheio() {
+        return qtdEstoqueCheio;
     }
 
-    public void setNum_serie(String num_serie) {
-        this.num_serie = num_serie;
+    public void setQtdEstoqueCheio(int qtdEstoqueCheio) {
+        this.qtdEstoqueCheio = qtdEstoqueCheio;
     }
 
-    public int getBp() {
-        return bp;
+    public int getQtdEstoqueVazio() {
+        return qtdEstoqueVazio;
     }
 
-    public void setBp(int bp) {
-        this.bp = bp;
+    public void setQtdEstoqueVazio(int qtdEstoqueVazio) {
+        this.qtdEstoqueVazio = qtdEstoqueVazio;
     }
 
-    public String getSetor() {
-        return setor;
+    public int getQtdForaCheio() {
+        return qtdForaCheio;
     }
 
-    public void setSetor(String setor) {
-        this.setor = setor;
+    public void setQtdForaCheio(int qtdForaCheio) {
+        this.qtdForaCheio = qtdForaCheio;
     }
 
-    public double getPreco() {
-        return preco;
+    public int getQtdForaVazio() {
+        return qtdForaVazio;
     }
 
-    public void setPreco(double preco) {
-        this.preco = preco;
+    public void setQtdForaVazio(int qtdForaVazio) {
+        this.qtdForaVazio = qtdForaVazio;
     }
 
-    public String getEmpresa() {
-        return empresa;
+    public int getQtdDesabilitadoCheio() {
+        return qtdDesabilitadoCheio;
     }
 
-    public void setEmpresa(String empresa) {
-        this.empresa = empresa;
+    public void setQtdDesabilitadoCheio(int qtdDesabilitadoCheio) {
+        this.qtdDesabilitadoCheio = qtdDesabilitadoCheio;
     }
 
-    public String getTipoToner() {
-        return TipoToner;
+    public int getQtdDesabilitadoVazio() {
+        return qtdDesabilitadoVazio;
     }
 
-    public void setTipoToner(String TipoToner) {
-        this.TipoToner = TipoToner;
+    public void setQtdDesabilitadoVazio(int qtdDesabilitadoVazio) {
+        this.qtdDesabilitadoVazio = qtdDesabilitadoVazio;
     }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
+    
 }

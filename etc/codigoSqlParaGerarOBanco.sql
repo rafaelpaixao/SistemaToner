@@ -1,46 +1,69 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- * Author:  Rafael
- * Created: 23/11/2016
- */
-
+drop database controledetoner;
 create database controledetoner;
 
 use controledetoner;
 
-create table setor(
+create table usuarios(
+    idUsuario int auto_increment,
+    login varchar(50),
+    senha varchar(50),
+    tipoDeUsuario varchar(50),
+    primary key(idUsuario)
+);
+
+create table setores(
     idSetor int auto_increment,
-    nomeSetor varchar(255),
-    empresa varchar(255),
-    
+    nomeSetor varchar(50),
+    nomeEmpresa varchar(50),
+    primary key(idSetor)
 );
 
-create table toner(
-    idToner int auto_increment,
-    descricao varchar(255),
-    idModelo int,
+create table impressoras(
+    idImpressora int auto_increment,
     idSetor int,
-    numSerie varchar(255),
-    tipo varchar(255),
-    primary key(idToner)
+    modeloImpressora varchar(50),
+    modeloToner varchar(50),
+    precoToner double,
+    primary key(idImpressora),
+    foreign key(idSetor) references setores (idSetor)
 );
 
-create table modeloToner(
-    idModeloToner int auto_increment,
-    nomeModeloToner varchar(255),
-    fabricante varchar(255),
-    preco double,
-    primary key(idModeloToner)
+create table toners(
+    idToner int auto_increment,
+    idImpressora int,
+    tipo varchar(50),
+    qtdEstoqueCheio int,
+    qtdEstoqueVazio int,
+    qtdForaCheio int,
+    qtdForaVazio int,
+    qtdDesabilitadoCheio int,
+    qtdDesabilitadoVazio int,
+    primary key(idToner),
+    foreign key(idImpressora) references impressoras(idImpressora)
 );
 
-create table movEntradas(
-
+create table entradas(
+    idEntrada int auto_increment,
+    idToner int,
+    idUsuario int,
+    dataEntrada date,
+    descricao varchar(255),
+    qtdCheio int,
+    qtdVazio int,
+    primary key(idEntrada),
+    foreign key(idToner) references toners(idToner),
+    foreign key(idUsuario) references usuarios(idUsuario)
 );
 
-create table movSaidas(
-
+create table saidas(
+    idSaida int auto_increment,
+    idToner int,
+    idUsuario int,
+    dataSaida date,
+    descricao varchar(255),
+    qtdCheio int,
+    qtdVazio int,
+    primary key(idSaida),
+    foreign key(idToner) references toners(idToner),
+    foreign key(idUsuario) references usuarios(idUsuario)
 );
