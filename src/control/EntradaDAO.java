@@ -80,7 +80,7 @@ public class EntradaDAO {
         }
     }
 
-    public ArrayList<Entrada> getTodosEntradas(Entrada entrada) {
+    public ArrayList<Entrada> getTudo() {
 
         ArrayList<Entrada> lista = new ArrayList<>();
 

@@ -70,4 +70,4 @@ create table saidas(
 
 
 
-insert into usuarios (login,senha) values ('joao','123');
+insert into usuarios (login,senha,tipoDeUsuario) values ('joao','123','Administrador');

@@ -72,7 +72,7 @@ public class ImpressoraDAO {
         }
     }
     
-    public ArrayList<Impressora> getTodosImpressoras(Impressora impressora){
+    public ArrayList<Impressora> getTudo(){
         
         ArrayList<Impressora> lista = new ArrayList<>();
         

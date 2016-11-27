@@ -80,7 +80,7 @@ public class SaidaDAO {
         }
     }
 
-    public ArrayList<Saida> getTodosSaidas(Saida saida) {
+    public ArrayList<Saida> getTudo() {
 
         ArrayList<Saida> lista = new ArrayList<>();
 

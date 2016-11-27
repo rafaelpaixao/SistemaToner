@@ -65,7 +65,7 @@ public class SetorDAO {
         }
     }
     
-    public ArrayList<Setor> getTodosSetores(Setor setor){
+    public ArrayList<Setor> getTudo(){
         
         ArrayList<Setor> lista = new ArrayList<>();
         

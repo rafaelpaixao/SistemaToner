@@ -40,7 +40,7 @@ public class UsuarioDAO {
                 + "set "
                 + "login=?, "
                 + "senha=?,"
-                + "tipo=? "
+                + "tipoDeUsuario=? "
                 + "where idUsuario=?";
         try {
             PreparedStatement atualizacao = conexao.prepareStatement(comandoSql);
@@ -69,7 +69,7 @@ public class UsuarioDAO {
         }
     }
     
-    public ArrayList<Usuario> getTodosUsuarios(Usuario usuario){
+    public ArrayList<Usuario> getTudo(){
         
         ArrayList<Usuario> lista = new ArrayList<>();
         
@@ -149,5 +149,21 @@ public class UsuarioDAO {
         }
         
         return u;
+    }
+
+    boolean existeLogin(String login) {
+        String comandoSql = "select * from usuarios where login=?";
+
+        try {
+            PreparedStatement selecao = conexao.prepareStatement(comandoSql);
+            selecao.setString(1, login);
+            ResultSet resultado = selecao.executeQuery();
+            boolean retorno = resultado.next();
+            selecao.close();
+            return retorno;
+            
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -83,7 +83,7 @@ Connection conexao;
         }
     }
     
-    public ArrayList<Toner> getTodosToners(Toner toner){
+    public ArrayList<Toner> getTudo(){
         
         ArrayList<Toner> lista = new ArrayList<>();
         
