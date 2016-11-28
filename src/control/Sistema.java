@@ -2,7 +2,7 @@
 package control;
 
 import java.util.ArrayList;
-import model.Usuario;
+import model.*;
 
 public class Sistema {
     private AcessoAoBanco acessoAoBanco;
@@ -48,6 +48,10 @@ public class Sistema {
         return this.usuarioAtivo.getLogin();
     }
     
+    public int getIdUsuarioAtivo(){
+        return this.usuarioAtivo.getId();
+    }
+    
     public boolean cadastrarUsuario(Usuario u){
         if(usuarioDao.existeLogin(u.getLogin()))
             return false;
@@ -72,6 +76,88 @@ public class Sistema {
     
     public boolean atualizarUsuario(Usuario u){
         this.usuarioDao.atualizar(u);
+        return true;
+    }
+    
+    public boolean cadastrarSetor(Setor s){
+        this.setorDao.cadastrar(s);
+        return true;
+    }
+    
+    public ArrayList<Setor> getListaDeSetores(){
+        return this.setorDao.getTudo();
+    }
+    
+    public Setor getSetor(int id){
+        return this.setorDao.getSetorPorId(id);
+    }
+    
+    public boolean deletarSetor(Setor s){
+        this.setorDao.deletar(s);
+        return true;
+    }
+    
+    public boolean atualizarSetor(Setor s){
+        this.setorDao.atualizar(s);
+        return true;
+    }
+    
+    public boolean cadastrarImpressora(Impressora x){
+        this.impressoraDao.cadastrar(x);
+        return true;
+    }
+    
+    public ArrayList<Impressora> getListaDeImpressoras(){
+        return this.impressoraDao.getTudo();
+    }
+    
+    public Impressora getImpressora(int id){
+        return this.impressoraDao.getImpressoraPorId(id);
+    }
+    
+    public boolean deletarImpressora(Impressora x){
+        this.impressoraDao.deletar(x);
+        return true;
+    }
+    
+    public boolean atualizarImpressora(Impressora x){
+        this.impressoraDao.atualizar(x);
+        return true;
+    }
+    
+    public boolean cadastrarToner(Toner x){
+        this.tonerDao.cadastrar(x);
+        return true;
+    }
+    
+    public ArrayList<Toner> getListaDeToner(){
+        return this.tonerDao.getTudo();
+    }
+    
+    public boolean deletarToner(Toner x){
+        if(temMovimentacaoToner(x))
+            return false;
+        this.tonerDao.deletar(x);
+        return true;
+    }
+    
+    public boolean atualizarToner(Toner x){
+        this.tonerDao.atualizar(x);
+        return true;
+    }
+    
+    private boolean temMovimentacaoToner(Toner x){
+        //FAZER
+        return true;
+    }
+    
+    public boolean cadastrarEntrada(Entrada x){
+        this.entradaDao.cadastrar(x);
+        return true;
+    }
+    
+    public boolean cadastrarSaida(Saida x){
+        this.saidaDao.cadastrar(x);
         return true;
     }
 }

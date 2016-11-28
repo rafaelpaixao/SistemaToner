@@ -28,7 +28,7 @@ public class SaidaDAO {
             PreparedStatement cadastro = conexao.prepareStatement(comandoSql);
             cadastro.setInt(1, saida.getIdToner());
             cadastro.setInt(2, saida.getIdUsuario());
-            cadastro.setDate(3, saida.getData());
+            cadastro.setString(3, saida.getData());
             cadastro.setInt(4, saida.getQtdCheio());
             cadastro.setInt(5, saida.getQtdVazio());
             cadastro.setInt(6, saida.getIdSetor());
@@ -54,7 +54,7 @@ public class SaidaDAO {
             PreparedStatement atualizacao = conexao.prepareStatement(comandoSql);
             atualizacao.setInt(1, saida.getIdToner());
             atualizacao.setInt(2, saida.getIdUsuario());
-            atualizacao.setDate(3, saida.getData());
+            atualizacao.setString(3, saida.getData());
             atualizacao.setInt(4, saida.getQtdCheio());
             atualizacao.setInt(5, saida.getQtdVazio());
             atualizacao.setInt(6, saida.getIdSetor());
@@ -95,7 +95,7 @@ public class SaidaDAO {
                 e.setId(resultado.getInt("idSaida"));
                 e.setIdToner(resultado.getInt("idToner"));
                 e.setIdUsuario(resultado.getInt("idUsuario"));
-                e.setData(resultado.getDate("dataSaida"));
+                e.setData(resultado.getString("dataSaida"));
                 e.setQtdCheio(resultado.getInt("qtdCheio"));
                 e.setQtdVazio(resultado.getInt("qtdVazio"));
                 e.setIdSetor(resultado.getInt("idSetor"));
@@ -126,7 +126,7 @@ public class SaidaDAO {
                 e.setId(resultado.getInt("idSaida"));
                 e.setIdToner(resultado.getInt("idToner"));
                 e.setIdUsuario(resultado.getInt("idUsuario"));
-                e.setData(resultado.getDate("dataSaida"));
+                e.setData(resultado.getString("dataSaida"));
                 e.setQtdCheio(resultado.getInt("qtdCheio"));
                 e.setQtdVazio(resultado.getInt("qtdVazio"));
                 e.setIdSetor(resultado.getInt("idSetor"));

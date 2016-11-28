@@ -28,7 +28,7 @@ public class EntradaDAO {
             PreparedStatement cadastro = conexao.prepareStatement(comandoSql);
             cadastro.setInt(1, entrada.getIdToner());
             cadastro.setInt(2, entrada.getIdUsuario());
-            cadastro.setDate(3, entrada.getData());
+            cadastro.setString(3, entrada.getData());
             cadastro.setInt(4, entrada.getQtdCheio());
             cadastro.setInt(5, entrada.getQtdVazio());
             cadastro.setString(6, entrada.getTipoDeEntrada());
@@ -54,7 +54,7 @@ public class EntradaDAO {
             PreparedStatement atualizacao = conexao.prepareStatement(comandoSql);
             atualizacao.setInt(1, entrada.getIdToner());
             atualizacao.setInt(2, entrada.getIdUsuario());
-            atualizacao.setDate(3, entrada.getData());
+            atualizacao.setString(3, entrada.getData());
             atualizacao.setInt(4, entrada.getQtdCheio());
             atualizacao.setInt(5, entrada.getQtdVazio());
             atualizacao.setString(6, entrada.getTipoDeEntrada());
@@ -95,7 +95,7 @@ public class EntradaDAO {
                 e.setId(resultado.getInt("idEntrada"));
                 e.setIdToner(resultado.getInt("idToner"));
                 e.setIdUsuario(resultado.getInt("idUsuario"));
-                e.setData(resultado.getDate("dataEntrada"));
+                e.setData(resultado.getString("dataEntrada"));
                 e.setQtdCheio(resultado.getInt("qtdCheio"));
                 e.setQtdVazio(resultado.getInt("qtdVazio"));
                 e.setTipoDeEntrada(resultado.getString("tipoDeEntrada"));
@@ -126,7 +126,7 @@ public class EntradaDAO {
                 e.setId(resultado.getInt("idEntrada"));
                 e.setIdToner(resultado.getInt("idToner"));
                 e.setIdUsuario(resultado.getInt("idUsuario"));
-                e.setData(resultado.getDate("dataEntrada"));
+                e.setData(resultado.getString("dataEntrada"));
                 e.setQtdCheio(resultado.getInt("qtdCheio"));
                 e.setQtdVazio(resultado.getInt("qtdVazio"));
                 e.setTipoDeEntrada(resultado.getString("tipoDeEntrada"));

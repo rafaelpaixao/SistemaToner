@@ -71,3 +71,5 @@ create table saidas(
 
 
 insert into usuarios (login,senha,tipoDeUsuario) values ('joao','123','Administrador');
+
+insert into setores (nomeSetor,nomeEmpresa) values ('Secretaria','Empresa Tal');

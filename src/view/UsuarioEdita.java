@@ -12,12 +12,12 @@ import model.Usuario;
  *
  * @author Rafael
  */
-public class UsuarioEditar extends javax.swing.JInternalFrame {
+public class UsuarioEdita extends javax.swing.JInternalFrame {
 
     Sistema sistema;
     Usuario usuario;
     
-    public UsuarioEditar(Sistema sistema, Usuario u) {
+    public UsuarioEdita(Sistema sistema, Usuario u) {
         this.sistema = sistema;
         this.usuario = u;
         initComponents();

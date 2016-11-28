@@ -21,6 +21,7 @@ public class UsuarioLogin extends javax.swing.JInternalFrame {
         this.sistema = sistema;
         this.janelaPai = janelaPai;
         initComponents();
+        this.getRootPane().setDefaultButton(this.jButtonConfirmar);
     }
 
     /**
@@ -36,10 +37,28 @@ public class UsuarioLogin extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         jTextLogin = new javax.swing.JTextField();
         jTextSenha = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        jButtonConfirmar = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
         setTitle("Informe os dados para login");
+        setPreferredSize(new java.awt.Dimension(250, 130));
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameActivated(evt);
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+            }
+        });
 
         jLabel1.setText("Login:");
 
@@ -51,11 +70,11 @@ public class UsuarioLogin extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton1.setText("Confirmar");
-        jButton1.setToolTipText("");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonConfirmar.setText("Confirmar");
+        jButtonConfirmar.setToolTipText("");
+        jButtonConfirmar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonConfirmarActionPerformed(evt);
             }
         });
 
@@ -88,7 +107,7 @@ public class UsuarioLogin extends javax.swing.JInternalFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)))
+                        .addComponent(jButtonConfirmar)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -104,7 +123,7 @@ public class UsuarioLogin extends javax.swing.JInternalFrame {
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(jButtonConfirmar)
                     .addComponent(jButton2))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -121,7 +140,7 @@ public class UsuarioLogin extends javax.swing.JInternalFrame {
         this.jTextSenha.setText("");
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButtonConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmarActionPerformed
         Usuario u = new Usuario();
         u.setLogin(this.jTextLogin.getText());
         u.setSenha(this.jTextSenha.getText());
@@ -136,12 +155,16 @@ public class UsuarioLogin extends javax.swing.JInternalFrame {
         }
         else
             Alertas.mensagem(this, "Usuário inválido!");
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButtonConfirmarActionPerformed
+
+    private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
+        this.jTextLogin.requestFocus();
+    }//GEN-LAST:event_formInternalFrameActivated
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButtonConfirmar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField jTextLogin;

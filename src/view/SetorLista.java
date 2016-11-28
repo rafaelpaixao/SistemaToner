@@ -8,29 +8,28 @@ package view;
 import control.Sistema;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
-import javax.swing.JList;
-import model.Usuario;
+import model.*;
 
 /**
  *
  * @author Rafael
  */
-public class UsuarioListar extends javax.swing.JInternalFrame {
+public class SetorLista extends javax.swing.JInternalFrame {
 
     Sistema sistema;
-    ArrayList<Usuario> listaUsuarios;
+    ArrayList<Setor> lista;
 
-    public UsuarioListar(Sistema sistema) {
+    public SetorLista(Sistema sistema) {
         this.sistema = sistema;
         initComponents();
 
-        this.listaUsuarios = this.sistema.getListaDeUsuarios();
+        this.lista = this.sistema.getListaDeSetores();
         DefaultListModel listModel = new DefaultListModel();
 
-        for (Usuario u : this.listaUsuarios) {
-            listModel.addElement(u.getLogin());
+        for (Setor s : this.lista) {
+            listModel.addElement(s.getNome() + " ("+s.getEmpresa()+")");
         }
-        this.jListUsuarios.setModel(listModel);
+        this.jList1.setModel(listModel);
     }
 
     /**
@@ -43,22 +42,22 @@ public class UsuarioListar extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jListUsuarios = new javax.swing.JList<>();
+        jList1 = new javax.swing.JList<>();
         jLabel1 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
         setClosable(true);
-        setTitle("Lista de Usuários");
+        setTitle("Lista de Setores");
 
-        jListUsuarios.setModel(new javax.swing.AbstractListModel<String>() {
+        jList1.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(jListUsuarios);
+        jScrollPane1.setViewportView(jList1);
 
-        jLabel1.setText("Selecione um usuário:");
+        jLabel1.setText("Selecione um setor:");
 
         jButton2.setText("Editar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -110,12 +109,12 @@ public class UsuarioListar extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        int index = this.jListUsuarios.getSelectedIndex();
+        int index = this.jList1.getSelectedIndex();
         if (index > -1) {
-            boolean sucesso = this.sistema.deletarUsuario(this.listaUsuarios.get(index));
+            boolean sucesso = this.sistema.deletarSetor(this.lista.get(index));
             Alertas.sucessoOuErro(this, sucesso);
             if(sucesso){
-                UsuarioListar u = new UsuarioListar(this.sistema);
+                SetorLista u = new SetorLista(this.sistema);
                 this.getParent().add(u);
                 this.dispose();
                 u.show();
@@ -127,12 +126,12 @@ public class UsuarioListar extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        int index = this.jListUsuarios.getSelectedIndex();
+        int index = this.jList1.getSelectedIndex();
         if (index > -1) {
-            UsuarioEditar u = new UsuarioEditar(this.sistema, this.listaUsuarios.get(index));
-            this.getParent().add(u);
+            SetorEdita x = new SetorEdita(this.sistema, this.lista.get(index));
+            this.getParent().add(x);
             this.dispose();
-            u.show();
+            x.show();
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -141,7 +140,7 @@ public class UsuarioListar extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JList<String> jListUsuarios;
+    private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

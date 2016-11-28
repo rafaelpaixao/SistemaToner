@@ -7,7 +7,7 @@ public class Movimentacao {
     private int id;
     private int idToner;
     private int idUsuario;
-    private Date data;
+    private String data;
     private int qtdCheio;
     private int qtdVazio;
 
@@ -35,11 +35,11 @@ public class Movimentacao {
         this.idUsuario = idUsuario;
     }
 
-    public Date getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(String data) {
         this.data = data;
     }
 
