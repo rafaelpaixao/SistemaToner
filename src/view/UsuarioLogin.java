@@ -41,7 +41,8 @@ public class UsuarioLogin extends javax.swing.JInternalFrame {
         jButton2 = new javax.swing.JButton();
 
         setTitle("Informe os dados para login");
-        setPreferredSize(new java.awt.Dimension(250, 130));
+        setNormalBounds(new java.awt.Rectangle(50, 50, 250, 135));
+        setPreferredSize(new java.awt.Dimension(250, 135));
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
                 formInternalFrameActivated(evt);
@@ -128,7 +129,7 @@ public class UsuarioLogin extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        pack();
+        setBounds(400, 137, 250, 135);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextLoginActionPerformed
@@ -150,7 +151,9 @@ public class UsuarioLogin extends javax.swing.JInternalFrame {
                 d.setVisible(true);
                 janelaPai.dispose();
             }else if (this.sistema.getTipoUsuarioAtivo().equals("padrao")){
-                //FALTA
+                DesktopPadrao d = new DesktopPadrao(this.sistema);
+                d.setVisible(true);
+                janelaPai.dispose();
             }
         }
         else
@@ -158,6 +161,7 @@ public class UsuarioLogin extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButtonConfirmarActionPerformed
 
     private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
+        this.requestFocus();
         this.jTextLogin.requestFocus();
     }//GEN-LAST:event_formInternalFrameActivated
 

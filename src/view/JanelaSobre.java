@@ -57,7 +57,7 @@ public class JanelaSobre extends javax.swing.JInternalFrame {
         jTextPane1.setEditable(false);
         jTextPane1.setContentType("text/html"); // NOI18N
         jTextPane1.setFont(new java.awt.Font("Verdana", 0, 13)); // NOI18N
-        jTextPane1.setText("<html>\n<head>\n</head>\n<body>\n\t<p style=\"margin-top: 5px\">\n\t\tDesenvolvido por:\n\t</p>\n\t<p style=\"margin-top: 5px; margin-left:10px\">\n\t\tDiego Cruz\n\t</p>\n\t<p style=\"margin-top: 5px; margin-left:10px\">\n\t\tRafael Paixão (<a href=\"https://github.com/rafaelpaixao\">Github</a> | <a href=\"mailto:rafaelsspaixao@gmail.com\">Gmail</a>)\n\t</p>\n\t<p style=\"margin-top: 15px\">\n\t\tSistema para controle de toner desenvolvido como projeto final para a disciplina Linguagens e Técnicas de Programação I, sob orientação do professor Jairo Rego, para o curso Bacharelado em Sistema de Informação da Universidade Salvador (UNIFACS).\n\t</p>\n\t<p style=\"margin-top: 15px\">\n\t\tFeira de Santana, Dezembro/2016.\n\t</p>\n</body>\n</html>");
+        jTextPane1.setText("<html>\n<head>\n</head>\n<body>\n\t<p style=\"margin-top: 5px\">\n\t\tDesenvolvido por:\n\t</p>\n\t<p style=\"margin-top: 5px; margin-left:10px\">\n\t\tDiego Cruz (<a href=\"https://github.com/diegocruzalves\">Github</a> | <a href=\"mailto:diegocruzalves@gmail.com\">Gmail</a>)\n\t</p>\n\t<p style=\"margin-top: 5px; margin-left:10px\">\n\t\tRafael Paixão (<a href=\"https://github.com/rafaelpaixao\">Github</a> | <a href=\"mailto:rafaelsspaixao@gmail.com\">Gmail</a>)\n\t</p>\n\t<p style=\"margin-top: 15px\">\n\t\tSistema para controle de toner desenvolvido como projeto final para a disciplina Linguagens e Técnicas de Programação I, sob orientação do professor Jairo Rego, para o curso Bacharelado em Sistema de Informação da Universidade Salvador (UNIFACS).\n\t</p>\n\t<p style=\"margin-top: 15px\">\n\t\tFeira de Santana, Dezembro/2016.\n\t</p>\n</body>\n</html>");
         jScrollPane1.setViewportView(jTextPane1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -71,7 +71,7 @@ public class JanelaSobre extends javax.swing.JInternalFrame {
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
         );
 
-        pack();
+        setBounds(300, 100, 400, 280);
     }// </editor-fold>//GEN-END:initComponents
 
 

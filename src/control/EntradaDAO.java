@@ -3,7 +3,10 @@ package control;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Entrada;
 
 public class EntradaDAO {
@@ -138,6 +141,18 @@ public class EntradaDAO {
         }
 
         return e;
+    }
+    
+    public ResultSet getResultSetEntradas() {
+        ResultSet retorno = null;
+        String comandoSql = "select * from entradas";
+        try {
+            PreparedStatement selecao = conexao.prepareStatement(comandoSql);
+            retorno = selecao.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(TonerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return retorno;
     }
 
 }

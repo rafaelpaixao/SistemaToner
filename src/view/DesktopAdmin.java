@@ -45,29 +45,28 @@ public class DesktopAdmin extends javax.swing.JFrame {
         jMenuItem10 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem11 = new javax.swing.JMenuItem();
-        jMenuItem13 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
-        jMenuItem14 = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         jMenuItem15 = new javax.swing.JMenuItem();
         jMenuItem16 = new javax.swing.JMenuItem();
+        jMenuItem17 = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de Toner");
-        setResizable(false);
+        setPreferredSize(new java.awt.Dimension(1100, 650));
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 700, Short.MAX_VALUE)
+            .addGap(0, 1100, Short.MAX_VALUE)
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 479, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         jMenu1.setText("Usuários");
@@ -155,28 +154,17 @@ public class DesktopAdmin extends javax.swing.JFrame {
         jMenuItem11.setText("Nova Entrada");
         jMenu5.add(jMenuItem11);
 
-        jMenuItem13.setText("Listar Entradas");
-        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem13ActionPerformed(evt);
-            }
-        });
-        jMenu5.add(jMenuItem13);
-
         jMenuItem12.setText("Nova Saída");
         jMenu5.add(jMenuItem12);
-
-        jMenuItem14.setText("Listar Saídas");
-        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem14ActionPerformed(evt);
-            }
-        });
-        jMenu5.add(jMenuItem14);
 
         jMenuBar1.add(jMenu5);
 
         jMenu6.setText("Relatórios");
+        jMenu6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu6ActionPerformed(evt);
+            }
+        });
 
         jMenuItem15.setText("Situação de Toners");
         jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
@@ -186,13 +174,21 @@ public class DesktopAdmin extends javax.swing.JFrame {
         });
         jMenu6.add(jMenuItem15);
 
-        jMenuItem16.setText("Histórico de Movimentações");
+        jMenuItem16.setText("Histórico de Entradas");
         jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem16ActionPerformed(evt);
             }
         });
         jMenu6.add(jMenuItem16);
+
+        jMenuItem17.setText("Histórico de Saídas");
+        jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem17ActionPerformed(evt);
+            }
+        });
+        jMenu6.add(jMenuItem17);
 
         jMenuBar1.add(jMenu6);
 
@@ -292,20 +288,29 @@ public class DesktopAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
     private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
-        Alertas.mensagem(this, "Ainda não implementado!");
+        //RELATORIO TONER
+        RelatorioSituacaoToner janela = new RelatorioSituacaoToner(this.sistema);
+        this.jDesktopPane1.add(janela);
+        janela.show();
     }//GEN-LAST:event_jMenuItem15ActionPerformed
 
     private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
-        Alertas.mensagem(this, "Ainda não implementado!");
+        //RELATORIO ENTRADAS
+        RelatorioEntradas janela = new RelatorioEntradas(this.sistema);
+        this.jDesktopPane1.add(janela);
+        janela.show();
     }//GEN-LAST:event_jMenuItem16ActionPerformed
 
-    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
-        Alertas.mensagem(this, "Ainda não implementado!");
-    }//GEN-LAST:event_jMenuItem13ActionPerformed
+    private void jMenu6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu6ActionPerformed
+        
+    }//GEN-LAST:event_jMenu6ActionPerformed
 
-    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
-        Alertas.mensagem(this, "Ainda não implementado!");
-    }//GEN-LAST:event_jMenuItem14ActionPerformed
+    private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
+        //RELATORIO SAIDAS
+        RelatorioSaidas janela = new RelatorioSaidas(this.sistema);
+        this.jDesktopPane1.add(janela);
+        janela.show();
+    }//GEN-LAST:event_jMenuItem17ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -322,10 +327,9 @@ public class DesktopAdmin extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem13;
-    private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem16;
+    private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

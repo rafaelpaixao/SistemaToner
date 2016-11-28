@@ -1,21 +1,29 @@
-
 package control;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 import model.Toner;
 
 public class TonerDAO {
 
-Connection conexao;
-    
-    public TonerDAO(Connection conexao){
+    Connection conexao;
+
+    public TonerDAO(Connection conexao) {
         this.conexao = conexao;
     }
-    
-    public void cadastrar(Toner toner){
+
+    public void cadastrar(Toner toner) {
         String comandoSql = ""
                 + "insert into toners ("
                 + "idImpressora,"
@@ -37,8 +45,8 @@ Connection conexao;
             throw new RuntimeException(e);
         }
     }
-    
-    public void atualizar(Toner toner){
+
+    public void atualizar(Toner toner) {
         String comandoSql = ""
                 + "update toners "
                 + "set "
@@ -68,8 +76,8 @@ Connection conexao;
             throw new RuntimeException(e);
         }
     }
-    
-    public void deletar(Toner toner){
+
+    public void deletar(Toner toner) {
         String comandoSql = ""
                 + "delete from toners "
                 + "where idToner=?";
@@ -82,18 +90,18 @@ Connection conexao;
             throw new RuntimeException(e);
         }
     }
-    
-    public ArrayList<Toner> getTudo(){
-        
+
+    public ArrayList<Toner> getTudo() {
+
         ArrayList<Toner> lista = new ArrayList<>();
-        
+
         String comandoSql = "select * from toners";
 
         try {
             PreparedStatement selecao = conexao.prepareStatement(comandoSql);
             ResultSet resultado = selecao.executeQuery();
-            
-            while(resultado.next()){
+
+            while (resultado.next()) {
                 Toner t = new Toner();
                 t.setId(resultado.getInt("idToner"));
                 t.setTipo(resultado.getString("tipoDeToner"));
@@ -106,27 +114,27 @@ Connection conexao;
                 t.setIdImpressora(resultado.getInt("idImpressora"));
                 lista.add(t);
             }
-            
+
             selecao.close();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        
+
         return lista;
     }
-    
-    public Toner getToner(int idToner){
-        
+
+    public Toner getToner(int idToner) {
+
         Toner t = null;
-        
+
         String comandoSql = "select * from toners where idToner=?";
 
         try {
             PreparedStatement selecao = conexao.prepareStatement(comandoSql);
             selecao.setInt(1, idToner);
             ResultSet resultado = selecao.executeQuery();
-            
-            if(resultado.next()){
+
+            if (resultado.next()) {
                 t = new Toner();
                 t.setId(resultado.getInt("idToner"));
                 t.setTipo(resultado.getString("tipoDeToner"));
@@ -138,13 +146,27 @@ Connection conexao;
                 t.setQtdDesabilitadoVazio(resultado.getInt("qtdDesabilitadoVazio"));
                 t.setIdImpressora(resultado.getInt("idImpressora"));
             }
-            
+
             selecao.close();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        
+
         return t;
     }
 
+    public ResultSet getResultSetSituacaoToner() {
+        ResultSet retorno = null;
+        String comandoSql = "select * from toners";
+        
+        try {
+            PreparedStatement selecao;
+            selecao = conexao.prepareStatement(comandoSql);
+            retorno = selecao.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(TonerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return retorno;
+    }
 }
