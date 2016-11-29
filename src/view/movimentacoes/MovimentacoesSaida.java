@@ -71,6 +71,7 @@ public class MovimentacoesSaida extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setTitle("Nova Saída");
+        setPreferredSize(new java.awt.Dimension(295, 165));
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
                 formComponentShown(evt);
@@ -148,7 +149,7 @@ public class MovimentacoesSaida extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        setBounds(300, 100, 294, 157);
+        setBounds(300, 100, 295, 165);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

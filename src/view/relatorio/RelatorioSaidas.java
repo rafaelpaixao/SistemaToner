@@ -69,7 +69,7 @@ public class RelatorioSaidas extends javax.swing.JInternalFrame {
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
         );
 
-        pack();
+        setBounds(50, 50, 1000, 500);
     }// </editor-fold>//GEN-END:initComponents
 
 

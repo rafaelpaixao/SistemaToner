@@ -60,7 +60,7 @@ public class MovimentacoesEntrada extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setTitle("Nova Entrada");
-        setPreferredSize(new java.awt.Dimension(328, 165));
+        setPreferredSize(new java.awt.Dimension(355, 165));
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
                 formComponentShown(evt);
@@ -138,7 +138,7 @@ public class MovimentacoesEntrada extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        setBounds(300, 100, 328, 165);
+        setBounds(300, 100, 355, 165);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

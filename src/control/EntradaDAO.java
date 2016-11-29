@@ -92,7 +92,7 @@ public class EntradaDAO {
         try {
             PreparedStatement selecao = conexao.prepareStatement(comandoSql);
             ResultSet resultado = selecao.executeQuery();
-            
+
             while (resultado.next()) {
                 Entrada e = new Entrada();
                 e.setId(resultado.getInt("idEntrada"));
@@ -104,7 +104,7 @@ public class EntradaDAO {
                 e.setTipoDeEntrada(resultado.getString("tipoDeEntrada"));
                 lista.add(e);
             }
-            
+
             selecao.close();
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -134,7 +134,7 @@ public class EntradaDAO {
                 e.setQtdVazio(resultado.getInt("qtdVazio"));
                 e.setTipoDeEntrada(resultado.getString("tipoDeEntrada"));
             }
-            
+
             selecao.close();
         } catch (Exception er) {
             throw new RuntimeException(er);
@@ -142,10 +142,21 @@ public class EntradaDAO {
 
         return e;
     }
-    
+
     public ResultSet getResultSetEntradas() {
         ResultSet retorno = null;
-        String comandoSql = "select * from entradas";
+        String comandoSql = "select "
+                + "entradas.dataEntrada as Dia, "
+                + "entradas.tipoDeEntrada as Tipo, "
+                + "usuarios.login as Usuário, "
+                + "impressoras.modeloToner as Toner, "
+                + "impressoras.modeloImpressora as Impressora, "
+                + "entradas.qtdCheio, "
+                + "entradas.qtdVazio "
+                + "from entradas"
+                + "join usuarios on entradas.idUsuario=usuarios.idUsuario"
+                + "join toners on entradas.idToner=toners.idToner"
+                + "join impressoras on toners.idImpressora = impressoras.idImpressora";
         try {
             PreparedStatement selecao = conexao.prepareStatement(comandoSql);
             retorno = selecao.executeQuery();

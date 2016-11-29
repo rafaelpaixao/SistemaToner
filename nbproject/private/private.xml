@@ -3,18 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Rafael/Codigo/Github/SistemaToner/src/view/TonerLista.java</file>
-            <file>file:/C:/Rafael/Codigo/Github/SistemaToner/src/view/SetorLista.java</file>
-            <file>file:/C:/Rafael/Codigo/Github/SistemaToner/src/view/UsuarioLista.java</file>
-            <file>file:/C:/Rafael/Codigo/Github/SistemaToner/src/view/UsuarioLogin.java</file>
-            <file>file:/C:/Rafael/Codigo/Github/SistemaToner/src/view/SaidaCadastro.java</file>
-            <file>file:/C:/Rafael/Codigo/Github/SistemaToner/src/view/JanelaSobre.java</file>
-            <file>file:/C:/Rafael/Codigo/Github/SistemaToner/src/view/UsuarioCadastro.java</file>
-            <file>file:/C:/Rafael/Codigo/Github/SistemaToner/src/view/TonerCadastro.java</file>
-            <file>file:/C:/Rafael/Codigo/Github/SistemaToner/src/view/TonerEdita.java</file>
-            <file>file:/C:/Rafael/Codigo/Github/SistemaToner/src/view/SetorEdita.java</file>
-            <file>file:/C:/Rafael/Codigo/Github/SistemaToner/src/view/SetorCadastro.java</file>
-            <file>file:/C:/Rafael/Codigo/Github/SistemaToner/src/view/UsuarioEdita.java</file>
+            <file>file:/C:/Rafael/Codigo/Github/SistemaToner/src/view/DesktopAdmin.java</file>
+            <file>file:/C:/Rafael/Codigo/Github/SistemaToner/src/view/movimentacoes/MovimentacoesEntrada.java</file>
+            <file>file:/C:/Rafael/Codigo/Github/SistemaToner/src/control/Sistema.java</file>
+            <file>file:/C:/Rafael/Codigo/Github/SistemaToner/src/view/movimentacoes/MovimentacoesSaida.java</file>
+            <file>file:/C:/Rafael/Codigo/Github/SistemaToner/etc/codigoSqlParaGerarOBanco.sql</file>
         </group>
     </open-files>
 </project-private>

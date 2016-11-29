@@ -104,7 +104,7 @@ public class SaidaDAO {
                 e.setIdSetor(resultado.getInt("idSetor"));
                 lista.add(e);
             }
-            
+
             selecao.close();
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -134,7 +134,7 @@ public class SaidaDAO {
                 e.setQtdVazio(resultado.getInt("qtdVazio"));
                 e.setIdSetor(resultado.getInt("idSetor"));
             }
-            
+
             selecao.close();
         } catch (Exception er) {
             throw new RuntimeException(er);
@@ -142,10 +142,23 @@ public class SaidaDAO {
 
         return e;
     }
-    
+
     public ResultSet getResultSetSaidas() {
         ResultSet retorno = null;
-        String comandoSql = "select * from saidas";
+        String comandoSql = "select "
+                + "saidas.dataSaida as Dia, "
+                + "setores.nomeSetor as Setor, "
+                + "setores.nomeEmpresa as Empresa, "
+                + "usuarios.login as Usuário, "
+                + "impressoras.modeloToner as Toner, "
+                + "impressoras.modeloImpressora as Impressora, "
+                + "saidas.qtdCheio, "
+                + "saidas.qtdVazio "
+                + "from saidas "
+                + "join usuarios on saidas.idUsuario=usuarios.idUsuario "
+                + "join toners on saidas.idToner=toners.idToner "
+                + "join impressoras on toners.idImpressora = impressoras.idImpressora "
+                + "join setores on saidas.idSetor = setores.idSetor";
         try {
             PreparedStatement selecao = conexao.prepareStatement(comandoSql);
             retorno = selecao.executeQuery();
