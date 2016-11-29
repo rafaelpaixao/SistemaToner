@@ -3,23 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package view;
+package view.relatorio;
 
 import control.Sistema;
 import javax.swing.table.DefaultTableModel;
+import view.Alertas;
 
 /**
  *
  * @author Rafael
  */
-public class RelatorioSaidas extends javax.swing.JInternalFrame {
+public class RelatorioEntradas extends javax.swing.JInternalFrame {
 
     Sistema sistema;
-    public RelatorioSaidas(Sistema s) {
+    public RelatorioEntradas(Sistema s) {
         this.sistema = s;
         initComponents();
         
-        DefaultTableModel tabela = this.sistema.getTableModelSaidas();
+        DefaultTableModel tabela = this.sistema.getTableModelEntradas();
         if(tabela!=null)
             this.jTable1.setModel(tabela);
         else{
@@ -41,7 +42,7 @@ public class RelatorioSaidas extends javax.swing.JInternalFrame {
         jTable1 = new javax.swing.JTable();
 
         setClosable(true);
-        setTitle("Histórico de Saídas");
+        setTitle("Histórico de Entradas");
         setPreferredSize(new java.awt.Dimension(1000, 500));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(

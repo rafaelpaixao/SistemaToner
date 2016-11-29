@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package view;
+package view.movimentacoes;
 
 import control.Sistema;
 import java.text.SimpleDateFormat;
@@ -12,17 +12,18 @@ import java.util.Calendar;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import model.*;
+import view.Alertas;
 
 /**
  *
  * @author Rafael
  */
-public class EntradaCadastro extends javax.swing.JInternalFrame {
+public class MovimentacoesEntrada extends javax.swing.JInternalFrame {
 
     Sistema sistema;
     ArrayList<Toner> lista;
     
-    public EntradaCadastro(Sistema sistema) {
+    public MovimentacoesEntrada(Sistema sistema) {
         this.sistema = sistema;
         initComponents();
         
@@ -31,7 +32,7 @@ public class EntradaCadastro extends javax.swing.JInternalFrame {
             String[] toners = new String[this.lista.size()];
             for (int i = 0; i < this.lista.size(); i++) {
                 Impressora imp = this.sistema.getImpressora(this.lista.get(i).getIdImpressora());
-                toners[i] = imp.getModeloToner() + "("+lista.get(i).getTipo()+") - "+imp.getModelo()+")";
+                toners[i] = imp.getModeloToner() + " ("+lista.get(i).getTipo()+") - "+imp.getModelo();
             }
             DefaultComboBoxModel model = new DefaultComboBoxModel(toners);
             this.jComboBoxToner.setModel(model);
@@ -59,15 +60,22 @@ public class EntradaCadastro extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setTitle("Nova Entrada");
+        setPreferredSize(new java.awt.Dimension(328, 165));
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
                 formComponentShown(evt);
             }
         });
 
+        jTextCheio.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTextCheio.setText("0");
+
         jLabel1.setText("Qtd. cheio:");
 
         jLabel2.setText("Qtd. vazio:");
+
+        jTextVazio.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTextVazio.setText("0");
 
         jButton1.setText("Confirmar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -78,7 +86,7 @@ public class EntradaCadastro extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Toner:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Devolução", "Recarga" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Novo", "Recarga" }));
 
         jLabel4.setText("Tipo de entrada:");
 
@@ -88,25 +96,24 @@ public class EntradaCadastro extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel4)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel1)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jTextCheio, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(19, 19, 19)
-                            .addComponent(jLabel2)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jTextVazio, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel3)
-                            .addGap(32, 32, 32)
-                            .addComponent(jComboBoxToner, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(32, 32, 32)
+                        .addComponent(jComboBoxToner, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextCheio, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextVazio, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -131,7 +138,7 @@ public class EntradaCadastro extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        pack();
+        setBounds(300, 100, 328, 165);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -163,7 +170,7 @@ public class EntradaCadastro extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
-        if(lista.size()==0){
+        if(lista.isEmpty()){
             Alertas.mensagem(this, "É preciso cadastrar um toner!");
             this.dispose();
         }

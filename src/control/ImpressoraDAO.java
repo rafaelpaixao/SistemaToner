@@ -42,7 +42,7 @@ public class ImpressoraDAO {
                 + "idSetor=?, "
                 + "modeloImpressora=?, "
                 + "modeloToner=?, "
-                + "precoToner=?, "
+                + "precoToner=? "
                 + "where idImpressora=?";
         try {
             PreparedStatement atualizacao = conexao.prepareStatement(comandoSql);

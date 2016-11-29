@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package view;
+package view.movimentacoes;
 
 import control.Sistema;
 import java.text.SimpleDateFormat;
@@ -12,18 +12,19 @@ import java.util.Calendar;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import model.*;
+import view.Alertas;
 
 /**
  *
  * @author Rafael
  */
-public class SaidaCadastro extends javax.swing.JInternalFrame {
+public class MovimentacoesSaida extends javax.swing.JInternalFrame {
 
     Sistema sistema;
     ArrayList<Toner> listaToner;
     ArrayList<Setor> listaSetor;
     
-    public SaidaCadastro(Sistema sistema) {
+    public MovimentacoesSaida(Sistema sistema) {
         this.sistema = sistema;
         initComponents();
         
@@ -32,7 +33,7 @@ public class SaidaCadastro extends javax.swing.JInternalFrame {
             String[] toners = new String[this.listaToner.size()];
             for (int i = 0; i < this.listaToner.size(); i++) {
                 Impressora imp = this.sistema.getImpressora(this.listaToner.get(i).getIdImpressora());
-                toners[i] = imp.getModeloToner() + "("+listaToner.get(i).getTipo()+") - "+imp.getModelo() + ")";
+                toners[i] = imp.getModeloToner() + " ("+listaToner.get(i).getTipo()+") - "+imp.getModelo();
             }
             DefaultComboBoxModel model = new DefaultComboBoxModel(toners);
             this.jComboBoxToner.setModel(model);
@@ -76,9 +77,15 @@ public class SaidaCadastro extends javax.swing.JInternalFrame {
             }
         });
 
+        jTextCheio.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTextCheio.setText("0");
+
         jLabel1.setText("Qtd. cheio:");
 
         jLabel2.setText("Qtd. vazio:");
+
+        jTextVazio.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTextVazio.setText("0");
 
         jButton1.setText("Confirmar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {

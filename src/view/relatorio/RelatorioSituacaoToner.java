@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package view;
+package view.relatorio;
 
 import control.Sistema;
 import javax.swing.table.DefaultTableModel;
+import view.Alertas;
 
 /**
  *

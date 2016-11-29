@@ -5,6 +5,10 @@
  */
 package view;
 
+import view.ajuda.AjudaSobre;
+import view.relatorio.RelatorioSituacaoToner;
+import view.relatorio.RelatorioSaidas;
+import view.relatorio.RelatorioEntradas;
 import control.Sistema;
 
 /**
@@ -141,7 +145,7 @@ public class DesktopPadrao extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        JanelaSobre j = new JanelaSobre();
+        AjudaSobre j = new AjudaSobre();
         this.jDesktopPane1.add(j);
         j.show();
     }//GEN-LAST:event_jMenuItem1ActionPerformed

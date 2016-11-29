@@ -70,6 +70,15 @@ create table saidas(
 
 
 
-insert into usuarios (login,senha,tipoDeUsuario) values ('joao','123','Administrador');
+insert into usuarios (login,senha,tipoDeUsuario) values ('admin','123','Administrador');
+insert into usuarios (login,senha,tipoDeUsuario) values ('padrao','123','padrao');
 
-insert into setores (nomeSetor,nomeEmpresa) values ('Secretaria','Empresa Tal');
+insert into setores (nomeSetor,nomeEmpresa) values ('Secretaria','Faculdade');
+insert into setores (nomeSetor,nomeEmpresa) values ('Financeiro','Faculdade');
+
+insert into impressoras(idSetor,modeloImpressora,modeloToner,precoToner) values (1,'HP P1102w','HP85A',240.0);
+insert into impressoras(idSetor,modeloImpressora,modeloToner,precoToner) values (2,'Samsung M2020w','D111S',72.68);
+
+insert into toners (idImpressora,tipoDeToner,qtdEstoqueCheio,qtdEstoqueVazio,qtdForaCheio,qtdForaVazio,qtdDesabilitadoCheio,qtdDesabilitadoVazio) values (1,'Consignado',0,0,0,0,0,0);
+insert into toners (idImpressora,tipoDeToner,qtdEstoqueCheio,qtdEstoqueVazio,qtdForaCheio,qtdForaVazio,qtdDesabilitadoCheio,qtdDesabilitadoVazio) values (1,'Próprio',0,0,0,0,0,0);
+insert into toners (idImpressora,tipoDeToner,qtdEstoqueCheio,qtdEstoqueVazio,qtdForaCheio,qtdForaVazio,qtdDesabilitadoCheio,qtdDesabilitadoVazio) values (2,'Consignado',0,0,0,0,0,0);

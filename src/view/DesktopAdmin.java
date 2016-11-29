@@ -5,7 +5,21 @@
  */
 package view;
 
+import view.ajuda.AjudaSobre;
+import view.impressora.ImpressoraLista;
+import view.relatorio.RelatorioSituacaoToner;
+import view.relatorio.RelatorioSaidas;
+import view.relatorio.RelatorioEntradas;
+import view.setor.SetorLista;
+import view.setor.SetorCadastro;
+import view.toner.TonerLista;
+import view.toner.TonerCadastro;
+import view.usuario.UsuarioCadastro;
+import view.usuario.UsuarioLista;
 import control.Sistema;
+import view.impressora.ImpressoraCadastro;
+import view.movimentacoes.MovimentacoesEntrada;
+import view.movimentacoes.MovimentacoesSaida;
 
 /**
  *
@@ -152,9 +166,19 @@ public class DesktopAdmin extends javax.swing.JFrame {
         jMenu5.setText("Movimentações");
 
         jMenuItem11.setText("Nova Entrada");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem11);
 
         jMenuItem12.setText("Nova Saída");
+        jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem12ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem12);
 
         jMenuBar1.add(jMenu5);
@@ -252,7 +276,7 @@ public class DesktopAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        JanelaSobre j = new JanelaSobre();
+        AjudaSobre j = new AjudaSobre();
         this.jDesktopPane1.add(j);
         j.show();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
@@ -311,6 +335,18 @@ public class DesktopAdmin extends javax.swing.JFrame {
         this.jDesktopPane1.add(janela);
         janela.show();
     }//GEN-LAST:event_jMenuItem17ActionPerformed
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        MovimentacoesEntrada janela = new MovimentacoesEntrada(this.sistema);
+        this.jDesktopPane1.add(janela);
+        janela.show();
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
+
+    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+        MovimentacoesSaida janela = new MovimentacoesSaida(this.sistema);
+        this.jDesktopPane1.add(janela);
+        janela.show();
+    }//GEN-LAST:event_jMenuItem12ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

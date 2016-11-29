@@ -3,11 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package view;
+package view.usuario;
 
 import control.Sistema;
 import javax.swing.JFrame;
 import model.Usuario;
+import view.Alertas;
+import view.DesktopAdmin;
+import view.DesktopPadrao;
 
 /**
  *

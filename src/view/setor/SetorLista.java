@@ -3,33 +3,32 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package view;
+package view.setor;
 
 import control.Sistema;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import model.*;
+import view.Alertas;
 
 /**
  *
  * @author Rafael
  */
-public class ImpressoraLista extends javax.swing.JInternalFrame {
+public class SetorLista extends javax.swing.JInternalFrame {
 
     Sistema sistema;
-    ArrayList<Impressora> lista;
+    ArrayList<Setor> lista;
 
-    public ImpressoraLista(Sistema sistema) {
+    public SetorLista(Sistema sistema) {
         this.sistema = sistema;
         initComponents();
 
-        this.lista = this.sistema.getListaDeImpressoras();
-        ArrayList<Setor> setores = this.sistema.getListaDeSetores();
+        this.lista = this.sistema.getListaDeSetores();
         DefaultListModel listModel = new DefaultListModel();
 
-        for (Impressora x : this.lista) {
-            Setor s = this.sistema.getSetor(x.getIdSetor());
-            listModel.addElement(x.getModelo() + " - Setor: "+s.getNome() + " ("+s.getEmpresa()+")");
+        for (Setor s : this.lista) {
+            listModel.addElement(s.getNome() + " ("+s.getEmpresa()+")");
         }
         this.jList1.setModel(listModel);
     }
@@ -59,7 +58,7 @@ public class ImpressoraLista extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(jList1);
 
-        jLabel1.setText("Selecione uma impressora:");
+        jLabel1.setText("Selecione um setor:");
 
         jButton2.setText("Editar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -87,7 +86,7 @@ public class ImpressoraLista extends javax.swing.JInternalFrame {
                         .addComponent(jLabel1)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 65, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2)))
@@ -107,16 +106,16 @@ public class ImpressoraLista extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        pack();
+        setBounds(300, 100, 166, 346);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         int index = this.jList1.getSelectedIndex();
         if (index > -1) {
-            boolean sucesso = this.sistema.deletarImpressora(this.lista.get(index));
+            boolean sucesso = this.sistema.deletarSetor(this.lista.get(index));
             Alertas.sucessoOuErro(this, sucesso);
             if(sucesso){
-                ImpressoraLista u = new ImpressoraLista(this.sistema);
+                SetorLista u = new SetorLista(this.sistema);
                 this.getParent().add(u);
                 this.dispose();
                 u.show();
@@ -130,7 +129,7 @@ public class ImpressoraLista extends javax.swing.JInternalFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         int index = this.jList1.getSelectedIndex();
         if (index > -1) {
-            ImpressoraEdita x = new ImpressoraEdita(this.sistema, this.lista.get(index));
+            SetorEdita x = new SetorEdita(this.sistema, this.lista.get(index));
             this.getParent().add(x);
             this.dispose();
             x.show();

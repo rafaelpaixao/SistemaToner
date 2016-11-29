@@ -3,38 +3,57 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package view;
+package view.impressora;
 
 import control.Sistema;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import model.*;
+import view.Alertas;
 
 /**
  *
  * @author Rafael
  */
-public class ImpressoraCadastro extends javax.swing.JInternalFrame {
+public class ImpressoraEdita extends javax.swing.JInternalFrame {
 
     Sistema sistema;
+    Impressora editado;
     ArrayList<Setor> lista;
-    
-    public ImpressoraCadastro(Sistema sistema) {
+
+    public ImpressoraEdita(Sistema sistema, Impressora x) {
         this.sistema = sistema;
+        this.editado = x;
         initComponents();
-        
+        this.jTextModelo.setText(this.editado.getModelo());
+        this.jTextToner.setText(this.editado.getModeloToner());
+        this.jTextPreco.setText(converterDoubleParaString(this.editado.getPrecoToner()));
+
         this.lista = this.sistema.getListaDeSetores();
-        if(lista.size()!=0){
+        if (lista.size() != 0) {
 
-        String[] setores = new String[this.lista.size()];
+            String[] setores = new String[this.lista.size()];
+            int indexSetor = 0;
 
-        for(int i=0;i<this.lista.size();i++){
-            setores[i]= lista.get(i).getNome() + " ("+lista.get(i).getEmpresa()+")";
+            for (int i = 0; i < this.lista.size(); i++) {
+                setores[i] = lista.get(i).getNome() + " (" + lista.get(i).getEmpresa() + ")";
+                if (lista.get(i).getId() == editado.getIdSetor()) {
+                    indexSetor = i;
+                }
+            }
+
+            DefaultComboBoxModel model = new DefaultComboBoxModel(setores);
+            this.jComboBoxSetor.setModel(model);
+
+            jComboBoxSetor.setSelectedIndex(indexSetor);
         }
-        
-        DefaultComboBoxModel model = new DefaultComboBoxModel( setores );
-        this.jComboBoxSetor.setModel( model );
-        }
+
+    }
+
+    private String converterDoubleParaString(double d) {
+        DecimalFormat df = new DecimalFormat("#.00");
+        return df.format(d).replace('.', ',');
     }
 
     /**
@@ -46,27 +65,25 @@ public class ImpressoraCadastro extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel4 = new javax.swing.JLabel();
+        jTextModelo = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextImpressora = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jComboBoxSetor = new javax.swing.JComboBox<>();
-        jLabel3 = new javax.swing.JLabel();
         jTextToner = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
         jTextPreco = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jComboBoxSetor = new javax.swing.JComboBox<>();
+
+        jLabel4.setText("jLabel1");
 
         setClosable(true);
-        setTitle("Cadastrar Nova Impressora");
-        addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentShown(java.awt.event.ComponentEvent evt) {
-                formComponentShown(evt);
-            }
-        });
+        setTitle("Editar Impressora");
 
-        jLabel1.setText("Setor:");
+        jLabel1.setText("Modelo:");
 
-        jLabel2.setText("Modelo:");
+        jLabel2.setText("Modelo do Toner:");
 
         jButton1.setText("Confirmar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -75,9 +92,9 @@ public class ImpressoraCadastro extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel3.setText("Modelo do toner:");
+        jLabel3.setText("Preço do Toner:");
 
-        jLabel4.setText("Preço do toner:");
+        jLabel5.setText("Setor:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -87,24 +104,22 @@ public class ImpressoraCadastro extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextImpressora)
-                            .addComponent(jComboBoxSetor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 187, Short.MAX_VALUE)
                         .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextPreco))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4))
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextToner, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
-                            .addComponent(jTextPreco))))
+                            .addComponent(jTextModelo)
+                            .addComponent(jTextToner)
+                            .addComponent(jComboBoxSetor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -112,23 +127,23 @@ public class ImpressoraCadastro extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
+                    .addComponent(jLabel5)
                     .addComponent(jComboBoxSetor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextImpressora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextToner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextToner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
                     .addComponent(jTextPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(9, 9, 9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -136,29 +151,24 @@ public class ImpressoraCadastro extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         boolean sucesso = false;
-        
-        try{
+
+        try {
             Impressora x = new Impressora();
             x.setIdSetor(lista.get(this.jComboBoxSetor.getSelectedIndex()).getId());
-            x.setModelo(this.jTextImpressora.getText());
+            x.setModelo(this.jTextModelo.getText());
             x.setModeloToner(this.jTextToner.getText());
             x.setPrecoToner(Double.parseDouble(this.jTextPreco.getText().replace(',', '.')));
-            sucesso = this.sistema.cadastrarImpressora(x);
-            
-        }catch (NumberFormatException e){
-            sucesso = false;
-        }finally{
-            Alertas.sucessoOuErro(this,sucesso);
-            if(sucesso) this.dispose();
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
+            sucesso = this.sistema.atualizarImpressora(x);
 
-    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
-        if(lista.size()==0){
-            Alertas.mensagem(this, "É preciso cadastrar um setor!");
+        } catch (NumberFormatException e) {
+            sucesso = false;
+        }
+
+        Alertas.sucessoOuErro(this, sucesso);
+        if (sucesso) {
             this.dispose();
         }
-    }//GEN-LAST:event_formComponentShown
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -168,7 +178,8 @@ public class ImpressoraCadastro extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JTextField jTextImpressora;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JTextField jTextModelo;
     private javax.swing.JTextField jTextPreco;
     private javax.swing.JTextField jTextToner;
     // End of variables declaration//GEN-END:variables

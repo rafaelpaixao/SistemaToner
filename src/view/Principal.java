@@ -5,6 +5,8 @@
  */
 package view;
 
+import view.ajuda.AjudaSobre;
+import view.usuario.UsuarioLogin;
 import control.Sistema;
 import java.awt.Dimension;
 
@@ -92,7 +94,7 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        JanelaSobre j = new JanelaSobre();
+        AjudaSobre j = new AjudaSobre();
         this.jDesktopPane1.add(j);
         
         j.show();

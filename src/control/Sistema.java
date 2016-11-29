@@ -188,46 +188,101 @@ public class Sistema {
     }
 
     public boolean cadastrarEntrada(Entrada x) {
-        this.entradaDao.cadastrar(x);
-        return true;
+        Toner t;
+        if (x.getQtdCheio() < 0 || x.getQtdVazio() < 0 || (x.getQtdCheio() + x.getQtdVazio()) == 0) {
+            return false;
+        } else {
+            t = this.tonerDao.getToner(x.getIdToner());
+            t.setQtdEstoqueCheio(t.getQtdEstoqueCheio() + x.getQtdCheio());
+            t.setQtdEstoqueVazio(t.getQtdEstoqueVazio() + x.getQtdVazio());
+
+            if (x.getTipoDeEntrada().equals("Recarga")) {
+
+                if (t.getQtdForaCheio() < x.getQtdCheio()) {
+                    return false;
+                } else {
+                    t.setQtdForaCheio(x.getQtdCheio() - t.getQtdForaCheio());
+                }
+
+                if (t.getQtdForaVazio() < x.getQtdVazio()) {
+                    return false;
+                } else {
+                    t.setQtdForaVazio(x.getQtdVazio() - t.getQtdForaVazio());
+                }
+            }
+            this.entradaDao.cadastrar(x);
+            this.tonerDao.atualizar(t);
+            return true;
+        }
+
     }
 
     public boolean cadastrarSaida(Saida x) {
-        this.saidaDao.cadastrar(x);
-        return true;
+        if (x.getQtdCheio() < 0 || x.getQtdVazio() < 0 || (x.getQtdCheio() + x.getQtdVazio()) == 0) {
+            return false;
+        } else {
+            Toner t = this.tonerDao.getToner(x.getIdToner());
+            
+            //Testar se o setor tem uma impressora compatível com o toner
+            
+            if (t.getQtdEstoqueCheio() < x.getQtdCheio()) {
+                return false;
+            } else {
+                t.setQtdEstoqueCheio(t.getQtdEstoqueCheio() - x.getQtdCheio());
+                t.setQtdForaCheio(x.getQtdCheio() + t.getQtdForaCheio());
+            }
+
+            if (t.getQtdEstoqueVazio() < x.getQtdVazio()) {
+                return false;
+            } else {
+                t.setQtdEstoqueVazio(t.getQtdEstoqueVazio() - x.getQtdVazio());
+                t.setQtdForaVazio(x.getQtdVazio() + t.getQtdForaVazio());
+            }
+
+            this.saidaDao.cadastrar(x);
+            this.tonerDao.atualizar(t);
+            return true;
+        }
+
     }
 
     public DefaultTableModel getTableModelSituacaoToner() {
         DefaultTableModel retorno = null;
         try {
             retorno = buildTableModel(this.tonerDao.getResultSetSituacaoToner());
+
         } catch (SQLException ex) {
-            Logger.getLogger(Sistema.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Sistema.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
         return retorno;
     }
-    
+
     public DefaultTableModel getTableModelEntradas() {
         DefaultTableModel retorno = null;
-        
+
         try {
             retorno = buildTableModel(this.entradaDao.getResultSetEntradas());
+
         } catch (SQLException ex) {
-            Logger.getLogger(Sistema.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Sistema.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return retorno;
     }
-    
+
     public DefaultTableModel getTableModelSaidas() {
         DefaultTableModel retorno = null;
-        
+
         try {
             retorno = buildTableModel(this.saidaDao.getResultSetSaidas());
+
         } catch (SQLException ex) {
-            Logger.getLogger(Sistema.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Sistema.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return retorno;
     }
 

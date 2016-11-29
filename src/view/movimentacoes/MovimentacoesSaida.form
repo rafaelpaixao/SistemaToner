@@ -92,6 +92,10 @@
   </Layout>
   <SubComponents>
     <Component class="javax.swing.JTextField" name="jTextCheio">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+        <Property name="text" type="java.lang.String" value="0"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
@@ -104,6 +108,10 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTextVazio">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+        <Property name="text" type="java.lang.String" value="0"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jButton1">
       <Properties>

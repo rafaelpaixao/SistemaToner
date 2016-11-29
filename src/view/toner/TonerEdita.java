@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package view;
+package view.toner;
 
 import control.Sistema;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import model.*;
+import view.Alertas;
 
 /**
  *

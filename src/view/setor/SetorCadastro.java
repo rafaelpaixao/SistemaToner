@@ -3,39 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package view;
+package view.setor;
 
 import control.Sistema;
-import java.util.ArrayList;
-import javax.swing.DefaultComboBoxModel;
 import model.*;
+import view.Alertas;
 
 /**
  *
  * @author Rafael
  */
-public class TonerCadastro extends javax.swing.JInternalFrame {
+public class SetorCadastro extends javax.swing.JInternalFrame {
 
     Sistema sistema;
-    ArrayList<Impressora> lista;
-
-    public TonerCadastro(Sistema sistema) {
+    
+    public SetorCadastro(Sistema sistema) {
         this.sistema = sistema;
         initComponents();
-
-        this.lista = this.sistema.getListaDeImpressoras();
-        if (lista.size() != 0) {
-
-            String[] impressoras = new String[this.lista.size()];
-
-            for (int i = 0; i < this.lista.size(); i++) {
-                Setor s = this.sistema.getSetor(lista.get(i).getIdSetor());
-                impressoras[i] = lista.get(i).getModelo() + " - Setor: " + s.getNome() + " (" + s.getEmpresa() + ")";
-            }
-
-            DefaultComboBoxModel model = new DefaultComboBoxModel(impressoras);
-            this.jComboBoxImpressora.setModel(model);
-        }
     }
 
     /**
@@ -47,24 +31,18 @@ public class TonerCadastro extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jTextNomeSetor = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jTextNomeEmpresa = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jComboBoxImpressora = new javax.swing.JComboBox<>();
-        jComboBoxTipo = new javax.swing.JComboBox<>();
 
         setClosable(true);
-        setTitle("Cadastrar Novo Toner");
-        setToolTipText("");
-        addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentShown(java.awt.event.ComponentEvent evt) {
-                formComponentShown(evt);
-            }
-        });
+        setTitle("Cadastrar Novo Setor");
 
-        jLabel1.setText("Impressora:");
+        jLabel1.setText("Setor:");
 
-        jLabel2.setText("Tipo de toner:");
+        jLabel2.setText("Empresa:");
 
         jButton1.setText("Confirmar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -73,13 +51,11 @@ public class TonerCadastro extends javax.swing.JInternalFrame {
             }
         });
 
-        jComboBoxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Consignado", "Próprio" }));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -88,10 +64,10 @@ public class TonerCadastro extends javax.swing.JInternalFrame {
                             .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBoxImpressora, 0, 235, Short.MAX_VALUE)
-                            .addComponent(jComboBoxTipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jTextNomeSetor)
+                            .addComponent(jTextNomeEmpresa)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 203, Short.MAX_VALUE)
                         .addComponent(jButton1)))
                 .addContainerGap())
         );
@@ -100,47 +76,35 @@ public class TonerCadastro extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jComboBoxImpressora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextNomeSetor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBoxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextNomeEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        setBounds(300, 100, 349, 136);
+        setBounds(300, 100, 318, 136);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        boolean sucesso = false;
-
-        Toner x = new Toner();
-        x.setIdImpressora(lista.get(this.jComboBoxImpressora.getSelectedIndex()).getId());
-        x.setTipo(this.jComboBoxTipo.getSelectedItem().toString());
-        sucesso = this.sistema.cadastrarToner(x);
-
-        Alertas.sucessoOuErro(this, sucesso);
-        if (sucesso) {
-            this.dispose();
-        }
+        Setor s = new Setor();
+        s.setNome(jTextNomeSetor.getText());
+        s.setNome(this.jTextNomeEmpresa.getText());
+        boolean sucesso = this.sistema.cadastrarSetor(s);
+        Alertas.sucessoOuErro(this,sucesso);
+        if(sucesso) this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
-        if (lista.isEmpty()) {
-            Alertas.mensagem(this, "É preciso cadastrar uma impressora!");
-            this.dispose();
-        }
-    }//GEN-LAST:event_formComponentShown
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBoxImpressora;
-    private javax.swing.JComboBox<String> jComboBoxTipo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JTextField jTextNomeEmpresa;
+    private javax.swing.JTextField jTextNomeSetor;
     // End of variables declaration//GEN-END:variables
 }

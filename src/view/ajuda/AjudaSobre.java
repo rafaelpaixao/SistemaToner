@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package view;
+package view.ajuda;
 
 import java.awt.Desktop;
 import javax.swing.event.HyperlinkEvent;
@@ -13,12 +13,12 @@ import javax.swing.event.HyperlinkListener;
  *
  * @author Rafael
  */
-public class JanelaSobre extends javax.swing.JInternalFrame {
+public class AjudaSobre extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form JanelaSobre
      */
-    public JanelaSobre() {
+    public AjudaSobre() {
         initComponents();
         
         
