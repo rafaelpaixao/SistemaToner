@@ -146,17 +146,18 @@ public class EntradaDAO {
     public ResultSet getResultSetEntradas() {
         ResultSet retorno = null;
         String comandoSql = "select "
-                + "entradas.dataEntrada as Dia, "
+                + "entradas.dataEntrada as Data, "
                 + "entradas.tipoDeEntrada as Tipo, "
                 + "usuarios.login as Usuário, "
                 + "impressoras.modeloToner as Toner, "
                 + "impressoras.modeloImpressora as Impressora, "
                 + "entradas.qtdCheio, "
                 + "entradas.qtdVazio "
-                + "from entradas"
-                + "join usuarios on entradas.idUsuario=usuarios.idUsuario"
-                + "join toners on entradas.idToner=toners.idToner"
-                + "join impressoras on toners.idImpressora = impressoras.idImpressora";
+                + "from entradas "
+                + "join usuarios on entradas.idUsuario=usuarios.idUsuario "
+                + "join toners on entradas.idToner=toners.idToner "
+                + "join impressoras on toners.idImpressora = impressoras.idImpressora "
+                + "order by entradas.dataEntrada desc";
         try {
             PreparedStatement selecao = conexao.prepareStatement(comandoSql);
             retorno = selecao.executeQuery();

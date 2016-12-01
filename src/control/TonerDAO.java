@@ -160,6 +160,7 @@ public class TonerDAO {
         String comandoSql = "select "
                 + "impressoras.modeloToner as Toner, "
                 + "impressoras.modeloImpressora as Impressora, "
+                + "toners.tipoDeToner as Tipo, "
                 + "impressoras.precoToner as Preço, "
                 + "toners.qtdEstoqueCheio, "
                 + "toners.qtdEstoqueVazio, "
@@ -167,7 +168,8 @@ public class TonerDAO {
                 + "toners.qtdForaVazio, "
                 + "toners.qtdDesabilitadoCheio, "
                 + "toners.qtdDesabilitadoVazio "
-                + "from toners join impressoras on toners.idImpressora=impressoras.idImpressora";
+                + "from toners join impressoras on toners.idImpressora=impressoras.idImpressora "
+                + "order by impressoras.modeloToner";
 
         try {
             PreparedStatement selecao;
@@ -178,5 +180,24 @@ public class TonerDAO {
         }
 
         return retorno;
+    }
+    
+    public boolean tonerTemMovimentacao(Toner x){
+        String comandoSql1 = "select * from entradas where idToner=?";
+        String comandoSql2 = "select * from saidas where idToner=?";
+
+        try {
+            PreparedStatement selecao1 = conexao.prepareStatement(comandoSql1);
+            selecao1.setInt(1, x.getId());
+            ResultSet resultado1 = selecao1.executeQuery();
+            
+            PreparedStatement selecao2 = conexao.prepareStatement(comandoSql2);
+            selecao2.setInt(1, x.getId());
+            ResultSet resultado2 = selecao2.executeQuery();
+
+            return resultado1.next() || resultado2.next();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

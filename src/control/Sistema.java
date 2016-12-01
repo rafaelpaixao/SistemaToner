@@ -1,5 +1,6 @@
 package control;
 
+import java.io.File;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -7,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import model.*;
 
@@ -20,6 +22,7 @@ public class Sistema {
     private TonerDAO tonerDao;
     private EntradaDAO entradaDao;
     private SaidaDAO saidaDao;
+    private ArquivoCSV arquivoCsv;
 
     private Usuario usuarioAtivo;
 
@@ -31,6 +34,7 @@ public class Sistema {
         this.tonerDao = new TonerDAO(this.acessoAoBanco.getConexao());
         this.entradaDao = new EntradaDAO(this.acessoAoBanco.getConexao());
         this.saidaDao = new SaidaDAO(this.acessoAoBanco.getConexao());
+        this.arquivoCsv = new ArquivoCSV();
     }
 
     public void encerrar() {
@@ -183,8 +187,7 @@ public class Sistema {
     }
 
     private boolean temMovimentacaoToner(Toner x) {
-        //FAZER
-        return true;
+        return this.tonerDao.tonerTemMovimentacao(x);
     }
 
     public boolean cadastrarEntrada(Entrada x) {
@@ -222,26 +225,27 @@ public class Sistema {
             return false;
         } else {
             Toner t = this.tonerDao.getToner(x.getIdToner());
-            
-            //Testar se o setor tem uma impressora compatível com o toner
-            
-            if (t.getQtdEstoqueCheio() < x.getQtdCheio()) {
-                return false;
-            } else {
-                t.setQtdEstoqueCheio(t.getQtdEstoqueCheio() - x.getQtdCheio());
-                t.setQtdForaCheio(x.getQtdCheio() + t.getQtdForaCheio());
-            }
+            String modeloImpressora = this.impressoraDao.getImpressoraPorId(t.getIdImpressora()).getModelo();
+            if(this.impressoraDao.temImpressoraNoSetor(modeloImpressora, x.getIdSetor())){
+                if (t.getQtdEstoqueCheio() < x.getQtdCheio()) {
+                    return false;
+                } else {
+                    t.setQtdEstoqueCheio(t.getQtdEstoqueCheio() - x.getQtdCheio());
+                    t.setQtdForaCheio(x.getQtdCheio() + t.getQtdForaCheio());
+                }
 
-            if (t.getQtdEstoqueVazio() < x.getQtdVazio()) {
-                return false;
-            } else {
-                t.setQtdEstoqueVazio(t.getQtdEstoqueVazio() - x.getQtdVazio());
-                t.setQtdForaVazio(x.getQtdVazio() + t.getQtdForaVazio());
-            }
+                if (t.getQtdEstoqueVazio() < x.getQtdVazio()) {
+                    return false;
+                } else {
+                    t.setQtdEstoqueVazio(t.getQtdEstoqueVazio() - x.getQtdVazio());
+                    t.setQtdForaVazio(x.getQtdVazio() + t.getQtdForaVazio());
+                }
 
-            this.saidaDao.cadastrar(x);
-            this.tonerDao.atualizar(t);
-            return true;
+                this.saidaDao.cadastrar(x);
+                this.tonerDao.atualizar(t);
+                return true;
+            }
+            else return false;
         }
 
     }
@@ -308,5 +312,12 @@ public class Sistema {
 
         return new DefaultTableModel(data, columnNames);
 
+    }
+    
+    public boolean exportarCSV(JTable tabela, File arquivo){
+        if(arquivo!=null)
+            return this.arquivoCsv.exportarTabela(tabela, arquivo);
+        else
+            return false;
     }
 }

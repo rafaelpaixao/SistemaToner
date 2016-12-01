@@ -134,4 +134,23 @@ public class ImpressoraDAO {
         
         return i;
     }
+    
+    public boolean temImpressoraNoSetor(String modeloImpressora, int idSetor){
+        String comandoSql = ""
+                + "select * from impressoras "
+                + "where idSetor=? AND modeloImpressora=?";
+
+        try {
+            PreparedStatement selecao = conexao.prepareStatement(comandoSql);
+            selecao.setInt(1, idSetor);
+            selecao.setString(2, modeloImpressora);
+            ResultSet resultado = selecao.executeQuery();
+                       
+            return resultado.next();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 }

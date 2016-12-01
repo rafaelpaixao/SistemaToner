@@ -146,7 +146,7 @@ public class SaidaDAO {
     public ResultSet getResultSetSaidas() {
         ResultSet retorno = null;
         String comandoSql = "select "
-                + "saidas.dataSaida as Dia, "
+                + "saidas.dataSaida as Data, "
                 + "setores.nomeSetor as Setor, "
                 + "setores.nomeEmpresa as Empresa, "
                 + "usuarios.login as Usuário, "
@@ -158,7 +158,8 @@ public class SaidaDAO {
                 + "join usuarios on saidas.idUsuario=usuarios.idUsuario "
                 + "join toners on saidas.idToner=toners.idToner "
                 + "join impressoras on toners.idImpressora = impressoras.idImpressora "
-                + "join setores on saidas.idSetor = setores.idSetor";
+                + "join setores on saidas.idSetor = setores.idSetor "
+                + "order by saidas.dataSaida desc";
         try {
             PreparedStatement selecao = conexao.prepareStatement(comandoSql);
             retorno = selecao.executeQuery();

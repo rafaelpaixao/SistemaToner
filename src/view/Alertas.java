@@ -6,6 +6,8 @@
 package view;
 
 import java.awt.Component;
+import java.io.File;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,5 +24,14 @@ public class Alertas {
     
     public static void mensagem(Component c, String s){
         JOptionPane.showMessageDialog(c, s);
+    }
+    
+    public static File janelaSalvarComo(Component c){
+        final JFileChooser janela = new JFileChooser();
+        int returnVal = janela.showOpenDialog(c);
+        if (returnVal == JFileChooser.APPROVE_OPTION)
+            return janela.getSelectedFile();
+        else
+            return null;
     }
 }
