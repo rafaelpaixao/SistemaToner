@@ -254,6 +254,18 @@ public class Sistema {
         DefaultTableModel retorno = null;
         try {
             retorno = buildTableModel(this.tonerDao.getResultSetSituacaoToner());
+            Vector<String> colunas = new Vector<String>();
+            colunas.add("Toner");
+            colunas.add("Impressora");
+            colunas.add("Tipo");
+            colunas.add("Preço (R$)");
+            colunas.add("Estoque Cheio");
+            colunas.add("Estoque Vazio");
+            colunas.add("Fora Cheio");
+            colunas.add("Fora Vazio");
+            colunas.add("Desabilitado Cheio");
+            colunas.add("Desabilitado Vazio");
+            retorno = new DefaultTableModel(retorno.getDataVector(), colunas);
 
         } catch (SQLException ex) {
             Logger.getLogger(Sistema.class
@@ -267,6 +279,15 @@ public class Sistema {
 
         try {
             retorno = buildTableModel(this.entradaDao.getResultSetEntradas());
+            Vector<String> colunas = new Vector<String>();
+            colunas.add("Data");
+            colunas.add("Tipo");
+            colunas.add("Usuário");
+            colunas.add("Toner");
+            colunas.add("Impressora");
+            colunas.add("Cheio");
+            colunas.add("Vazio");
+            retorno = new DefaultTableModel(retorno.getDataVector(), colunas);
 
         } catch (SQLException ex) {
             Logger.getLogger(Sistema.class
@@ -281,6 +302,16 @@ public class Sistema {
 
         try {
             retorno = buildTableModel(this.saidaDao.getResultSetSaidas());
+            Vector<String> colunas = new Vector<String>();
+            colunas.add("Data");
+            colunas.add("Setor");
+            colunas.add("Empresa");
+            colunas.add("Usuário");
+            colunas.add("Toner");
+            colunas.add("Impressora");
+            colunas.add("Cheio");
+            colunas.add("Vazio");
+            retorno = new DefaultTableModel(retorno.getDataVector(), colunas);
 
         } catch (SQLException ex) {
             Logger.getLogger(Sistema.class

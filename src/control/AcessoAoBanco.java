@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class AcessoAoBanco {
     
@@ -37,7 +38,7 @@ public class AcessoAoBanco {
             this.conexao.setAutoCommit(true);
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(AcessoAoBanco.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null,"Erro de comunicação com a base de dados!");
         }
-        System.out.println("Conexão com o banco bem sucedida!");
     }
 }
