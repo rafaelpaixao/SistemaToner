@@ -16,7 +16,7 @@ import javax.swing.table.TableModel;
  * @author Rafael
  */
 public class ArquivoCSV {
-
+     
     public boolean exportarTabela(JTable tabela, File arquivo) {
         try {
             TableModel model = tabela.getModel();

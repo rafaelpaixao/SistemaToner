@@ -3,6 +3,8 @@ create database controledetoner;
 
 use controledetoner;
 
+ALTER DATABASE controledetoner CHARSET = UTF8 COLLATE = utf8_general_ci;
+
 create table usuarios(
     idUsuario int auto_increment,
     login varchar(50),

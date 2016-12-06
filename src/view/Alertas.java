@@ -28,7 +28,7 @@ public class Alertas {
     
     public static File janelaSalvarComo(Component c){
         final JFileChooser janela = new JFileChooser();
-        int returnVal = janela.showOpenDialog(c);
+        int returnVal = janela.showSaveDialog(c);
         if (returnVal == JFileChooser.APPROVE_OPTION)
             return janela.getSelectedFile();
         else

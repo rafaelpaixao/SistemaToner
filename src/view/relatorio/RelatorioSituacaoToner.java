@@ -19,14 +19,15 @@ import view.Alertas;
 public class RelatorioSituacaoToner extends javax.swing.JInternalFrame {
 
     Sistema sistema;
+
     public RelatorioSituacaoToner(Sistema s) {
         this.sistema = s;
         initComponents();
-        
+
         DefaultTableModel tabela = this.sistema.getTableModelSituacaoToner();
-        if(tabela!=null)
+        if (tabela != null) {
             this.jTable1.setModel(tabela);
-        else{
+        } else {
             Alertas.mensagem(this, "Nenhum resultado encontrado!");
         }
 
@@ -92,8 +93,10 @@ public class RelatorioSituacaoToner extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        boolean sucesso = this.sistema.exportarCSV(this.jTable1,Alertas.janelaSalvarComo(this));
-        Alertas.sucessoOuErro(this, sucesso);
+        File arquivo = Alertas.janelaSalvarComo(this);
+        if (arquivo != null) {
+            Alertas.sucessoOuErro(this, this.sistema.exportarCSV(this.jTable1, arquivo));
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
