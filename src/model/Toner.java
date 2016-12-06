@@ -5,12 +5,9 @@ public class Toner {
     private int id;
     private int idImpressora;
     private String tipo;
-    private int qtdEstoqueCheio;
-    private int qtdEstoqueVazio;
-    private int qtdForaCheio;
-    private int qtdForaVazio;
-    private int qtdDesabilitadoCheio;
-    private int qtdDesabilitadoVazio;
+    private int estoque;
+    private int fora;
+    private int desabilitado;
 
     public int getId() {
         return id;
@@ -36,52 +33,28 @@ public class Toner {
         this.tipo = tipo;
     }
 
-    public int getQtdEstoqueCheio() {
-        return qtdEstoqueCheio;
+    public int getEstoque() {
+        return estoque;
     }
 
-    public void setQtdEstoqueCheio(int qtdEstoqueCheio) {
-        this.qtdEstoqueCheio = qtdEstoqueCheio;
+    public void setEstoque(int estoque) {
+        this.estoque = estoque;
     }
 
-    public int getQtdEstoqueVazio() {
-        return qtdEstoqueVazio;
+    public int getFora() {
+        return fora;
     }
 
-    public void setQtdEstoqueVazio(int qtdEstoqueVazio) {
-        this.qtdEstoqueVazio = qtdEstoqueVazio;
+    public void setFora(int fora) {
+        this.fora = fora;
     }
 
-    public int getQtdForaCheio() {
-        return qtdForaCheio;
+    public int getDesabilitado() {
+        return desabilitado;
     }
 
-    public void setQtdForaCheio(int qtdForaCheio) {
-        this.qtdForaCheio = qtdForaCheio;
-    }
-
-    public int getQtdForaVazio() {
-        return qtdForaVazio;
-    }
-
-    public void setQtdForaVazio(int qtdForaVazio) {
-        this.qtdForaVazio = qtdForaVazio;
-    }
-
-    public int getQtdDesabilitadoCheio() {
-        return qtdDesabilitadoCheio;
-    }
-
-    public void setQtdDesabilitadoCheio(int qtdDesabilitadoCheio) {
-        this.qtdDesabilitadoCheio = qtdDesabilitadoCheio;
-    }
-
-    public int getQtdDesabilitadoVazio() {
-        return qtdDesabilitadoVazio;
-    }
-
-    public void setQtdDesabilitadoVazio(int qtdDesabilitadoVazio) {
-        this.qtdDesabilitadoVazio = qtdDesabilitadoVazio;
+    public void setDesabilitado(int desabilitado) {
+        this.desabilitado = desabilitado;
     }
     
 }

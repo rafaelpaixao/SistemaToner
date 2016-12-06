@@ -31,7 +31,7 @@ public class TonerCadastro extends javax.swing.JInternalFrame {
 
             for (int i = 0; i < this.lista.size(); i++) {
                 Setor s = this.sistema.getSetor(lista.get(i).getIdSetor());
-                impressoras[i] = lista.get(i).getModelo() + " - Setor: " + s.getNome() + " (" + s.getEmpresa() + ")";
+                impressoras[i] = lista.get(i).getModeloImpressora() + " - Setor: " + s.getNome() + " (" + s.getEmpresa() + ")";
             }
 
             DefaultComboBoxModel model = new DefaultComboBoxModel(impressoras);

@@ -31,7 +31,7 @@ public class TonerLista extends javax.swing.JInternalFrame {
         for (Toner x : this.lista) {
             Impressora i = this.sistema.getImpressora(x.getIdImpressora());
             Setor s = this.sistema.getSetor(i.getIdSetor());
-            listModel.addElement(i.getModeloToner() + "("+x.getTipo()+") - "+i.getModelo() + " - Setor: "+s.getNome() + " ("+s.getEmpresa()+")");
+            listModel.addElement(i.getModeloToner() + "("+x.getTipo()+") - "+i.getModeloImpressora() + " - Setor: "+s.getNome() + " ("+s.getEmpresa()+")");
         }
         this.jList1.setModel(listModel);
     }

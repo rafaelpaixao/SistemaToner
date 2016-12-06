@@ -32,12 +32,9 @@ create table toners(
     idToner int auto_increment,
     idImpressora int,
     tipoDeToner varchar(50),
-    qtdEstoqueCheio int,
-    qtdEstoqueVazio int,
-    qtdForaCheio int,
-    qtdForaVazio int,
-    qtdDesabilitadoCheio int,
-    qtdDesabilitadoVazio int,
+    estoque int,
+    fora int,
+    desabilitado int,
     primary key(idToner),
     foreign key(idImpressora) references impressoras(idImpressora)
 );
@@ -46,10 +43,9 @@ create table entradas(
     idEntrada int auto_increment,
     idToner int,
     idUsuario int,
-    dataEntrada date,
+    dataEntrada datetime,
     tipoDeEntrada varchar(50),
-    qtdCheio int,
-    qtdVazio int,
+    quantidade int,
     primary key(idEntrada),
     foreign key(idToner) references toners(idToner),
     foreign key(idUsuario) references usuarios(idUsuario)
@@ -60,9 +56,8 @@ create table saidas(
     idToner int,
     idUsuario int,
     idSetor int,
-    dataSaida date,
-    qtdCheio int,
-    qtdVazio int,
+    dataSaida datetime,
+    quantidade int,
     primary key(idSaida),
     foreign key(idToner) references toners(idToner),
     foreign key(idUsuario) references usuarios(idUsuario)
@@ -79,6 +74,6 @@ insert into setores (nomeSetor,nomeEmpresa) values ('Financeiro','Faculdade');
 insert into impressoras(idSetor,modeloImpressora,modeloToner,precoToner) values (1,'HP P1102w','HP85A',240.0);
 insert into impressoras(idSetor,modeloImpressora,modeloToner,precoToner) values (2,'Samsung M2020w','D111S',72.68);
 
-insert into toners (idImpressora,tipoDeToner,qtdEstoqueCheio,qtdEstoqueVazio,qtdForaCheio,qtdForaVazio,qtdDesabilitadoCheio,qtdDesabilitadoVazio) values (1,'Consignado',0,0,0,0,0,0);
-insert into toners (idImpressora,tipoDeToner,qtdEstoqueCheio,qtdEstoqueVazio,qtdForaCheio,qtdForaVazio,qtdDesabilitadoCheio,qtdDesabilitadoVazio) values (1,'Próprio',0,0,0,0,0,0);
-insert into toners (idImpressora,tipoDeToner,qtdEstoqueCheio,qtdEstoqueVazio,qtdForaCheio,qtdForaVazio,qtdDesabilitadoCheio,qtdDesabilitadoVazio) values (2,'Consignado',0,0,0,0,0,0);
+insert into toners (idImpressora,tipoDeToner,estoque,fora,desabilitado) values (1,'Consignado',0,0,0);
+insert into toners (idImpressora,tipoDeToner,estoque,fora,desabilitado) values (1,'Próprio',0,0,0);
+insert into toners (idImpressora,tipoDeToner,estoque,fora,desabilitado) values (2,'Consignado',0,0,0);

@@ -8,8 +8,7 @@ public class Movimentacao {
     private int idToner;
     private int idUsuario;
     private String data;
-    private int qtdCheio;
-    private int qtdVazio;
+    private int quantidade;
 
     public int getId() {
         return id;
@@ -43,19 +42,11 @@ public class Movimentacao {
         this.data = data;
     }
 
-    public int getQtdCheio() {
-        return qtdCheio;
+    public int getQuantidade() {
+        return quantidade;
     }
 
-    public void setQtdCheio(int qtdCheio) {
-        this.qtdCheio = qtdCheio;
-    }
-
-    public int getQtdVazio() {
-        return qtdVazio;
-    }
-
-    public void setQtdVazio(int qtdVazio) {
-        this.qtdVazio = qtdVazio;
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
     }
 }

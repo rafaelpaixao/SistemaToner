@@ -30,7 +30,7 @@ public class ImpressoraLista extends javax.swing.JInternalFrame {
 
         for (Impressora x : this.lista) {
             Setor s = this.sistema.getSetor(x.getIdSetor());
-            listModel.addElement(x.getModelo() + " - Setor: "+s.getNome() + " ("+s.getEmpresa()+")");
+            listModel.addElement(x.getModeloImpressora() + " - Setor: "+s.getNome() + " ("+s.getEmpresa()+")");
         }
         this.jList1.setModel(listModel);
     }

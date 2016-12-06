@@ -141,7 +141,7 @@ public class ImpressoraCadastro extends javax.swing.JInternalFrame {
         try{
             Impressora x = new Impressora();
             x.setIdSetor(lista.get(this.jComboBoxSetor.getSelectedIndex()).getId());
-            x.setModelo(this.jTextImpressora.getText());
+            x.setModeloImpressora(this.jTextImpressora.getText());
             x.setModeloToner(this.jTextToner.getText());
             x.setPrecoToner(Double.parseDouble(this.jTextPreco.getText().replace(',', '.')));
             sucesso = this.sistema.cadastrarImpressora(x);

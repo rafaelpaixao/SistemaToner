@@ -23,18 +23,16 @@ public class EntradaDAO {
                 + "idToner,"
                 + "idUsuario,"
                 + "dataEntrada,"
-                + "qtdCheio,"
-                + "qtdVazio,"
+                + "quantidade,"
                 + "tipoDeEntrada)"
-                + "values (?,?,?,?,?,?)";
+                + "values (?,?,?,?,?)";
         try {
             PreparedStatement cadastro = conexao.prepareStatement(comandoSql);
             cadastro.setInt(1, entrada.getIdToner());
             cadastro.setInt(2, entrada.getIdUsuario());
             cadastro.setString(3, entrada.getData());
-            cadastro.setInt(4, entrada.getQtdCheio());
-            cadastro.setInt(5, entrada.getQtdVazio());
-            cadastro.setString(6, entrada.getTipoDeEntrada());
+            cadastro.setInt(4, entrada.getQuantidade());
+            cadastro.setString(5, entrada.getTipoDeEntrada());
             cadastro.executeUpdate();
             cadastro.close();
         } catch (Exception e) {
@@ -49,8 +47,7 @@ public class EntradaDAO {
                 + "idToner=?,"
                 + "idUsuario=?,"
                 + "dataEntrada=?,"
-                + "qtdCheio=?,"
-                + "qtdVazio=?, "
+                + "quantidade=?,"
                 + "tipoDeEntrada=? "
                 + "where idEntrada=?";
         try {
@@ -58,10 +55,9 @@ public class EntradaDAO {
             atualizacao.setInt(1, entrada.getIdToner());
             atualizacao.setInt(2, entrada.getIdUsuario());
             atualizacao.setString(3, entrada.getData());
-            atualizacao.setInt(4, entrada.getQtdCheio());
-            atualizacao.setInt(5, entrada.getQtdVazio());
-            atualizacao.setString(6, entrada.getTipoDeEntrada());
-            atualizacao.setInt(7, entrada.getId());
+            atualizacao.setInt(4, entrada.getQuantidade());
+            atualizacao.setString(5, entrada.getTipoDeEntrada());
+            atualizacao.setInt(6, entrada.getId());
             atualizacao.executeUpdate();
             atualizacao.close();
         } catch (Exception e) {
@@ -99,8 +95,7 @@ public class EntradaDAO {
                 e.setIdToner(resultado.getInt("idToner"));
                 e.setIdUsuario(resultado.getInt("idUsuario"));
                 e.setData(resultado.getString("dataEntrada"));
-                e.setQtdCheio(resultado.getInt("qtdCheio"));
-                e.setQtdVazio(resultado.getInt("qtdVazio"));
+                e.setQuantidade(resultado.getInt("quantidade"));
                 e.setTipoDeEntrada(resultado.getString("tipoDeEntrada"));
                 lista.add(e);
             }
@@ -130,8 +125,7 @@ public class EntradaDAO {
                 e.setIdToner(resultado.getInt("idToner"));
                 e.setIdUsuario(resultado.getInt("idUsuario"));
                 e.setData(resultado.getString("dataEntrada"));
-                e.setQtdCheio(resultado.getInt("qtdCheio"));
-                e.setQtdVazio(resultado.getInt("qtdVazio"));
+                e.setQuantidade(resultado.getInt("quantidade"));
                 e.setTipoDeEntrada(resultado.getString("tipoDeEntrada"));
             }
 
@@ -151,8 +145,7 @@ public class EntradaDAO {
                 + "usuarios.login as Usuário, "
                 + "impressoras.modeloToner as Toner, "
                 + "impressoras.modeloImpressora as Impressora, "
-                + "entradas.qtdCheio, "
-                + "entradas.qtdVazio "
+                + "entradas.quantidade "
                 + "from entradas "
                 + "join usuarios on entradas.idUsuario=usuarios.idUsuario "
                 + "join toners on entradas.idToner=toners.idToner "

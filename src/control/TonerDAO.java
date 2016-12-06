@@ -3,16 +3,10 @@ package control;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 import model.Toner;
 
 public class TonerDAO {
@@ -28,13 +22,10 @@ public class TonerDAO {
                 + "insert into toners ("
                 + "idImpressora,"
                 + "tipoDeToner,"
-                + "qtdEstoqueCheio,"
-                + "qtdEstoqueVazio,"
-                + "qtdForaCheio,"
-                + "qtdForaVazio,"
-                + "qtdDesabilitadoCheio,"
-                + "qtdDesabilitadoVazio)"
-                + "values (?,?,0,0,0,0,0,0);";
+                + "estoque,"
+                + "fora,"
+                + "desabilitado)"
+                + "values (?,?,0,0,0);";
         try {
             PreparedStatement cadastro = conexao.prepareStatement(comandoSql);
             cadastro.setInt(1, toner.getIdImpressora());
@@ -52,24 +43,18 @@ public class TonerDAO {
                 + "set "
                 + "idImpressora=?,"
                 + "tipoDeToner=?,"
-                + "qtdEstoqueCheio=?,"
-                + "qtdEstoqueVazio=?,"
-                + "qtdForaCheio=?,"
-                + "qtdForaVazio=?,"
-                + "qtdDesabilitadoCheio=?,"
-                + "qtdDesabilitadoVazio=? "
+                + "estoque=?,"
+                + "fora=?,"
+                + "desabilitado=? "
                 + "where idToner=?";
         try {
             PreparedStatement atualizacao = conexao.prepareStatement(comandoSql);
             atualizacao.setInt(1, toner.getIdImpressora());
             atualizacao.setString(2, toner.getTipo());
-            atualizacao.setInt(3, toner.getQtdEstoqueCheio());
-            atualizacao.setInt(4, toner.getQtdEstoqueVazio());
-            atualizacao.setInt(5, toner.getQtdForaCheio());
-            atualizacao.setInt(6, toner.getQtdForaVazio());
-            atualizacao.setInt(7, toner.getQtdDesabilitadoCheio());
-            atualizacao.setInt(8, toner.getQtdDesabilitadoVazio());
-            atualizacao.setInt(9, toner.getId());
+            atualizacao.setInt(3, toner.getEstoque());
+            atualizacao.setInt(4, toner.getFora());
+            atualizacao.setInt(5, toner.getDesabilitado());
+            atualizacao.setInt(6, toner.getId());
             atualizacao.executeUpdate();
             atualizacao.close();
         } catch (Exception e) {
@@ -105,12 +90,9 @@ public class TonerDAO {
                 Toner t = new Toner();
                 t.setId(resultado.getInt("idToner"));
                 t.setTipo(resultado.getString("tipoDeToner"));
-                t.setQtdEstoqueCheio(resultado.getInt("qtdEstoqueCheio"));
-                t.setQtdEstoqueVazio(resultado.getInt("qtdEstoqueVazio"));
-                t.setQtdForaCheio(resultado.getInt("qtdForaCheio"));
-                t.setQtdForaVazio(resultado.getInt("qtdForaVazio"));
-                t.setQtdDesabilitadoCheio(resultado.getInt("qtdDesabilitadoCheio"));
-                t.setQtdDesabilitadoVazio(resultado.getInt("qtdDesabilitadoVazio"));
+                t.setEstoque(resultado.getInt("estoque"));
+                t.setFora(resultado.getInt("fora"));
+                t.setDesabilitado(resultado.getInt("desabilitado"));
                 t.setIdImpressora(resultado.getInt("idImpressora"));
                 lista.add(t);
             }
@@ -138,12 +120,9 @@ public class TonerDAO {
                 t = new Toner();
                 t.setId(resultado.getInt("idToner"));
                 t.setTipo(resultado.getString("tipoDeToner"));
-                t.setQtdEstoqueCheio(resultado.getInt("qtdEstoqueCheio"));
-                t.setQtdEstoqueVazio(resultado.getInt("qtdEstoqueVazio"));
-                t.setQtdForaCheio(resultado.getInt("qtdForaCheio"));
-                t.setQtdForaVazio(resultado.getInt("qtdForaVazio"));
-                t.setQtdDesabilitadoCheio(resultado.getInt("qtdDesabilitadoCheio"));
-                t.setQtdDesabilitadoVazio(resultado.getInt("qtdDesabilitadoVazio"));
+                t.setEstoque(resultado.getInt("estoque"));
+                t.setFora(resultado.getInt("fora"));
+                t.setDesabilitado(resultado.getInt("desabilitado"));
                 t.setIdImpressora(resultado.getInt("idImpressora"));
             }
 
@@ -162,12 +141,9 @@ public class TonerDAO {
                 + "impressoras.modeloImpressora as Impressora, "
                 + "toners.tipoDeToner as Tipo, "
                 + "impressoras.precoToner as Preço, "
-                + "toners.qtdEstoqueCheio, "
-                + "toners.qtdEstoqueVazio, "
-                + "toners.qtdForaCheio, "
-                + "toners.qtdForaVazio, "
-                + "toners.qtdDesabilitadoCheio, "
-                + "toners.qtdDesabilitadoVazio "
+                + "toners.estoque, "
+                + "toners.fora, "
+                + "toners.desabilitado "
                 + "from toners join impressoras on toners.idImpressora=impressoras.idImpressora "
                 + "order by impressoras.modeloToner";
 

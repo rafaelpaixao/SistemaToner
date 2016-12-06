@@ -23,18 +23,16 @@ public class SaidaDAO {
                 + "idToner,"
                 + "idUsuario,"
                 + "dataSaida,"
-                + "qtdCheio,"
-                + "qtdVazio,"
+                + "quantidade,"
                 + "idSetor)"
-                + "values (?,?,?,?,?,?)";
+                + "values (?,?,?,?,?)";
         try {
             PreparedStatement cadastro = conexao.prepareStatement(comandoSql);
             cadastro.setInt(1, saida.getIdToner());
             cadastro.setInt(2, saida.getIdUsuario());
             cadastro.setString(3, saida.getData());
-            cadastro.setInt(4, saida.getQtdCheio());
-            cadastro.setInt(5, saida.getQtdVazio());
-            cadastro.setInt(6, saida.getIdSetor());
+            cadastro.setInt(4, saida.getQuantidade());
+            cadastro.setInt(5, saida.getIdSetor());
             cadastro.executeUpdate();
             cadastro.close();
         } catch (Exception e) {
@@ -49,8 +47,7 @@ public class SaidaDAO {
                 + "idToner=?,"
                 + "idUsuario=?,"
                 + "dataSaida=?,"
-                + "qtdCheio=?,"
-                + "qtdVazio=?, "
+                + "quantidade=?, "
                 + "idSetor=? "
                 + "where idSaida=?";
         try {
@@ -58,10 +55,9 @@ public class SaidaDAO {
             atualizacao.setInt(1, saida.getIdToner());
             atualizacao.setInt(2, saida.getIdUsuario());
             atualizacao.setString(3, saida.getData());
-            atualizacao.setInt(4, saida.getQtdCheio());
-            atualizacao.setInt(5, saida.getQtdVazio());
-            atualizacao.setInt(6, saida.getIdSetor());
-            atualizacao.setInt(7, saida.getId());
+            atualizacao.setInt(4, saida.getQuantidade());
+            atualizacao.setInt(5, saida.getIdSetor());
+            atualizacao.setInt(6, saida.getId());
             atualizacao.executeUpdate();
             atualizacao.close();
         } catch (Exception e) {
@@ -99,8 +95,7 @@ public class SaidaDAO {
                 e.setIdToner(resultado.getInt("idToner"));
                 e.setIdUsuario(resultado.getInt("idUsuario"));
                 e.setData(resultado.getString("dataSaida"));
-                e.setQtdCheio(resultado.getInt("qtdCheio"));
-                e.setQtdVazio(resultado.getInt("qtdVazio"));
+                e.setQuantidade(resultado.getInt("quantidade"));
                 e.setIdSetor(resultado.getInt("idSetor"));
                 lista.add(e);
             }
@@ -130,8 +125,7 @@ public class SaidaDAO {
                 e.setIdToner(resultado.getInt("idToner"));
                 e.setIdUsuario(resultado.getInt("idUsuario"));
                 e.setData(resultado.getString("dataSaida"));
-                e.setQtdCheio(resultado.getInt("qtdCheio"));
-                e.setQtdVazio(resultado.getInt("qtdVazio"));
+                e.setQuantidade(resultado.getInt("quantidade"));
                 e.setIdSetor(resultado.getInt("idSetor"));
             }
 
@@ -152,8 +146,7 @@ public class SaidaDAO {
                 + "usuarios.login as Usuário, "
                 + "impressoras.modeloToner as Toner, "
                 + "impressoras.modeloImpressora as Impressora, "
-                + "saidas.qtdCheio, "
-                + "saidas.qtdVazio "
+                + "saidas.quantidade "
                 + "from saidas "
                 + "join usuarios on saidas.idUsuario=usuarios.idUsuario "
                 + "join toners on saidas.idToner=toners.idToner "

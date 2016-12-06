@@ -15,7 +15,6 @@ import model.*;
 public class Sistema {
 
     private AcessoAoBanco acessoAoBanco;
-
     private UsuarioDAO usuarioDao;
     private SetorDAO setorDao;
     private ImpressoraDAO impressoraDao;
@@ -158,13 +157,11 @@ public class Sistema {
         return true;
     }
 
-    public boolean habilitarToner(Toner x, int cheio, int vazio) {
+    public boolean habilitarToner(Toner x, int qtd) {
         x = this.tonerDao.getToner(x.getId());
-        if (cheio > 0 && cheio <= x.getQtdDesabilitadoCheio() && vazio > 0 && vazio <= x.getQtdDesabilitadoVazio()) {
-            x.setQtdDesabilitadoCheio(x.getQtdDesabilitadoCheio() - cheio);
-            x.setQtdEstoqueCheio(x.getQtdEstoqueCheio() + cheio);
-            x.setQtdDesabilitadoVazio(x.getQtdDesabilitadoVazio() - vazio);
-            x.setQtdEstoqueVazio(x.getQtdEstoqueVazio() + vazio);
+        if (qtd > 0 && qtd <= x.getDesabilitado()) {
+            x.setDesabilitado(x.getDesabilitado() - qtd);
+            x.setEstoque(x.getEstoque() + qtd);
             this.tonerDao.atualizar(x);
             return true;
         } else {
@@ -172,13 +169,11 @@ public class Sistema {
         }
     }
 
-    public boolean desabilitarToner(Toner x, int cheio, int vazio) {
+    public boolean desabilitarToner(Toner x, int qtd) {
         x = this.tonerDao.getToner(x.getId());
-        if (cheio > 0 && cheio <= x.getQtdEstoqueCheio() && vazio > 0 && vazio <= x.getQtdEstoqueVazio()) {
-            x.setQtdEstoqueCheio(x.getQtdEstoqueCheio() - cheio);
-            x.setQtdDesabilitadoCheio(x.getQtdDesabilitadoCheio() + cheio);
-            x.setQtdEstoqueVazio(x.getQtdEstoqueVazio() - vazio);
-            x.setQtdDesabilitadoVazio(x.getQtdDesabilitadoVazio() + vazio);
+        if (qtd > 0 && qtd <= x.getEstoque()) {
+            x.setEstoque(x.getEstoque() - qtd);
+            x.setDesabilitado(x.getDesabilitado() + qtd);
             this.tonerDao.atualizar(x);
             return true;
         } else {
@@ -192,27 +187,21 @@ public class Sistema {
 
     public boolean cadastrarEntrada(Entrada x) {
         Toner t;
-        if (x.getQtdCheio() < 0 || x.getQtdVazio() < 0 || (x.getQtdCheio() + x.getQtdVazio()) == 0) {
+        if (x.getQuantidade() <= 0) {
             return false;
         } else {
             t = this.tonerDao.getToner(x.getIdToner());
-            t.setQtdEstoqueCheio(t.getQtdEstoqueCheio() + x.getQtdCheio());
-            t.setQtdEstoqueVazio(t.getQtdEstoqueVazio() + x.getQtdVazio());
-
+            
             if (x.getTipoDeEntrada().equals("Recarga")) {
-
-                if (t.getQtdForaCheio() < x.getQtdCheio()) {
+                if (x.getQuantidade() > t.getFora()) {
                     return false;
                 } else {
-                    t.setQtdForaCheio(x.getQtdCheio() - t.getQtdForaCheio());
-                }
-
-                if (t.getQtdForaVazio() < x.getQtdVazio()) {
-                    return false;
-                } else {
-                    t.setQtdForaVazio(x.getQtdVazio() - t.getQtdForaVazio());
+                    t.setFora(t.getFora() - x.getQuantidade());
                 }
             }
+            
+            t.setEstoque(t.getEstoque() + x.getQuantidade());
+            
             this.entradaDao.cadastrar(x);
             this.tonerDao.atualizar(t);
             return true;
@@ -221,24 +210,18 @@ public class Sistema {
     }
 
     public boolean cadastrarSaida(Saida x) {
-        if (x.getQtdCheio() < 0 || x.getQtdVazio() < 0 || (x.getQtdCheio() + x.getQtdVazio()) == 0) {
+        if (x.getQuantidade() <= 0) {
             return false;
         } else {
             Toner t = this.tonerDao.getToner(x.getIdToner());
-            String modeloImpressora = this.impressoraDao.getImpressoraPorId(t.getIdImpressora()).getModelo();
+            String modeloImpressora = this.impressoraDao.getImpressoraPorId(t.getIdImpressora()).getModeloImpressora();
+            
             if(this.impressoraDao.temImpressoraNoSetor(modeloImpressora, x.getIdSetor())){
-                if (t.getQtdEstoqueCheio() < x.getQtdCheio()) {
+                if (x.getQuantidade() > t.getEstoque()) {
                     return false;
                 } else {
-                    t.setQtdEstoqueCheio(t.getQtdEstoqueCheio() - x.getQtdCheio());
-                    t.setQtdForaCheio(x.getQtdCheio() + t.getQtdForaCheio());
-                }
-
-                if (t.getQtdEstoqueVazio() < x.getQtdVazio()) {
-                    return false;
-                } else {
-                    t.setQtdEstoqueVazio(t.getQtdEstoqueVazio() - x.getQtdVazio());
-                    t.setQtdForaVazio(x.getQtdVazio() + t.getQtdForaVazio());
+                    t.setEstoque(t.getEstoque() - x.getQuantidade());
+                    t.setFora(t.getFora() + x.getQuantidade());
                 }
 
                 this.saidaDao.cadastrar(x);
@@ -259,12 +242,9 @@ public class Sistema {
             colunas.add("Impressora");
             colunas.add("Tipo");
             colunas.add("Preço (R$)");
-            colunas.add("Estoque Cheio");
-            colunas.add("Estoque Vazio");
-            colunas.add("Fora Cheio");
-            colunas.add("Fora Vazio");
-            colunas.add("Desabilitado Cheio");
-            colunas.add("Desabilitado Vazio");
+            colunas.add("Estoque");
+            colunas.add("Fora");
+            colunas.add("Desabilitado");
             retorno = new DefaultTableModel(retorno.getDataVector(), colunas);
 
         } catch (SQLException ex) {
@@ -285,8 +265,7 @@ public class Sistema {
             colunas.add("Usuário");
             colunas.add("Toner");
             colunas.add("Impressora");
-            colunas.add("Cheio");
-            colunas.add("Vazio");
+            colunas.add("Quantidade");
             retorno = new DefaultTableModel(retorno.getDataVector(), colunas);
 
         } catch (SQLException ex) {
@@ -309,8 +288,7 @@ public class Sistema {
             colunas.add("Usuário");
             colunas.add("Toner");
             colunas.add("Impressora");
-            colunas.add("Cheio");
-            colunas.add("Vazio");
+            colunas.add("Quantidade");
             retorno = new DefaultTableModel(retorno.getDataVector(), colunas);
 
         } catch (SQLException ex) {

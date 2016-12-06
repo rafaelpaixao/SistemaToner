@@ -26,7 +26,7 @@ public class ImpressoraEdita extends javax.swing.JInternalFrame {
         this.sistema = sistema;
         this.editado = x;
         initComponents();
-        this.jTextModelo.setText(this.editado.getModelo());
+        this.jTextModelo.setText(this.editado.getModeloImpressora());
         this.jTextToner.setText(this.editado.getModeloToner());
         this.jTextPreco.setText(converterDoubleParaString(this.editado.getPrecoToner()));
 
@@ -155,7 +155,7 @@ public class ImpressoraEdita extends javax.swing.JInternalFrame {
         try {
             Impressora x = new Impressora();
             x.setIdSetor(lista.get(this.jComboBoxSetor.getSelectedIndex()).getId());
-            x.setModelo(this.jTextModelo.getText());
+            x.setModeloImpressora(this.jTextModelo.getText());
             x.setModeloToner(this.jTextToner.getText());
             x.setPrecoToner(Double.parseDouble(this.jTextPreco.getText().replace(',', '.')));
             sucesso = this.sistema.atualizarImpressora(x);

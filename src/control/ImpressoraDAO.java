@@ -25,7 +25,7 @@ public class ImpressoraDAO {
         try {
             PreparedStatement cadastro = conexao.prepareStatement(comandoSql);
             cadastro.setInt(1, impressora.getIdSetor());
-            cadastro.setString(2, impressora.getModelo());
+            cadastro.setString(2, impressora.getModeloImpressora());
             cadastro.setString(3, impressora.getModeloToner());
             cadastro.setDouble(4, impressora.getPrecoToner());
             cadastro.executeUpdate();
@@ -47,7 +47,7 @@ public class ImpressoraDAO {
         try {
             PreparedStatement atualizacao = conexao.prepareStatement(comandoSql);
             atualizacao.setInt(1, impressora.getIdSetor());
-            atualizacao.setString(2, impressora.getModelo());
+            atualizacao.setString(2, impressora.getModeloImpressora());
             atualizacao.setString(3, impressora.getModeloToner());
             atualizacao.setDouble(4, impressora.getPrecoToner());
             atualizacao.setInt(5, impressora.getId());
@@ -88,7 +88,7 @@ public class ImpressoraDAO {
             while(resultado.next()){
                 Impressora i = new Impressora();
                 i.setId(resultado.getInt("idImpressora"));
-                i.setModelo(resultado.getString("modeloImpressora"));
+                i.setModeloImpressora(resultado.getString("modeloImpressora"));
                 i.setModeloToner(resultado.getString("modeloToner"));
                 i.setPrecoToner(resultado.getDouble("precoToner"));
                 i.setIdSetor(resultado.getInt("idSetor"));
@@ -121,7 +121,7 @@ public class ImpressoraDAO {
             if(resultado.next()){
                 i = new Impressora();
                 i.setId(resultado.getInt("idImpressora"));
-                i.setModelo(resultado.getString("modeloImpressora"));
+                i.setModeloImpressora(resultado.getString("modeloImpressora"));
                 i.setModeloToner(resultado.getString("modeloToner"));
                 i.setPrecoToner(resultado.getDouble("precoToner"));
                 i.setIdSetor(resultado.getInt("idSetor"));
