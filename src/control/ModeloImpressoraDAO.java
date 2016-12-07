@@ -1,3 +1,4 @@
+
 package control;
 
 import java.sql.Connection;
@@ -5,51 +6,55 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import model.Setor;
+import model.ModeloImpressora;
 
-public class SetorDAO extends atributosDAO implements metodosDAO<Setor> {
-
-    public SetorDAO(Connection conexao) {
+public class ModeloImpressoraDAO extends atributosDAO implements metodosDAO<ModeloImpressora>{
+    
+    public ModeloImpressoraDAO(Connection conexao){
         this.conexao = conexao;
-        this.nomeTabela = "setores";
+        this.nomeTabela = "modelosImpressoras";
     }
 
     @Override
-    public void cadastrar(Setor novo) throws SQLException {
+    public void cadastrar(ModeloImpressora novo) throws SQLException {
         String comandoSql = ""
                 + "insert into "
                 + this.nomeTabela
                 + "("
-                + "nome,"
-                + "empresa)"
-                + "values (?,?);";
+                + "modeloImpressora,"
+                + "modeloToner,"
+                + "precoToner"
+                + ")"
+                + "values (?,?,?);";
         PreparedStatement cadastro = conexao.prepareStatement(comandoSql);
-        cadastro.setString(1, novo.getNome());
-        cadastro.setString(2, novo.getEmpresa());
+        cadastro.setString(1, novo.getModeloImpressora());
+        cadastro.setString(2, novo.getModeloToner());
+        cadastro.setDouble(3, novo.getPrecoToner());
         cadastro.executeUpdate();
         cadastro.close();
     }
 
     @Override
-    public void atualizar(Setor atualizado) throws SQLException {
+    public void atualizar(ModeloImpressora atualizado) throws SQLException {
         String comandoSql = ""
                 + "update "
                 + this.nomeTabela
                 + " set "
-                + "nome=?, "
-                + "empresa=? "
+                + "modeloImpressora=?, "
+                + "modeloToner=?, "
+                + "precoToner=? "
                 + "where id=?";
         PreparedStatement atualizacao = conexao.prepareStatement(comandoSql);
-        atualizacao.setString(1, atualizado.getNome());
-        atualizacao.setString(2, atualizado.getEmpresa());
-        atualizacao.setInt(3, atualizado.getId());
+        atualizacao.setString(1, atualizado.getModeloImpressora());
+        atualizacao.setString(2, atualizado.getModeloToner());
+        atualizacao.setDouble(3, atualizado.getPrecoToner());
         atualizacao.setInt(4, atualizado.getId());
         atualizacao.executeUpdate();
         atualizacao.close();
     }
 
     @Override
-    public void excluir(Setor excluido) throws SQLException {
+    public void excluir(ModeloImpressora excluido) throws SQLException {
         String comandoSql = ""
                 + "delete from "
                 + this.nomeTabela
@@ -61,19 +66,20 @@ public class SetorDAO extends atributosDAO implements metodosDAO<Setor> {
     }
 
     @Override
-    public ArrayList<Setor> getTodos() throws SQLException {
+    public ArrayList<ModeloImpressora> getTodos() throws SQLException {
         String comandoSql = ""
                 + "select * from "
                 + this.nomeTabela;
         PreparedStatement selecao = conexao.prepareStatement(comandoSql);
         ResultSet resultado = selecao.executeQuery();
 
-        ArrayList<Setor> lista = new ArrayList<>();
+        ArrayList<ModeloImpressora> lista = new ArrayList<>();
         while (resultado.next()) {
-            Setor r = new Setor();
+            ModeloImpressora r = new ModeloImpressora();
             r.setId(resultado.getInt("id"));
-            r.setNome(resultado.getString("nome"));
-            r.setEmpresa(resultado.getString("empresa"));
+            r.setModeloImpressora(resultado.getString("modeloImpressora"));
+            r.setModeloToner(resultado.getString("modeloToner"));
+            r.setPrecoToner(resultado.getDouble("precoToner"));
             lista.add(r);
         }
 
@@ -82,7 +88,7 @@ public class SetorDAO extends atributosDAO implements metodosDAO<Setor> {
     }
 
     @Override
-    public Setor getPorId(int idProcurado) throws SQLException {
+    public ModeloImpressora getPorId(int idProcurado) throws SQLException {
         String comandoSql = ""
                 + "select * from "
                 + this.nomeTabela
@@ -91,12 +97,13 @@ public class SetorDAO extends atributosDAO implements metodosDAO<Setor> {
         selecao.setInt(1, idProcurado);
         ResultSet resultado = selecao.executeQuery();
 
-        Setor r = null;
+        ModeloImpressora r = null;
         if (resultado.next()) {
-            r = new Setor();
+            r = new ModeloImpressora();
             r.setId(resultado.getInt("id"));
-              r.setNome(resultado.getString("nome"));
-            r.setEmpresa(resultado.getString("empresa"));
+            r.setModeloImpressora(resultado.getString("modeloImpressora"));
+            r.setModeloToner(resultado.getString("modeloToner"));
+            r.setPrecoToner(resultado.getDouble("precoToner"));
         }
 
         selecao.close();

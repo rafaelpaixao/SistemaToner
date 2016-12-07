@@ -5,159 +5,135 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import model.Entrada;
 
-public class EntradaDAO {
-
-    Connection conexao;
+public class EntradaDAO extends atributosDAO implements metodosDAO< Entrada> {
 
     public EntradaDAO(Connection conexao) {
         this.conexao = conexao;
+        this.nomeTabela = "entradas";
     }
 
-    public void cadastrar(Entrada entrada) {
+    @Override
+    public void cadastrar(Entrada novo) throws SQLException {
         String comandoSql = ""
-                + "insert into entradas ("
+                + "insert into "
+                + this.nomeTabela
+                + "("
                 + "idToner,"
                 + "idUsuario,"
-                + "dataEntrada,"
+                + "data,"
                 + "quantidade,"
-                + "tipoDeEntrada)"
+                + "tipo)"
                 + "values (?,?,?,?,?)";
-        try {
-            PreparedStatement cadastro = conexao.prepareStatement(comandoSql);
-            cadastro.setInt(1, entrada.getIdToner());
-            cadastro.setInt(2, entrada.getIdUsuario());
-            cadastro.setString(3, entrada.getData());
-            cadastro.setInt(4, entrada.getQuantidade());
-            cadastro.setString(5, entrada.getTipoDeEntrada());
-            cadastro.executeUpdate();
-            cadastro.close();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        PreparedStatement cadastro = conexao.prepareStatement(comandoSql);
+        cadastro.setInt(1, novo.getIdToner());
+        cadastro.setInt(2, novo.getIdUsuario());
+        cadastro.setString(3, novo.getData());
+        cadastro.setInt(4, novo.getQuantidade());
+        cadastro.setString(5, novo.getTipoDeEntrada());
+        cadastro.executeUpdate();
+        cadastro.close();
     }
 
-    public void atualizar(Entrada entrada) {
+    @Override
+    public void atualizar(Entrada atualizado) throws SQLException {
         String comandoSql = ""
-                + "update entradas "
-                + "set "
+                + "update "
+                + this.nomeTabela
+                + " set "
                 + "idToner=?,"
                 + "idUsuario=?,"
-                + "dataEntrada=?,"
+                + "data=?,"
                 + "quantidade=?,"
-                + "tipoDeEntrada=? "
-                + "where idEntrada=?";
-        try {
-            PreparedStatement atualizacao = conexao.prepareStatement(comandoSql);
-            atualizacao.setInt(1, entrada.getIdToner());
-            atualizacao.setInt(2, entrada.getIdUsuario());
-            atualizacao.setString(3, entrada.getData());
-            atualizacao.setInt(4, entrada.getQuantidade());
-            atualizacao.setString(5, entrada.getTipoDeEntrada());
-            atualizacao.setInt(6, entrada.getId());
-            atualizacao.executeUpdate();
-            atualizacao.close();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+                + "tipo=? "
+                + "where id=?";
+        PreparedStatement atualizacao = conexao.prepareStatement(comandoSql);
+        atualizacao.setInt(1, atualizado.getIdToner());
+        atualizacao.setInt(2, atualizado.getIdUsuario());
+        atualizacao.setString(3, atualizado.getData());
+        atualizacao.setInt(4, atualizado.getQuantidade());
+        atualizacao.setString(5, atualizado.getTipoDeEntrada());
+        atualizacao.setInt(6, atualizado.getId());
+        atualizacao.executeUpdate();
+        atualizacao.close();
     }
 
-    public void deletar(Entrada entrada) {
+    @Override
+    public void excluir(Entrada excluido) throws SQLException {
         String comandoSql = ""
-                + "delete from entradas "
-                + "where idEntrada=?";
-        try {
-            PreparedStatement atualizacao = conexao.prepareStatement(comandoSql);
-            atualizacao.setInt(1, entrada.getId());
-            atualizacao.executeUpdate();
-            atualizacao.close();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+                + "delete from "
+                + this.nomeTabela
+                + " where id=?";
+        PreparedStatement atualizacao = conexao.prepareStatement(comandoSql);
+        atualizacao.setInt(1, excluido.getId());
+        atualizacao.executeUpdate();
+        atualizacao.close();
     }
 
-    public ArrayList<Entrada> getTudo() {
+    @Override
+    public ArrayList< Entrada> getTodos() throws SQLException {
+        String comandoSql = ""
+                + "select * from "
+                + this.nomeTabela;
+        PreparedStatement selecao = conexao.prepareStatement(comandoSql);
+        ResultSet resultado = selecao.executeQuery();
 
-        ArrayList<Entrada> lista = new ArrayList<>();
-
-        String comandoSql = "select * from entradas";
-
-        try {
-            PreparedStatement selecao = conexao.prepareStatement(comandoSql);
-            ResultSet resultado = selecao.executeQuery();
-
-            while (resultado.next()) {
-                Entrada e = new Entrada();
-                e.setId(resultado.getInt("idEntrada"));
-                e.setIdToner(resultado.getInt("idToner"));
-                e.setIdUsuario(resultado.getInt("idUsuario"));
-                e.setData(resultado.getString("dataEntrada"));
-                e.setQuantidade(resultado.getInt("quantidade"));
-                e.setTipoDeEntrada(resultado.getString("tipoDeEntrada"));
-                lista.add(e);
-            }
-
-            selecao.close();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        ArrayList< Entrada> lista = new ArrayList<>();
+        while (resultado.next()) {
+            Entrada r = new Entrada();
+            r.setId(resultado.getInt("id"));
+            r.setIdToner(resultado.getInt("idToner"));
+            r.setIdUsuario(resultado.getInt("idUsuario"));
+            r.setData(resultado.getString("data"));
+            r.setQuantidade(resultado.getInt("quantidade"));
+            r.setTipoDeEntrada(resultado.getString("tipo"));
+            lista.add(r);
         }
 
+        selecao.close();
         return lista;
     }
 
-    public Entrada getEntrada(int idEntrada) {
+    @Override
+    public Entrada getPorId(int idProcurado) throws SQLException {
+        String comandoSql = ""
+                + "select * from "
+                + this.nomeTabela
+                + " where id=?";
+        PreparedStatement selecao = conexao.prepareStatement(comandoSql);
+        selecao.setInt(1, idProcurado);
+        ResultSet resultado = selecao.executeQuery();
 
-        Entrada e = null;
-
-        String comandoSql = "select * from entradas where idEntrada=?";
-
-        try {
-            PreparedStatement selecao = conexao.prepareStatement(comandoSql);
-            selecao.setInt(1, idEntrada);
-            ResultSet resultado = selecao.executeQuery();
-
-            if (resultado.next()) {
-                e = new Entrada();
-                e.setId(resultado.getInt("idEntrada"));
-                e.setIdToner(resultado.getInt("idToner"));
-                e.setIdUsuario(resultado.getInt("idUsuario"));
-                e.setData(resultado.getString("dataEntrada"));
-                e.setQuantidade(resultado.getInt("quantidade"));
-                e.setTipoDeEntrada(resultado.getString("tipoDeEntrada"));
-            }
-
-            selecao.close();
-        } catch (Exception er) {
-            throw new RuntimeException(er);
+        Entrada r = null;
+        if (resultado.next()) {
+            r = new Entrada();
+            r.setId(resultado.getInt("id"));
+            r.setIdToner(resultado.getInt("idToner"));
+            r.setIdUsuario(resultado.getInt("idUsuario"));
+            r.setData(resultado.getString("data"));
+            r.setQuantidade(resultado.getInt("quantidade"));
+            r.setTipoDeEntrada(resultado.getString("tipo"));
         }
 
-        return e;
+        selecao.close();
+        return r;
     }
 
-    public ResultSet getResultSetEntradas() {
-        ResultSet retorno = null;
+    public ResultSet getResultSetEntradas() throws SQLException {
         String comandoSql = "select "
-                + "entradas.dataEntrada as Data, "
-                + "entradas.tipoDeEntrada as Tipo, "
+                + "entradas.data as Data, "
+                + "entradas.tipo as Tipo, "
                 + "usuarios.login as Usuário, "
-                + "impressoras.modeloToner as Toner, "
-                + "impressoras.modeloImpressora as Impressora, "
+                + "modelosImpressoras.modeloToner as Toner, "
+                + "modelosImpressoras.modeloImpressora as Impressora, "
                 + "entradas.quantidade "
                 + "from entradas "
-                + "join usuarios on entradas.idUsuario=usuarios.idUsuario "
-                + "join toners on entradas.idToner=toners.idToner "
-                + "join impressoras on toners.idImpressora = impressoras.idImpressora "
-                + "order by entradas.dataEntrada desc";
-        try {
-            PreparedStatement selecao = conexao.prepareStatement(comandoSql);
-            retorno = selecao.executeQuery();
-        } catch (SQLException ex) {
-            Logger.getLogger(TonerDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return retorno;
+                + "join usuarios on entradas.idUsuario=usuarios.id "
+                + "join toners on entradas.idToner=toners.id "
+                + "join modelosImpressoras on toners.idModeloImpressora = modelosImpressoras.id "
+                + "order by entradas.data desc";
+        PreparedStatement selecao = conexao.prepareStatement(comandoSql);
+        return selecao.executeQuery();
     }
-
 }

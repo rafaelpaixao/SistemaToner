@@ -6,7 +6,10 @@
 package view.setor;
 
 import control.Sistema;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import model.*;
 import view.Alertas;
@@ -24,13 +27,19 @@ public class SetorLista extends javax.swing.JInternalFrame {
         this.sistema = sistema;
         initComponents();
 
-        this.lista = this.sistema.getListaDeSetores();
-        DefaultListModel listModel = new DefaultListModel();
+        try {
+            this.lista = this.sistema.getListaDeSetores();
+            DefaultListModel listModel = new DefaultListModel();
 
-        for (Setor s : this.lista) {
-            listModel.addElement(s.getNome() + " ("+s.getEmpresa()+")");
+            for (Setor s : this.lista) {
+                listModel.addElement(s.getNome() + " ("+s.getEmpresa()+")");
+            }
+            this.jList1.setModel(listModel);
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+            Alertas.erroBanco(this,ex.toString());
         }
-        this.jList1.setModel(listModel);
+        
     }
 
     /**
@@ -45,27 +54,14 @@ public class SetorLista extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
         jLabel1 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
         setClosable(true);
         setTitle("Lista de Setores");
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane1.setViewportView(jList1);
 
         jLabel1.setText("Selecione um setor:");
-
-        jButton2.setText("Editar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
 
         jButton3.setText("Excluir");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -81,15 +77,13 @@ public class SetorLista extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 161, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)))
+                        .addComponent(jButton3)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -98,21 +92,24 @@ public class SetorLista extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
+                .addComponent(jButton3)
                 .addContainerGap())
         );
 
-        setBounds(300, 100, 166, 346);
+        setBounds(300, 100, 291, 346);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         int index = this.jList1.getSelectedIndex();
         if (index > -1) {
-            boolean sucesso = this.sistema.deletarSetor(this.lista.get(index));
+            boolean sucesso = false;
+            try {
+                sucesso = this.sistema.excluirSetor(this.lista.get(index));
+            } catch (SQLException ex) {
+                Alertas.erroBanco(this,ex.toString());
+            }
             Alertas.sucessoOuErro(this, sucesso);
             if(sucesso){
                 SetorLista u = new SetorLista(this.sistema);
@@ -126,19 +123,8 @@ public class SetorLista extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        int index = this.jList1.getSelectedIndex();
-        if (index > -1) {
-            SetorEdita x = new SetorEdita(this.sistema, this.lista.get(index));
-            this.getParent().add(x);
-            this.dispose();
-            x.show();
-        }
-    }//GEN-LAST:event_jButton2ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JList<String> jList1;

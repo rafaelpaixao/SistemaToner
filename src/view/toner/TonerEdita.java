@@ -6,7 +6,10 @@
 package view.toner;
 
 import control.Sistema;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import model.*;
 import view.Alertas;
@@ -26,18 +29,21 @@ public class TonerEdita extends javax.swing.JInternalFrame {
         this.toner = t;
         this.habilitar = h;
         initComponents();
-        this.jTextModelo.setText(this.sistema.getImpressora(this.toner.getIdImpressora()).getModeloToner() + "(" + this.sistema.getImpressora(this.toner.getIdImpressora()).getModeloToner() + ")");
-        if(this.habilitar){
+        try {
+            this.jTextModelo.setText(this.sistema.getModeloImpressora(this.toner.getIdModeloImpressora()).getModeloToner());
+        } catch (SQLException ex) {
+            Logger.getLogger(TonerEdita.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (this.habilitar) {
             this.setTitle("Habilitar Toner");
             this.jLabelVerbo.setText("Habilitar:");
             this.jLabelFrase.setText("Desabilitados em estoque:");
-            this.jTextAtual.setText(""+this.toner.getDesabilitado());
-        }
-        else{
+            this.jTextAtual.setText("" + this.toner.getDesabilitado());
+        } else {
             this.setTitle("Desabilitar Toner");
             this.jLabelVerbo.setText("Desabilitar:");
             this.jLabelFrase.setText("Habilitados em estoque:");
-            this.jTextAtual.setText(""+this.toner.getEstoque());
+            this.jTextAtual.setText("" + this.toner.getEstoque());
         }
     }
 
@@ -135,21 +141,26 @@ public class TonerEdita extends javax.swing.JInternalFrame {
 
     private void jButtonConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmarActionPerformed
         boolean sucesso = false;
-        
+
         Toner x = new Toner();
-        
-        try{
-        int qtd = Integer.parseInt(this.jTextNovo.getText());
-        
-        if(this.habilitar){
-            sucesso = this.sistema.habilitarToner(x, qtd);
-        }else{
-            sucesso = this.sistema.desabilitarToner(x, qtd);
-        }
-        
-        }catch(NumberFormatException e){
-            sucesso = false;
-        }finally{
+
+        try {
+            int qtd = Integer.parseInt(this.jTextNovo.getText());
+            try {
+                if (this.habilitar) {
+
+                    sucesso = this.sistema.habilitarToner(x, qtd);
+
+                } else {
+                    sucesso = this.sistema.desabilitarToner(x, qtd);
+                }
+            } catch (SQLException ex) {
+                Alertas.erroBanco(this,ex.toString());
+            }
+
+        } catch (NumberFormatException e) {
+            Alertas.erroFormatoEntrada(this);
+        } finally {
             Alertas.sucessoOuErro(this, sucesso);
             if (sucesso) {
                 this.dispose();

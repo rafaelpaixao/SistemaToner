@@ -4,9 +4,6 @@ package control;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 public class AcessoAoBanco {
     
@@ -17,28 +14,19 @@ public class AcessoAoBanco {
     
     private Connection conexao = null;
     
-    public Connection getConexao(){
+    public Connection getConexao() throws ClassNotFoundException, SQLException{
         if(this.conexao==null)
             setConexao();
         return this.conexao;
     }
     
-    public void encerrar(){
-        try {
+    public void encerrar() throws SQLException{
             this.conexao.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(AcessoAoBanco.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
-    private void setConexao(){
-        try {
+    private void setConexao() throws ClassNotFoundException, SQLException{
             Class.forName("com.mysql.jdbc.Driver");
             this.conexao = DriverManager.getConnection(this.url+this.banco, this.usuario, this.senha);
             this.conexao.setAutoCommit(true);
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(AcessoAoBanco.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null,"Erro de comunicação com a base de dados!");
-        }
     }
 }

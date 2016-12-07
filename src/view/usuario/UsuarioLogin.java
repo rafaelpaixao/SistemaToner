@@ -6,6 +6,7 @@
 package view.usuario;
 
 import control.Sistema;
+import java.sql.SQLException;
 import javax.swing.JFrame;
 import model.Usuario;
 import view.Alertas;
@@ -148,19 +149,24 @@ public class UsuarioLogin extends javax.swing.JInternalFrame {
         Usuario u = new Usuario();
         u.setLogin(this.jTextLogin.getText());
         u.setSenha(this.jTextSenha.getText());
-        if(this.sistema.logar(u)){
-            if(this.sistema.getTipoUsuarioAtivo().equals("Administrador")){
-                DesktopAdmin d = new DesktopAdmin(this.sistema);
-                d.setVisible(true);
-                janelaPai.dispose();
-            }else if (this.sistema.getTipoUsuarioAtivo().equals("padrao")){
-                DesktopPadrao d = new DesktopPadrao(this.sistema);
-                d.setVisible(true);
-                janelaPai.dispose();
+        try {
+            if(this.sistema.logar(u)){
+                if(this.sistema.getTipoUsuarioAtivo().equals("Administrador")){
+                    DesktopAdmin d = new DesktopAdmin(this.sistema);
+                    d.setVisible(true);
+                    janelaPai.dispose();
+                }else if (this.sistema.getTipoUsuarioAtivo().equals("Padrão")){
+                    DesktopPadrao d = new DesktopPadrao(this.sistema);
+                    d.setVisible(true);
+                    janelaPai.dispose();
+                }
             }
+            else
+                Alertas.mensagem(this, "Usuário inválido!");
+        } catch (SQLException ex) {
+            System.out.println(ex.toString());
+            Alertas.erroBanco(this,ex.toString());
         }
-        else
-            Alertas.mensagem(this, "Usuário inválido!");
     }//GEN-LAST:event_jButtonConfirmarActionPerformed
 
     private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated

@@ -9,6 +9,9 @@ import view.ajuda.AjudaSobre;
 import view.usuario.UsuarioLogin;
 import control.Sistema;
 import java.awt.Dimension;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -134,7 +137,11 @@ public class Principal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Principal(new Sistema()).setVisible(true);
+                try {
+                    new Principal(new Sistema()).setVisible(true);
+                } catch (ClassNotFoundException | SQLException ex) {
+                    Alertas.erroBanco(null,ex.toString());
+                }
             }
         });
     }

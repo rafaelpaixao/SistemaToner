@@ -1,6 +1,7 @@
 package control;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -17,6 +18,7 @@ public class Sistema {
     private AcessoAoBanco acessoAoBanco;
     private UsuarioDAO usuarioDao;
     private SetorDAO setorDao;
+    private ModeloImpressoraDAO modeloImpressoraDao;
     private ImpressoraDAO impressoraDao;
     private TonerDAO tonerDao;
     private EntradaDAO entradaDao;
@@ -25,10 +27,11 @@ public class Sistema {
 
     private Usuario usuarioAtivo;
 
-    public Sistema() {
+    public Sistema() throws ClassNotFoundException, SQLException {
         this.acessoAoBanco = new AcessoAoBanco();
         this.usuarioDao = new UsuarioDAO(this.acessoAoBanco.getConexao());
         this.setorDao = new SetorDAO(this.acessoAoBanco.getConexao());
+        this.modeloImpressoraDao = new ModeloImpressoraDAO(this.acessoAoBanco.getConexao());
         this.impressoraDao = new ImpressoraDAO(this.acessoAoBanco.getConexao());
         this.tonerDao = new TonerDAO(this.acessoAoBanco.getConexao());
         this.entradaDao = new EntradaDAO(this.acessoAoBanco.getConexao());
@@ -36,18 +39,18 @@ public class Sistema {
         this.arquivoCsv = new ArquivoCSV();
     }
 
-    public void encerrar() {
-        this.acessoAoBanco.encerrar();
+    public void encerrar(){
+        try {
+            this.acessoAoBanco.encerrar();
+        } catch (SQLException ex) {
+            Logger.getLogger(Sistema.class.getName()).log(Level.SEVERE, null, ex);
+        }
         System.exit(0);
     }
 
-    public boolean logar(Usuario u) {
+    public boolean logar(Usuario u) throws SQLException {
         usuarioAtivo = this.usuarioDao.logar(u.getLogin(), u.getSenha());
-        if (usuarioAtivo != null) {
-            return true;
-        } else {
-            return false;
-        }
+        return usuarioAtivo != null;
     }
 
     public String getTipoUsuarioAtivo() {
@@ -62,7 +65,7 @@ public class Sistema {
         return this.usuarioAtivo.getId();
     }
 
-    public boolean cadastrarUsuario(Usuario u) {
+    public boolean cadastrarUsuario(Usuario u) throws SQLException {
         if (usuarioDao.existeLogin(u.getLogin())) {
             return false;
         } else {
@@ -71,94 +74,117 @@ public class Sistema {
         }
     }
 
-    public ArrayList<Usuario> getListaDeUsuarios() {
-        return this.usuarioDao.getTudo();
+    public ArrayList<Usuario> getListaDeUsuarios() throws SQLException {
+        return this.usuarioDao.getTodos();
     }
 
-    public boolean deletarUsuario(Usuario u) {
+    public boolean excluirUsuario(Usuario u) throws SQLException {
         if (u.getLogin().equals(this.usuarioAtivo.getLogin())) {
             return false;
         } else {
-            this.usuarioDao.deletar(u);
+            this.usuarioDao.excluir(u);
             return true;
         }
     }
 
-    public boolean atualizarUsuario(Usuario u) {
+    public boolean atualizarUsuario(Usuario u) throws SQLException {
         this.usuarioDao.atualizar(u);
         return true;
     }
 
-    public boolean cadastrarSetor(Setor s) {
+    public boolean cadastrarSetor(Setor s) throws SQLException {
         this.setorDao.cadastrar(s);
         return true;
     }
 
-    public ArrayList<Setor> getListaDeSetores() {
-        return this.setorDao.getTudo();
+    public ArrayList<Setor> getListaDeSetores() throws SQLException {
+        return this.setorDao.getTodos();
     }
 
-    public Setor getSetor(int id) {
-        return this.setorDao.getSetorPorId(id);
+    public Setor getSetor(int id) throws SQLException {
+        return this.setorDao.getPorId(id);
     }
 
-    public boolean deletarSetor(Setor s) {
-        this.setorDao.deletar(s);
+    public boolean excluirSetor(Setor s) throws SQLException {
+        this.setorDao.excluir(s);
         return true;
     }
 
-    public boolean atualizarSetor(Setor s) {
+    public boolean atualizarSetor(Setor s) throws SQLException {
         this.setorDao.atualizar(s);
         return true;
     }
 
-    public boolean cadastrarImpressora(Impressora x) {
+    public boolean cadastrarModeloImpressora(ModeloImpressora x) throws SQLException {
+        this.modeloImpressoraDao.cadastrar(x);
+        return true;
+    }
+
+    public ArrayList<ModeloImpressora> getListaDeModelosImpressoras() throws SQLException {
+        return this.modeloImpressoraDao.getTodos();
+    }
+
+    public ModeloImpressora getModeloImpressora(int id) throws SQLException {
+        return this.modeloImpressoraDao.getPorId(id);
+    }
+
+    public boolean excluirModeloImpressora(ModeloImpressora x) throws SQLException {
+        this.modeloImpressoraDao.excluir(x);
+        return true;
+    }
+
+    public boolean atualizarModeloImpressora(ModeloImpressora x) throws SQLException {
+        this.modeloImpressoraDao.atualizar(x);
+        return true;
+    }
+    
+    public boolean cadastrarImpressora(Impressora x) throws SQLException {
         this.impressoraDao.cadastrar(x);
         return true;
     }
 
-    public ArrayList<Impressora> getListaDeImpressoras() {
-        return this.impressoraDao.getTudo();
+    public ArrayList<Impressora> getListaDeImpressoras() throws SQLException {
+        return this.impressoraDao.getTodos();
     }
 
-    public Impressora getImpressora(int id) {
-        return this.impressoraDao.getImpressoraPorId(id);
+    public Impressora getImpressora(int id) throws SQLException {
+        return this.impressoraDao.getPorId(id);
     }
 
-    public boolean deletarImpressora(Impressora x) {
-        this.impressoraDao.deletar(x);
+    public boolean excluirImpressora(Impressora x) throws SQLException {
+        this.impressoraDao.excluir(x);
         return true;
     }
 
-    public boolean atualizarImpressora(Impressora x) {
+    public boolean atualizarImpressora(Impressora x) throws SQLException {
         this.impressoraDao.atualizar(x);
         return true;
     }
 
-    public boolean cadastrarToner(Toner x) {
+    public boolean cadastrarToner(Toner x) throws SQLException {
         this.tonerDao.cadastrar(x);
         return true;
     }
 
-    public ArrayList<Toner> getListaDeToner() {
-        return this.tonerDao.getTudo();
+    public ArrayList<Toner> getListaDeToner() throws SQLException {
+        return this.tonerDao.getTodos();
     }
 
-    public boolean deletarToner(Toner x) {
+    public boolean excluirToner(Toner x) throws SQLException {
         if (temMovimentacaoToner(x)) {
             return false;
         }
-        this.tonerDao.deletar(x);
+        this.tonerDao.excluir(x);
         return true;
     }
 
-    public boolean atualizarToner(Toner x) {
+    public boolean atualizarToner(Toner x) throws SQLException {
         this.tonerDao.atualizar(x);
         return true;
     }
 
-    public boolean habilitarToner(Toner x, int qtd) {
-        x = this.tonerDao.getToner(x.getId());
+    public boolean habilitarToner(Toner x, int qtd) throws SQLException {
+        x = this.tonerDao.getPorId(x.getId());
         if (qtd > 0 && qtd <= x.getDesabilitado()) {
             x.setDesabilitado(x.getDesabilitado() - qtd);
             x.setEstoque(x.getEstoque() + qtd);
@@ -169,8 +195,8 @@ public class Sistema {
         }
     }
 
-    public boolean desabilitarToner(Toner x, int qtd) {
-        x = this.tonerDao.getToner(x.getId());
+    public boolean desabilitarToner(Toner x, int qtd) throws SQLException {
+        x = this.tonerDao.getPorId(x.getId());
         if (qtd > 0 && qtd <= x.getEstoque()) {
             x.setEstoque(x.getEstoque() - qtd);
             x.setDesabilitado(x.getDesabilitado() + qtd);
@@ -181,16 +207,16 @@ public class Sistema {
         }
     }
 
-    private boolean temMovimentacaoToner(Toner x) {
+    private boolean temMovimentacaoToner(Toner x) throws SQLException {
         return this.tonerDao.tonerTemMovimentacao(x);
     }
 
-    public boolean cadastrarEntrada(Entrada x) {
+    public boolean cadastrarEntrada(Entrada x) throws SQLException {
         Toner t;
         if (x.getQuantidade() <= 0) {
             return false;
         } else {
-            t = this.tonerDao.getToner(x.getIdToner());
+            t = this.tonerDao.getPorId(x.getIdToner());
             
             if (x.getTipoDeEntrada().equals("Recarga")) {
                 if (x.getQuantidade() > t.getFora()) {
@@ -209,12 +235,12 @@ public class Sistema {
 
     }
 
-    public boolean cadastrarSaida(Saida x) {
+    public boolean cadastrarSaida(Saida x) throws SQLException {
         if (x.getQuantidade() <= 0) {
             return false;
         } else {
-            Toner t = this.tonerDao.getToner(x.getIdToner());
-            String modeloImpressora = this.impressoraDao.getImpressoraPorId(t.getIdImpressora()).getModeloImpressora();
+            Toner t = this.tonerDao.getPorId(x.getIdToner());
+            String modeloImpressora = this.modeloImpressoraDao.getPorId(t.getIdModeloImpressora()).getModeloImpressora();
             
             if(this.impressoraDao.temImpressoraNoSetor(modeloImpressora, x.getIdSetor())){
                 if (x.getQuantidade() > t.getEstoque()) {
@@ -233,9 +259,8 @@ public class Sistema {
 
     }
 
-    public DefaultTableModel getTableModelSituacaoToner() {
+    public DefaultTableModel getTableModelSituacaoToner() throws SQLException {
         DefaultTableModel retorno = null;
-        try {
             retorno = buildTableModel(this.tonerDao.getResultSetSituacaoToner());
             Vector<String> colunas = new Vector<String>();
             colunas.add("Toner");
@@ -247,17 +272,12 @@ public class Sistema {
             colunas.add("Desabilitado");
             retorno = new DefaultTableModel(retorno.getDataVector(), colunas);
 
-        } catch (SQLException ex) {
-            Logger.getLogger(Sistema.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
         return retorno;
     }
 
-    public DefaultTableModel getTableModelEntradas() {
+    public DefaultTableModel getTableModelEntradas() throws SQLException {
         DefaultTableModel retorno = null;
 
-        try {
             retorno = buildTableModel(this.entradaDao.getResultSetEntradas());
             Vector<String> colunas = new Vector<String>();
             colunas.add("Data");
@@ -268,18 +288,12 @@ public class Sistema {
             colunas.add("Quantidade");
             retorno = new DefaultTableModel(retorno.getDataVector(), colunas);
 
-        } catch (SQLException ex) {
-            Logger.getLogger(Sistema.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
-
         return retorno;
     }
 
-    public DefaultTableModel getTableModelSaidas() {
+    public DefaultTableModel getTableModelSaidas() throws SQLException {
         DefaultTableModel retorno = null;
 
-        try {
             retorno = buildTableModel(this.saidaDao.getResultSetSaidas());
             Vector<String> colunas = new Vector<String>();
             colunas.add("Data");
@@ -291,10 +305,6 @@ public class Sistema {
             colunas.add("Quantidade");
             retorno = new DefaultTableModel(retorno.getDataVector(), colunas);
 
-        } catch (SQLException ex) {
-            Logger.getLogger(Sistema.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
 
         return retorno;
     }
@@ -323,7 +333,7 @@ public class Sistema {
 
     }
     
-    public boolean exportarCSV(JTable tabela, File arquivo){
+    public boolean exportarCSV(JTable tabela, File arquivo) throws IOException{
         if(arquivo!=null)
             return this.arquivoCsv.exportarTabela(tabela, arquivo);
         else

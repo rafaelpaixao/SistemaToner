@@ -3,8 +3,20 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Rafael/Codigo/Github/SistemaToner/src/control/EntradaDAO.java</file>
+            <file>file:/C:/Rafael/Codigo/Github/SistemaToner/src/model/Movimentacao.java</file>
+            <file>file:/C:/Rafael/Codigo/Github/SistemaToner/src/model/ModeloImpressora.java</file>
+            <file>file:/C:/Rafael/Codigo/Github/SistemaToner/src/model/Impressora.java</file>
+            <file>file:/C:/Rafael/Codigo/Github/SistemaToner/src/control/metodosDAO.java</file>
             <file>file:/C:/Rafael/Codigo/Github/SistemaToner/src/control/Sistema.java</file>
+            <file>file:/C:/Rafael/Codigo/Github/SistemaToner/src/control/ModeloImpressoraDAO.java</file>
+            <file>file:/C:/Rafael/Codigo/Github/SistemaToner/src/model/Entrada.java</file>
+            <file>file:/C:/Rafael/Codigo/Github/SistemaToner/etc/codigoSqlParaGerarOBanco.sql</file>
+            <file>file:/C:/Rafael/Codigo/Github/SistemaToner/src/control/atributosDAO.java</file>
+            <file>file:/C:/Rafael/Codigo/Github/SistemaToner/src/model/Toner.java</file>
+            <file>file:/C:/Rafael/Codigo/Github/SistemaToner/src/model/Saida.java</file>
+            <file>file:/C:/Rafael/Codigo/Github/SistemaToner/src/model/Usuario.java</file>
+            <file>file:/C:/Rafael/Codigo/Github/SistemaToner/src/control/ArquivoCSV.java</file>
+            <file>file:/C:/Rafael/Codigo/Github/SistemaToner/src/model/Setor.java</file>
         </group>
     </open-files>
 </project-private>

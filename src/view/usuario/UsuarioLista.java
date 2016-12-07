@@ -1,31 +1,30 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package view.usuario;
 
 import control.Sistema;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import model.Usuario;
 import view.Alertas;
 
-/**
- *
- * @author Rafael
- */
+
 public class UsuarioLista extends javax.swing.JInternalFrame {
 
     Sistema sistema;
     ArrayList<Usuario> listaUsuarios;
 
-    public UsuarioLista(Sistema sistema) {
+    public UsuarioLista(Sistema sistema){
         this.sistema = sistema;
         initComponents();
 
-        this.listaUsuarios = this.sistema.getListaDeUsuarios();
+        try {
+            this.listaUsuarios = this.sistema.getListaDeUsuarios();
+        } catch (SQLException ex) {
+            Alertas.erroBanco(this,ex.toString());
+        }
         DefaultListModel listModel = new DefaultListModel();
 
         for (Usuario u : this.listaUsuarios) {
@@ -46,7 +45,6 @@ public class UsuarioLista extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jListUsuarios = new javax.swing.JList<>();
         jLabel1 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
         setClosable(true);
@@ -60,13 +58,6 @@ public class UsuarioLista extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(jListUsuarios);
 
         jLabel1.setText("Selecione um usuário:");
-
-        jButton2.setText("Editar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
 
         jButton3.setText("Excluir");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -85,12 +76,10 @@ public class UsuarioLista extends javax.swing.JInternalFrame {
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 26, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)))
+                        .addComponent(jButton3)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -99,11 +88,9 @@ public class UsuarioLista extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
+                .addComponent(jButton3)
                 .addContainerGap())
         );
 
@@ -113,10 +100,16 @@ public class UsuarioLista extends javax.swing.JInternalFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         int index = this.jListUsuarios.getSelectedIndex();
         if (index > -1) {
-            boolean sucesso = this.sistema.deletarUsuario(this.listaUsuarios.get(index));
+            boolean sucesso=false;
+            try {
+                sucesso = this.sistema.excluirUsuario(this.listaUsuarios.get(index));
+            } catch (SQLException ex) {
+                Alertas.erroBanco(this,ex.toString());
+            }
             Alertas.sucessoOuErro(this, sucesso);
             if(sucesso){
-                UsuarioLista u = new UsuarioLista(this.sistema);
+                UsuarioLista u;
+                u = new UsuarioLista(this.sistema);
                 this.getParent().add(u);
                 this.dispose();
                 u.show();
@@ -127,19 +120,8 @@ public class UsuarioLista extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        int index = this.jListUsuarios.getSelectedIndex();
-        if (index > -1) {
-            UsuarioEdita u = new UsuarioEdita(this.sistema, this.listaUsuarios.get(index));
-            this.getParent().add(u);
-            this.dispose();
-            u.show();
-        }
-    }//GEN-LAST:event_jButton2ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JList<String> jListUsuarios;

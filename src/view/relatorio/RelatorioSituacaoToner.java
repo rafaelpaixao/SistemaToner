@@ -1,21 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package view.relatorio;
 
 import control.Sistema;
 import java.io.File;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.stage.FileChooser;
 import javax.swing.JFileChooser;
 import javax.swing.table.DefaultTableModel;
 import view.Alertas;
 
-/**
- *
- * @author Rafael
- */
 public class RelatorioSituacaoToner extends javax.swing.JInternalFrame {
 
     Sistema sistema;
@@ -24,11 +19,16 @@ public class RelatorioSituacaoToner extends javax.swing.JInternalFrame {
         this.sistema = s;
         initComponents();
 
-        DefaultTableModel tabela = this.sistema.getTableModelSituacaoToner();
-        if (tabela != null) {
-            this.jTable1.setModel(tabela);
-        } else {
-            Alertas.mensagem(this, "Nenhum resultado encontrado!");
+        DefaultTableModel tabela;
+        try {
+            tabela = this.sistema.getTableModelSituacaoToner();
+            if (tabela != null) {
+                this.jTable1.setModel(tabela);
+            } else {
+                Alertas.mensagem(this, "Nenhum resultado encontrado!");
+            }
+        } catch (SQLException ex) {
+            Alertas.erroBanco(this,ex.toString());
         }
 
     }
@@ -95,7 +95,11 @@ public class RelatorioSituacaoToner extends javax.swing.JInternalFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         File arquivo = Alertas.janelaSalvarComo(this);
         if (arquivo != null) {
-            Alertas.sucessoOuErro(this, this.sistema.exportarCSV(this.jTable1, arquivo));
+            try {
+                Alertas.sucessoOuErro(this, this.sistema.exportarCSV(this.jTable1, arquivo));
+            } catch (IOException ex) {
+                Alertas.erroSalvarArquivo(this);
+            }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

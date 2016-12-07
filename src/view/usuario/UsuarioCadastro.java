@@ -6,6 +6,9 @@
 package view.usuario;
 
 import control.Sistema;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Usuario;
 import view.Alertas;
 
@@ -55,6 +58,11 @@ public class UsuarioCadastro extends javax.swing.JInternalFrame {
         });
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Padrão" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Tipo de acesso:");
 
@@ -111,10 +119,19 @@ public class UsuarioCadastro extends javax.swing.JInternalFrame {
         u.setLogin(this.jTextLogin.getText());
         u.setSenha(this.jTextSenha.getText());
         u.setTipo(this.jComboBox1.getSelectedItem().toString());
-        boolean sucesso = this.sistema.cadastrarUsuario(u);
+        boolean sucesso = false;
+        try {
+            sucesso = this.sistema.cadastrarUsuario(u);
+        } catch (SQLException ex) {
+            Alertas.erroBanco(this,ex.toString());
+        }
         Alertas.sucessoOuErro(this,sucesso);
         if(sucesso) this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

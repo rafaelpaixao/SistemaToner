@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package view.impressora;
+package view.modeloimpressora;
 
+import view.impressora.*;
 import control.Sistema;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -18,28 +19,26 @@ import view.Alertas;
  *
  * @author Rafael
  */
-public class ImpressoraLista extends javax.swing.JInternalFrame {
+public class ModeloImpressoraLista extends javax.swing.JInternalFrame {
 
     Sistema sistema;
-    ArrayList<Impressora> lista;
+    ArrayList<ModeloImpressora> lista;
 
-    public ImpressoraLista(Sistema sistema) {
+    public ModeloImpressoraLista(Sistema sistema) {
         this.sistema = sistema;
         initComponents();
 
         try {
-            this.lista = this.sistema.getListaDeImpressoras();
+            this.lista = this.sistema.getListaDeModelosImpressoras();
             DefaultListModel listModel = new DefaultListModel();
 
-            for (Impressora x : this.lista) {
-                Setor s = this.sistema.getSetor(x.getIdSetor());
-                String modelo = this.sistema.getModeloImpressora(x.getIdModeloImpressora()).getModeloImpressora();
-                listModel.addElement(modelo + " (" + s.getNome() + " - " + s.getEmpresa() + ")");
+            for (ModeloImpressora x : this.lista) {
+                listModel.addElement(x.getModeloImpressora());
             }
             this.jList1.setModel(listModel);
 
         } catch (SQLException ex) {
-            Logger.getLogger(ImpressoraLista.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ModeloImpressoraLista.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -87,7 +86,7 @@ public class ImpressoraLista extends javax.swing.JInternalFrame {
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(0, 163, Short.MAX_VALUE))
+                        .addGap(0, 144, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton3)))
@@ -105,7 +104,7 @@ public class ImpressoraLista extends javax.swing.JInternalFrame {
                 .addGap(16, 16, 16))
         );
 
-        setBounds(300, 100, 326, 350);
+        setBounds(300, 100, 307, 350);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -113,13 +112,13 @@ public class ImpressoraLista extends javax.swing.JInternalFrame {
         if (index > -1) {
             boolean sucesso = false;
             try {
-                sucesso = this.sistema.excluirImpressora(this.lista.get(index));
+                sucesso = this.sistema.excluirModeloImpressora(this.lista.get(index));
             } catch (SQLException ex) {
                 Alertas.erroBanco(this,ex.toString());
             }
             Alertas.sucessoOuErro(this, sucesso);
             if (sucesso) {
-                ImpressoraLista u = new ImpressoraLista(this.sistema);
+                ModeloImpressoraLista u = new ModeloImpressoraLista(this.sistema);
                 this.getParent().add(u);
                 this.dispose();
                 u.show();

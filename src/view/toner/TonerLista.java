@@ -1,20 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package view.toner;
 
 import control.Sistema;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import model.*;
 import view.Alertas;
 
-/**
- *
- * @author Rafael
- */
+
 public class TonerLista extends javax.swing.JInternalFrame {
 
     Sistema sistema;
@@ -24,16 +20,17 @@ public class TonerLista extends javax.swing.JInternalFrame {
         this.sistema = sistema;
         initComponents();
 
-        this.lista = this.sistema.getListaDeToner();
-        ArrayList<Impressora> impressoras = this.sistema.getListaDeImpressoras();
-        DefaultListModel listModel = new DefaultListModel();
-
-        for (Toner x : this.lista) {
-            Impressora i = this.sistema.getImpressora(x.getIdImpressora());
-            Setor s = this.sistema.getSetor(i.getIdSetor());
-            listModel.addElement(i.getModeloToner() + "("+x.getTipo()+") - "+i.getModeloImpressora() + " - Setor: "+s.getNome() + " ("+s.getEmpresa()+")");
+        try {
+            this.lista = this.sistema.getListaDeToner();
+            DefaultListModel listModel = new DefaultListModel();
+            for (Toner x : this.lista) {
+                ModeloImpressora i = this.sistema.getModeloImpressora(x.getIdModeloImpressora());
+                listModel.addElement(i.getModeloToner() + " (" + x.getTipo() + ")");
+            }
+            this.jList1.setModel(listModel);
+        } catch (SQLException ex) {
+            Logger.getLogger(TonerLista.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.jList1.setModel(listModel);
     }
 
     /**
@@ -94,14 +91,16 @@ public class TonerLista extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton2)))
+                        .addGap(0, 116, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -110,38 +109,42 @@ public class TonerLista extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
                     .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addGap(16, 16, 16))
+                    .addComponent(jButton2)
+                    .addComponent(jButton3))
+                .addGap(29, 29, 29))
         );
 
-        setBounds(300, 100, 295, 354);
+        setBounds(300, 100, 324, 354);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         int index = this.jList1.getSelectedIndex();
         if (index > -1) {
-            boolean sucesso = this.sistema.deletarToner(this.lista.get(index));
+            boolean sucesso=false;
+            try {
+                sucesso = this.sistema.excluirToner(this.lista.get(index));
+            } catch (SQLException ex) {
+                Alertas.erroBanco(this,ex.toString());
+            }
             Alertas.sucessoOuErro(this, sucesso);
-            if(sucesso){
+            if (sucesso) {
                 TonerLista u = new TonerLista(this.sistema);
                 this.getParent().add(u);
                 this.dispose();
                 u.show();
             }
         }
-        
-        
-        
+
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //Habilitar toner
-        TonerEdita janela = new TonerEdita(this.sistema,lista.get(this.jList1.getSelectedIndex()),true);
+        TonerEdita janela = new TonerEdita(this.sistema, lista.get(this.jList1.getSelectedIndex()), true);
         this.getParent().add(janela);
         janela.show();
         this.dispose();
@@ -149,7 +152,7 @@ public class TonerLista extends javax.swing.JInternalFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         //Desabilitar toner
-        TonerEdita janela = new TonerEdita(this.sistema,lista.get(this.jList1.getSelectedIndex()),false);
+        TonerEdita janela = new TonerEdita(this.sistema, lista.get(this.jList1.getSelectedIndex()), false);
         this.getParent().add(janela);
         janela.show();
         this.dispose();

@@ -6,9 +6,12 @@
 package view.movimentacoes;
 
 import control.Sistema;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import model.*;
@@ -23,31 +26,35 @@ public class MovimentacoesSaida extends javax.swing.JInternalFrame {
     Sistema sistema;
     ArrayList<Toner> listaToner;
     ArrayList<Setor> listaSetor;
-    
+
     public MovimentacoesSaida(Sistema sistema) {
         this.sistema = sistema;
         initComponents();
-        
-        this.listaToner = this.sistema.getListaDeToner();
-        if (!listaToner.isEmpty()) {
-            String[] toners = new String[this.listaToner.size()];
-            for (int i = 0; i < this.listaToner.size(); i++) {
-                Impressora imp = this.sistema.getImpressora(this.listaToner.get(i).getIdImpressora());
-                toners[i] = imp.getModeloToner() + " ("+listaToner.get(i).getTipo()+") - "+imp.getModeloImpressora();
+
+        try {
+            this.listaToner = this.sistema.getListaDeToner();
+            if (!listaToner.isEmpty()) {
+                String[] toners = new String[this.listaToner.size()];
+                for (int i = 0; i < this.listaToner.size(); i++) {
+                    toners[i] = this.sistema.getModeloImpressora(this.listaToner.get(i).getIdModeloImpressora()).getModeloToner() + " (" + this.listaToner.get(i).getTipo() + ")";
+                }
+                DefaultComboBoxModel model = new DefaultComboBoxModel(toners);
+                this.jComboBoxToner.setModel(model);
             }
-            DefaultComboBoxModel model = new DefaultComboBoxModel(toners);
-            this.jComboBoxToner.setModel(model);
-        }
-        
-        this.listaSetor = this.sistema.getListaDeSetores();
-        if (!listaSetor.isEmpty()) {
-            String[] setores = new String[this.listaSetor.size()];
-            for (int i = 0; i < this.listaSetor.size(); i++) {
-                setores[i] = listaSetor.get(i).getNome()+" - "+listaSetor.get(i).getEmpresa();
+
+            this.listaSetor = this.sistema.getListaDeSetores();
+            if (!listaSetor.isEmpty()) {
+                String[] setores = new String[this.listaSetor.size()];
+                for (int i = 0; i < this.listaSetor.size(); i++) {
+                    setores[i] = listaSetor.get(i).getNome() + " - " + listaSetor.get(i).getEmpresa();
+                }
+                DefaultComboBoxModel model = new DefaultComboBoxModel(setores);
+                this.jComboBoxSetor.setModel(model);
             }
-            DefaultComboBoxModel model = new DefaultComboBoxModel(setores);
-            this.jComboBoxSetor.setModel(model);
+        } catch (SQLException ex) {
+            Alertas.erroBanco(this,ex.toString());
         }
+
     }
 
     /**
@@ -140,7 +147,7 @@ public class MovimentacoesSaida extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         boolean sucesso = false;
-        try{
+        try {
             int qtd = Integer.parseInt(this.jTextQtd.getText());
             String agora = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
             Saida x = new Saida();
@@ -150,19 +157,28 @@ public class MovimentacoesSaida extends javax.swing.JInternalFrame {
             x.setData(agora);
             x.setIdSetor(listaSetor.get(this.jComboBoxSetor.getSelectedIndex()).getId());
 
-            sucesso = this.sistema.cadastrarSaida(x);
-            
-        }catch (NumberFormatException e){
-            sucesso = false;
-        }finally{
-            Alertas.sucessoOuErro(this,sucesso);
-            if(sucesso) this.dispose();
+            try {
+                sucesso = this.sistema.cadastrarSaida(x);
+            } catch (SQLException ex) {
+                System.out.println(ex.toString());
+                Alertas.erroBanco(this,ex.toString());
+            }
+
+        } catch (NumberFormatException e) {
+            Alertas.erroFormatoEntrada(this);
         }
+        Alertas.sucessoOuErro(this, sucesso);
+            if (sucesso) {
+                this.dispose();
+            }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
-        if(listaToner.isEmpty() || listaSetor.isEmpty()){
+        if (listaToner.isEmpty()) {
             Alertas.mensagem(this, "É preciso cadastrar um toner!");
+            this.dispose();
+        } else if (listaSetor.isEmpty()) {
+            Alertas.mensagem(this, "É preciso cadastrar um setor!");
             this.dispose();
         }
     }//GEN-LAST:event_formComponentShown

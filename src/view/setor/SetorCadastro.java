@@ -6,6 +6,9 @@
 package view.setor;
 
 import control.Sistema;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.*;
 import view.Alertas;
 
@@ -94,7 +97,12 @@ public class SetorCadastro extends javax.swing.JInternalFrame {
         Setor s = new Setor();
         s.setNome(jTextNomeSetor.getText());
         s.setNome(this.jTextNomeEmpresa.getText());
-        boolean sucesso = this.sistema.cadastrarSetor(s);
+        boolean sucesso=false;
+        try {
+            sucesso = this.sistema.cadastrarSetor(s);
+        } catch (SQLException ex) {
+            Alertas.erroBanco(this,ex.toString());
+        }
         Alertas.sucessoOuErro(this,sucesso);
         if(sucesso) this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed

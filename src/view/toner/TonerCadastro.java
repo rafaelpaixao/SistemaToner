@@ -1,41 +1,34 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package view.toner;
 
 import control.Sistema;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import model.*;
 import view.Alertas;
 
-/**
- *
- * @author Rafael
- */
+
 public class TonerCadastro extends javax.swing.JInternalFrame {
 
     Sistema sistema;
-    ArrayList<Impressora> lista;
+    ArrayList<ModeloImpressora> lista;
 
     public TonerCadastro(Sistema sistema) {
         this.sistema = sistema;
         initComponents();
 
-        this.lista = this.sistema.getListaDeImpressoras();
-        if (lista.size() != 0) {
-
+        try {
+            this.lista = this.sistema.getListaDeModelosImpressoras();
+        if (!lista.isEmpty()) {
             String[] impressoras = new String[this.lista.size()];
-
             for (int i = 0; i < this.lista.size(); i++) {
-                Setor s = this.sistema.getSetor(lista.get(i).getIdSetor());
-                impressoras[i] = lista.get(i).getModeloImpressora() + " - Setor: " + s.getNome() + " (" + s.getEmpresa() + ")";
+                impressoras[i] = lista.get(i).getModeloImpressora() + ")";
             }
-
             DefaultComboBoxModel model = new DefaultComboBoxModel(impressoras);
             this.jComboBoxImpressora.setModel(model);
+        }
+        } catch (SQLException ex) {
+            Alertas.erroBanco(this,ex.toString());
         }
     }
 
@@ -119,9 +112,13 @@ public class TonerCadastro extends javax.swing.JInternalFrame {
         boolean sucesso = false;
 
         Toner x = new Toner();
-        x.setIdImpressora(lista.get(this.jComboBoxImpressora.getSelectedIndex()).getId());
+        x.setIdModeloImpressora(lista.get(this.jComboBoxImpressora.getSelectedIndex()).getId());
         x.setTipo(this.jComboBoxTipo.getSelectedItem().toString());
-        sucesso = this.sistema.cadastrarToner(x);
+        try {
+            sucesso = this.sistema.cadastrarToner(x);
+        } catch (SQLException ex) {
+            Alertas.erroBanco(this,ex.toString());
+        }
 
         Alertas.sucessoOuErro(this, sucesso);
         if (sucesso) {

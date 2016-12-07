@@ -6,11 +6,11 @@
 package view.movimentacoes;
 
 import control.Sistema;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
 import model.*;
 import view.Alertas;
 
@@ -22,20 +22,22 @@ public class MovimentacoesEntrada extends javax.swing.JInternalFrame {
 
     Sistema sistema;
     ArrayList<Toner> lista;
-    
+
     public MovimentacoesEntrada(Sistema sistema) {
         this.sistema = sistema;
         initComponents();
-        
-        this.lista = this.sistema.getListaDeToner();
-        if (!lista.isEmpty()) {
-            String[] toners = new String[this.lista.size()];
-            for (int i = 0; i < this.lista.size(); i++) {
-                Impressora imp = this.sistema.getImpressora(this.lista.get(i).getIdImpressora());
-                toners[i] = imp.getModeloToner() + " ("+lista.get(i).getTipo()+") - "+imp.getModeloImpressora();
+        try {
+            this.lista = this.sistema.getListaDeToner();
+            if (!lista.isEmpty()) {
+                String[] toners = new String[this.lista.size()];
+                for (int i = 0; i < this.lista.size(); i++) {
+                    toners[i] = this.sistema.getModeloImpressora(this.lista.get(i).getIdModeloImpressora()).getModeloToner() + " (" + this.lista.get(i).getTipo() + ")";
+                }
+                DefaultComboBoxModel model = new DefaultComboBoxModel(toners);
+                this.jComboBoxToner.setModel(model);
             }
-            DefaultComboBoxModel model = new DefaultComboBoxModel(toners);
-            this.jComboBoxToner.setModel(model);
+        } catch (SQLException ex) {
+            Alertas.erroBanco(this,ex.toString());
         }
     }
 
@@ -128,11 +130,8 @@ public class MovimentacoesEntrada extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         boolean sucesso = false;
-        
-        
-        
-        
-        try{
+
+        try {
             int qtd = Integer.parseInt(this.jTextQtd.getText());
             String agora = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
             Entrada x = new Entrada();
@@ -142,18 +141,24 @@ public class MovimentacoesEntrada extends javax.swing.JInternalFrame {
             x.setTipoDeEntrada(this.jComboBox1.getSelectedItem().toString());
             x.setData(agora);
 
-            sucesso = this.sistema.cadastrarEntrada(x);
-            
-        }catch (NumberFormatException e){
-            sucesso = false;
-        }finally{
-            Alertas.sucessoOuErro(this,sucesso);
-            if(sucesso) this.dispose();
+            try {
+                sucesso = this.sistema.cadastrarEntrada(x);
+            } catch (SQLException ex) {
+                System.out.println(ex.toString());
+                Alertas.erroBanco(this,ex.toString());
+            }
+
+        } catch (NumberFormatException e) {
+            Alertas.erroFormatoEntrada(this);
         }
+        Alertas.sucessoOuErro(this, sucesso);
+            if (sucesso) {
+                this.dispose();
+            }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
-        if(lista.isEmpty()){
+        if (lista.isEmpty()) {
             Alertas.mensagem(this, "É preciso cadastrar um toner!");
             this.dispose();
         }
