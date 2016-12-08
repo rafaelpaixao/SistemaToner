@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import model.Entrada;
 
-public class EntradaDAO extends atributosDAO implements metodosDAO< Entrada> {
+public class EntradaDAO extends AtributosDAO implements MetodosDAO< Entrada> {
 
     public EntradaDAO(Connection conexao) {
         this.conexao = conexao;

@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import model.Impressora;
 
-public class ImpressoraDAO extends atributosDAO implements metodosDAO<Impressora> {
+public class ImpressoraDAO extends AtributosDAO implements MetodosDAO<Impressora> {
 
     public ImpressoraDAO(Connection conexao) {
         this.conexao = conexao;

@@ -94,7 +94,7 @@ public class ImpressoraCadastro extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Tipo:");
 
-        jLabelCodigo.setText("Tombo:");
+        jLabelCodigo.setText("Serial:");
 
         jComboBoxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Consignado", "Próprio" }));
         jComboBoxTipo.addItemListener(new java.awt.event.ItemListener() {
@@ -127,7 +127,7 @@ public class ImpressoraCadastro extends javax.swing.JInternalFrame {
                             .addComponent(jLabelCodigo))
                         .addGap(12, 12, 12)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBoxTipo, 0, 173, Short.MAX_VALUE)
+                            .addComponent(jComboBoxTipo, 0, 179, Short.MAX_VALUE)
                             .addComponent(jTextCodigo))))
                 .addContainerGap())
         );
@@ -152,10 +152,10 @@ public class ImpressoraCadastro extends javax.swing.JInternalFrame {
                     .addComponent(jTextCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(9, 9, 9)
                 .addComponent(jButton1)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
-        pack();
+        setBounds(300, 100, 257, 205);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

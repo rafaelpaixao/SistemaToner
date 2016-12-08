@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import model.Toner;
 
-public class TonerDAO extends atributosDAO implements metodosDAO<Toner> {
+public class TonerDAO extends AtributosDAO implements MetodosDAO<Toner> {
 
     public TonerDAO(Connection conexao) {
         this.conexao = conexao;
@@ -34,9 +34,10 @@ public class TonerDAO extends atributosDAO implements metodosDAO<Toner> {
 
     public boolean atualizar(Toner atualizado) throws SQLException {
         String comandoSql = ""
-                + "update from "
+                + "update "
                 + this.nomeTabela
-                + " idModeloImpressora=?, "
+                + " set "
+                + "idModeloImpressora=?, "
                 + "tipo=?, "
                 + "estoque=?, "
                 + "fora=?, "

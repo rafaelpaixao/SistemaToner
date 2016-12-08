@@ -20,11 +20,11 @@ public class TonerCadastro extends javax.swing.JInternalFrame {
         try {
             this.lista = this.sistema.getListaDeModelosImpressoras();
         if (!lista.isEmpty()) {
-            String[] impressoras = new String[this.lista.size()];
+            String[] toners = new String[this.lista.size()];
             for (int i = 0; i < this.lista.size(); i++) {
-                impressoras[i] = lista.get(i).getModeloImpressora() + ")";
+                toners[i] = lista.get(i).getModeloToner();
             }
-            DefaultComboBoxModel model = new DefaultComboBoxModel(impressoras);
+            DefaultComboBoxModel model = new DefaultComboBoxModel(toners);
             this.jComboBoxImpressora.setModel(model);
         }
         } catch (SQLException ex) {
@@ -56,9 +56,9 @@ public class TonerCadastro extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel1.setText("Impressora:");
+        jLabel1.setText("Modelo:");
 
-        jLabel2.setText("Tipo de toner:");
+        jLabel2.setText("Tipo:");
 
         jButton1.setText("Confirmar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -73,18 +73,18 @@ public class TonerCadastro extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBoxImpressora, 0, 235, Short.MAX_VALUE)
+                            .addComponent(jComboBoxImpressora, 0, 180, Short.MAX_VALUE)
                             .addComponent(jComboBoxTipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton1)))
                 .addContainerGap())
@@ -105,7 +105,7 @@ public class TonerCadastro extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        setBounds(300, 100, 349, 136);
+        setBounds(300, 100, 264, 136);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

@@ -58,7 +58,8 @@ public class ModeloImpressoraLista extends javax.swing.JInternalFrame {
         jButton3 = new javax.swing.JButton();
 
         setClosable(true);
-        setTitle("Lista de Impressoras");
+        setTitle("Lista de Modelos de Impressoras");
+        setToolTipText("");
 
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -67,7 +68,7 @@ public class ModeloImpressoraLista extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(jList1);
 
-        jLabel1.setText("Selecione uma impressora:");
+        jLabel1.setText("Selecione um modelo de impressora:");
 
         jButton3.setText("Excluir");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -86,7 +87,7 @@ public class ModeloImpressoraLista extends javax.swing.JInternalFrame {
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(0, 144, Short.MAX_VALUE))
+                        .addGap(0, 98, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton3)))

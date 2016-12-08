@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import model.Saida;
 
-public class SaidaDAO extends atributosDAO implements metodosDAO<Saida> {
+public class SaidaDAO extends AtributosDAO implements MetodosDAO<Saida> {
 
     public SaidaDAO(Connection conexao) {
         this.conexao = conexao;

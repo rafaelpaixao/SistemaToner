@@ -136,9 +136,11 @@ public class Sistema {
     }
 
     public boolean excluirImpressora(Impressora x) throws SQLException {
-        if(!this.tonerDao.isUtilizadoModeloImpressora(x.getIdModeloImpressora()))
+        if (!this.saidaDao.isUtilizadoSetor(x.getIdSetor())) {
             return this.impressoraDao.excluir(x);
-        else return false;
+        } else {
+            return false;
+        }
     }
 
     public boolean cadastrarToner(Toner x) throws SQLException {
@@ -152,8 +154,9 @@ public class Sistema {
     public boolean excluirToner(Toner x) throws SQLException {
         if (!this.entradaDao.isUtilizadoToner(x.getId()) && !this.saidaDao.isUtilizadoToner(x.getId())) {
             return this.tonerDao.excluir(x);
-        } else
-        return false;
+        } else {
+            return false;
+        }
     }
 
     public boolean atualizarToner(Toner x) throws SQLException {
@@ -200,7 +203,12 @@ public class Sistema {
                 }
             }
             t.setEstoque(t.getEstoque() + x.getQuantidade());
-            return (this.entradaDao.cadastrar(x) && this.tonerDao.atualizar(t));
+
+            if (this.tonerDao.atualizar(t)) {
+                return this.entradaDao.cadastrar(x);
+            } else {
+                return false;
+            }
         }
     }
 
@@ -219,7 +227,12 @@ public class Sistema {
                     t.setFora(t.getFora() + x.getQuantidade());
                 }
 
-                return (this.saidaDao.cadastrar(x) && this.tonerDao.atualizar(t));
+                if (this.tonerDao.atualizar(t)) {
+                    return this.saidaDao.cadastrar(x);
+                } else {
+                    return false;
+                }
+                
             } else {
                 return false;
             }

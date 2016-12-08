@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import model.Usuario;
 
-public class UsuarioDAO extends atributosDAO implements metodosDAO<Usuario> {
+public class UsuarioDAO extends AtributosDAO implements MetodosDAO<Usuario> {
 
     public UsuarioDAO(Connection conexao) {
         this.conexao = conexao;
@@ -22,7 +22,7 @@ public class UsuarioDAO extends atributosDAO implements metodosDAO<Usuario> {
                 + "("
                 + "login,"
                 + "senha,"
-                + "tipoDeUsuario)"
+                + "tipo)"
                 + "values (?,?,?);";
         PreparedStatement cadastro = conexao.prepareStatement(comandoSql);
         cadastro.setString(1, novo.getLogin());

@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import model.Setor;
 
-public class SetorDAO extends atributosDAO implements metodosDAO<Setor> {
+public class SetorDAO extends AtributosDAO implements MetodosDAO<Setor> {
 
     public SetorDAO(Connection conexao) {
         this.conexao = conexao;
@@ -82,4 +82,6 @@ public class SetorDAO extends atributosDAO implements metodosDAO<Setor> {
         selecao.close();
         return r;
     }
+    
+    
 }

@@ -3,7 +3,7 @@ package model;
 
 import java.sql.Date;
 
-public class Movimentacao {
+public abstract class Movimentacao {
     private int id;
     private int idToner;
     private int idUsuario;

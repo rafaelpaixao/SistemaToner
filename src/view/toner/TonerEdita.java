@@ -7,10 +7,8 @@ package view.toner;
 
 import control.Sistema;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultComboBoxModel;
 import model.*;
 import view.Alertas;
 
@@ -86,6 +84,7 @@ public class TonerEdita extends javax.swing.JInternalFrame {
 
         jTextAtual.setEditable(false);
         jTextAtual.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTextAtual.setEnabled(false);
 
         jLabelFrase.setText("Desabilitados:");
 
@@ -100,23 +99,23 @@ public class TonerEdita extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextModelo))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabelFrase, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabelFrase, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextAtual, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 27, Short.MAX_VALUE)
-                        .addComponent(jLabelVerbo, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextAtual, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(148, 148, 148)
+                        .addComponent(jButtonConfirmar))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButtonConfirmar)))
-                .addContainerGap())
+                        .addComponent(jLabelVerbo, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,43 +127,38 @@ public class TonerEdita extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelFrase)
-                    .addComponent(jTextAtual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextAtual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelVerbo)
                     .addComponent(jTextNovo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonConfirmar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
-        setBounds(300, 100, 338, 137);
+        setBounds(300, 100, 275, 182);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmarActionPerformed
         boolean sucesso = false;
-
-        Toner x = new Toner();
-
         try {
             int qtd = Integer.parseInt(this.jTextNovo.getText());
             try {
                 if (this.habilitar) {
-
-                    sucesso = this.sistema.habilitarToner(x, qtd);
-
+                    sucesso = this.sistema.habilitarToner(this.toner, qtd);
                 } else {
-                    sucesso = this.sistema.desabilitarToner(x, qtd);
+                    sucesso = this.sistema.desabilitarToner(this.toner, qtd);
+                }
+                Alertas.sucessoOuErro(this, sucesso);
+                if (sucesso) {
+                    this.dispose();
                 }
             } catch (SQLException ex) {
-                Alertas.erroBanco(this,ex.toString());
+                Alertas.erroBanco(this, ex.toString());
             }
-
         } catch (NumberFormatException e) {
             Alertas.erroFormatoEntrada(this);
-        } finally {
-            Alertas.sucessoOuErro(this, sucesso);
-            if (sucesso) {
-                this.dispose();
-            }
         }
     }//GEN-LAST:event_jButtonConfirmarActionPerformed
 

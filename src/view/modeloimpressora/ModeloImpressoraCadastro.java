@@ -33,7 +33,7 @@ public class ModeloImpressoraCadastro extends javax.swing.JInternalFrame {
         jTextPreco = new javax.swing.JTextField();
 
         setClosable(true);
-        setTitle("Cadastrar Nova Impressora");
+        setTitle("Cadastrar Novo Modelo de Impressora");
 
         jLabel2.setText("Modelo da impressora:");
 
@@ -89,10 +89,10 @@ public class ModeloImpressoraCadastro extends javax.swing.JInternalFrame {
                     .addComponent(jTextPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(9, 9, 9)
                 .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
-        pack();
+        setBounds(300, 100, 337, 185);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
