@@ -16,7 +16,7 @@ public class ModeloImpressoraDAO extends atributosDAO implements metodosDAO<Mode
     }
 
     @Override
-    public void cadastrar(ModeloImpressora novo) throws SQLException {
+    public boolean cadastrar(ModeloImpressora novo) throws SQLException {
         String comandoSql = ""
                 + "insert into "
                 + this.nomeTabela
@@ -30,39 +30,18 @@ public class ModeloImpressoraDAO extends atributosDAO implements metodosDAO<Mode
         cadastro.setString(1, novo.getModeloImpressora());
         cadastro.setString(2, novo.getModeloToner());
         cadastro.setDouble(3, novo.getPrecoToner());
-        cadastro.executeUpdate();
-        cadastro.close();
+        return cadastro.executeUpdate() !=0;
     }
 
     @Override
-    public void atualizar(ModeloImpressora atualizado) throws SQLException {
-        String comandoSql = ""
-                + "update "
-                + this.nomeTabela
-                + " set "
-                + "modeloImpressora=?, "
-                + "modeloToner=?, "
-                + "precoToner=? "
-                + "where id=?";
-        PreparedStatement atualizacao = conexao.prepareStatement(comandoSql);
-        atualizacao.setString(1, atualizado.getModeloImpressora());
-        atualizacao.setString(2, atualizado.getModeloToner());
-        atualizacao.setDouble(3, atualizado.getPrecoToner());
-        atualizacao.setInt(4, atualizado.getId());
-        atualizacao.executeUpdate();
-        atualizacao.close();
-    }
-
-    @Override
-    public void excluir(ModeloImpressora excluido) throws SQLException {
+    public boolean excluir(ModeloImpressora excluido) throws SQLException {
         String comandoSql = ""
                 + "delete from "
                 + this.nomeTabela
                 + " where id=?";
         PreparedStatement atualizacao = conexao.prepareStatement(comandoSql);
         atualizacao.setInt(1, excluido.getId());
-        atualizacao.executeUpdate();
-        atualizacao.close();
+        return atualizacao.executeUpdate() !=0;
     }
 
     @Override

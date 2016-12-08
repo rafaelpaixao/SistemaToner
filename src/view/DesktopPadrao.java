@@ -17,6 +17,7 @@ import view.toner.TonerCadastro;
 import view.usuario.UsuarioCadastro;
 import view.usuario.UsuarioLista;
 import control.Sistema;
+import java.sql.SQLException;
 import view.impressora.ImpressoraCadastro;
 import view.movimentacoes.MovimentacoesEntrada;
 import view.movimentacoes.MovimentacoesSaida;
@@ -295,7 +296,12 @@ public class DesktopPadrao extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        this.sistema.encerrar();
+        try {
+            this.sistema.encerrar();
+        } catch (SQLException ex) {
+            Alertas.erroBanco(this, ex.toString());
+        }
+        System.exit(0);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed

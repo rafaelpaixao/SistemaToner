@@ -15,7 +15,7 @@ public class SaidaDAO extends atributosDAO implements metodosDAO<Saida> {
     }
 
     @Override
-    public void cadastrar(Saida novo) throws SQLException {
+    public boolean cadastrar(Saida novo) throws SQLException {
         String comandoSql = ""
                 + "insert into "
                 + this.nomeTabela
@@ -32,43 +32,18 @@ public class SaidaDAO extends atributosDAO implements metodosDAO<Saida> {
         cadastro.setString(3, novo.getData());
         cadastro.setInt(4, novo.getQuantidade());
         cadastro.setInt(5, novo.getIdSetor());
-        cadastro.executeUpdate();
-        cadastro.close();
+        return cadastro.executeUpdate() != 0;
     }
 
     @Override
-    public void atualizar(Saida atualizado) throws SQLException {
-        String comandoSql = ""
-                + "update "
-                + this.nomeTabela
-                + " set "
-                + "idToner=?,"
-                + "idUsuario=?,"
-                + "data=?,"
-                + "quantidade=?, "
-                + "idSetor=? "
-                + "where id=?";
-        PreparedStatement atualizacao = conexao.prepareStatement(comandoSql);
-        atualizacao.setInt(1, atualizado.getIdToner());
-        atualizacao.setInt(2, atualizado.getIdUsuario());
-        atualizacao.setString(3, atualizado.getData());
-        atualizacao.setInt(4, atualizado.getQuantidade());
-        atualizacao.setInt(5, atualizado.getIdSetor());
-        atualizacao.setInt(6, atualizado.getId());
-        atualizacao.executeUpdate();
-        atualizacao.close();
-    }
-
-    @Override
-    public void excluir(Saida excluido) throws SQLException {
+    public boolean excluir(Saida excluido) throws SQLException {
         String comandoSql = ""
                 + "delete from "
                 + this.nomeTabela
                 + " where id=?";
         PreparedStatement atualizacao = conexao.prepareStatement(comandoSql);
         atualizacao.setInt(1, excluido.getId());
-        atualizacao.executeUpdate();
-        atualizacao.close();
+        return atualizacao.executeUpdate() !=0;
     }
 
     @Override
@@ -137,5 +112,26 @@ public class SaidaDAO extends atributosDAO implements metodosDAO<Saida> {
                 + "order by saidas.data desc";
             PreparedStatement selecao = conexao.prepareStatement(comandoSql);
         return selecao.executeQuery();
+    }
+    
+    boolean isUtilizadoUsuario(int id)throws SQLException {
+        String comandoSql = "select * from "+this.nomeTabela+" where idUsuario=?";
+            PreparedStatement selecao = conexao.prepareStatement(comandoSql);
+            selecao.setInt(1, id);
+            return selecao.executeQuery().next();
+    }
+    
+    boolean isUtilizadoToner(int id)throws SQLException {
+        String comandoSql = "select * from "+this.nomeTabela+" where idToner=?";
+            PreparedStatement selecao = conexao.prepareStatement(comandoSql);
+            selecao.setInt(1, id);
+            return selecao.executeQuery().next();
+    }
+    
+    boolean isUtilizadoSetor(int id)throws SQLException {
+        String comandoSql = "select * from "+this.nomeTabela+" where idSetor=?";
+            PreparedStatement selecao = conexao.prepareStatement(comandoSql);
+            selecao.setInt(1, id);
+            return selecao.executeQuery().next();
     }
 }

@@ -104,7 +104,12 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        this.sistema.encerrar();
+        try {
+            this.sistema.encerrar();
+        } catch (SQLException ex) {
+            Alertas.erroBanco(this, ex.toString());
+        }
+        System.exit(0);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**

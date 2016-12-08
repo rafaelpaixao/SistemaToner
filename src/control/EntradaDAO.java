@@ -15,7 +15,7 @@ public class EntradaDAO extends atributosDAO implements metodosDAO< Entrada> {
     }
 
     @Override
-    public void cadastrar(Entrada novo) throws SQLException {
+    public boolean cadastrar(Entrada novo) throws SQLException {
         String comandoSql = ""
                 + "insert into "
                 + this.nomeTabela
@@ -32,43 +32,18 @@ public class EntradaDAO extends atributosDAO implements metodosDAO< Entrada> {
         cadastro.setString(3, novo.getData());
         cadastro.setInt(4, novo.getQuantidade());
         cadastro.setString(5, novo.getTipoDeEntrada());
-        cadastro.executeUpdate();
-        cadastro.close();
+        return cadastro.executeUpdate() != 0;
     }
 
     @Override
-    public void atualizar(Entrada atualizado) throws SQLException {
-        String comandoSql = ""
-                + "update "
-                + this.nomeTabela
-                + " set "
-                + "idToner=?,"
-                + "idUsuario=?,"
-                + "data=?,"
-                + "quantidade=?,"
-                + "tipo=? "
-                + "where id=?";
-        PreparedStatement atualizacao = conexao.prepareStatement(comandoSql);
-        atualizacao.setInt(1, atualizado.getIdToner());
-        atualizacao.setInt(2, atualizado.getIdUsuario());
-        atualizacao.setString(3, atualizado.getData());
-        atualizacao.setInt(4, atualizado.getQuantidade());
-        atualizacao.setString(5, atualizado.getTipoDeEntrada());
-        atualizacao.setInt(6, atualizado.getId());
-        atualizacao.executeUpdate();
-        atualizacao.close();
-    }
-
-    @Override
-    public void excluir(Entrada excluido) throws SQLException {
+    public boolean excluir(Entrada excluido) throws SQLException {
         String comandoSql = ""
                 + "delete from "
                 + this.nomeTabela
                 + " where id=?";
         PreparedStatement atualizacao = conexao.prepareStatement(comandoSql);
         atualizacao.setInt(1, excluido.getId());
-        atualizacao.executeUpdate();
-        atualizacao.close();
+        return atualizacao.executeUpdate() != 0;
     }
 
     @Override
@@ -135,5 +110,19 @@ public class EntradaDAO extends atributosDAO implements metodosDAO< Entrada> {
                 + "order by entradas.data desc";
         PreparedStatement selecao = conexao.prepareStatement(comandoSql);
         return selecao.executeQuery();
+    }
+
+    boolean isUtilizadoUsuario(int id) throws SQLException {
+        String comandoSql = "select * from " + this.nomeTabela + " where idUsuario=?";
+        PreparedStatement selecao = conexao.prepareStatement(comandoSql);
+        selecao.setInt(1, id);
+        return selecao.executeQuery().next();
+    }
+
+    boolean isUtilizadoToner(int id) throws SQLException {
+        String comandoSql = "select * from " + this.nomeTabela + " where idToner=?";
+        PreparedStatement selecao = conexao.prepareStatement(comandoSql);
+        selecao.setInt(1, id);
+        return selecao.executeQuery().next();
     }
 }

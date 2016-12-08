@@ -1,4 +1,3 @@
-
 package control;
 
 import java.sql.Connection;
@@ -8,15 +7,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import model.Usuario;
 
-public class UsuarioDAO extends atributosDAO implements metodosDAO<Usuario>{
-    
-    public UsuarioDAO(Connection conexao){
+public class UsuarioDAO extends atributosDAO implements metodosDAO<Usuario> {
+
+    public UsuarioDAO(Connection conexao) {
         this.conexao = conexao;
         this.nomeTabela = "usuarios";
     }
 
     @Override
-    public void cadastrar(Usuario novo) throws SQLException {
+    public boolean cadastrar(Usuario novo) throws SQLException {
         String comandoSql = ""
                 + "insert into "
                 + this.nomeTabela
@@ -25,45 +24,22 @@ public class UsuarioDAO extends atributosDAO implements metodosDAO<Usuario>{
                 + "senha,"
                 + "tipoDeUsuario)"
                 + "values (?,?,?);";
-            PreparedStatement cadastro = conexao.prepareStatement(comandoSql);
-            cadastro.setString(1, novo.getLogin());
-            cadastro.setString(2, novo.getSenha());
-            cadastro.setString(3, novo.getTipo());
-        cadastro.executeUpdate();
-        cadastro.close();
+        PreparedStatement cadastro = conexao.prepareStatement(comandoSql);
+        cadastro.setString(1, novo.getLogin());
+        cadastro.setString(2, novo.getSenha());
+        cadastro.setString(3, novo.getTipo());
+        return cadastro.executeUpdate() != 0;
     }
 
     @Override
-    public void atualizar(Usuario atualizado) throws SQLException {
-        String comandoSql = ""
-                + "update "
-                + this.nomeTabela
-                + " set "
-                + "login=?, "
-                + "senha=?,"
-                + "tipo=? "
-                + "where id=?";
-
-            PreparedStatement atualizacao = conexao.prepareStatement(comandoSql);
-            atualizacao.setString(1, atualizado.getLogin());
-            atualizacao.setString(2, atualizado.getSenha());
-            atualizacao.setString(3, atualizado.getTipo());
-            atualizacao.setInt(4, atualizado.getId());
-        atualizacao.setInt(4, atualizado.getId());
-        atualizacao.executeUpdate();
-        atualizacao.close();
-    }
-
-    @Override
-    public void excluir(Usuario excluido) throws SQLException {
+    public boolean excluir(Usuario excluido) throws SQLException {
         String comandoSql = ""
                 + "delete from "
                 + this.nomeTabela
                 + " where id=?";
         PreparedStatement atualizacao = conexao.prepareStatement(comandoSql);
         atualizacao.setInt(1, excluido.getId());
-        atualizacao.executeUpdate();
-        atualizacao.close();
+        return atualizacao.executeUpdate() != 0;
     }
 
     @Override
@@ -79,8 +55,8 @@ public class UsuarioDAO extends atributosDAO implements metodosDAO<Usuario>{
             Usuario r = new Usuario();
             r.setId(resultado.getInt("id"));
             r.setLogin(resultado.getString("login"));
-                r.setSenha(resultado.getString("senha"));
-                r.setTipo(resultado.getString("tipo"));
+            r.setSenha(resultado.getString("senha"));
+            r.setTipo(resultado.getString("tipo"));
             lista.add(r);
         }
 
@@ -103,46 +79,47 @@ public class UsuarioDAO extends atributosDAO implements metodosDAO<Usuario>{
             r = new Usuario();
             r.setId(resultado.getInt("id"));
             r.setLogin(resultado.getString("login"));
-                r.setSenha(resultado.getString("senha"));
-                r.setTipo(resultado.getString("tipo"));
+            r.setSenha(resultado.getString("senha"));
+            r.setTipo(resultado.getString("tipo"));
         }
 
         selecao.close();
         return r;
     }
-    
-    public Usuario logar(String login,String senha) throws SQLException{
-        
+
+    public Usuario logar(String login, String senha) throws SQLException {
+
         Usuario u = null;
-        
-        String comandoSql = "select * from "+this.nomeTabela+" where login=? and senha=?";
 
-            PreparedStatement selecao = conexao.prepareStatement(comandoSql);
-            selecao.setString(1, login);
-            selecao.setString(2, senha);
-            ResultSet resultado = selecao.executeQuery();
+        String comandoSql = "select * from " + this.nomeTabela + " where login=? and senha=?";
 
-            if(resultado.next()){
-                u = new Usuario();
-                u.setId(resultado.getInt("id"));
-                u.setLogin(resultado.getString("login"));
-                u.setSenha(resultado.getString("senha"));
-                u.setTipo(resultado.getString("tipo"));
-            }
-            
-            selecao.close();
-        
+        PreparedStatement selecao = conexao.prepareStatement(comandoSql);
+        selecao.setString(1, login);
+        selecao.setString(2, senha);
+        ResultSet resultado = selecao.executeQuery();
+
+        if (resultado.next()) {
+            u = new Usuario();
+            u.setId(resultado.getInt("id"));
+            u.setLogin(resultado.getString("login"));
+            u.setSenha(resultado.getString("senha"));
+            u.setTipo(resultado.getString("tipo"));
+        }
+
+        selecao.close();
+
         return u;
     }
 
     boolean existeLogin(String login) throws SQLException {
-        String comandoSql = "select * from "+this.nomeTabela+" where login=?";
+        String comandoSql = "select * from " + this.nomeTabela + " where login=?";
 
-            PreparedStatement selecao = conexao.prepareStatement(comandoSql);
-            selecao.setString(1, login);
-            ResultSet resultado = selecao.executeQuery();
-            boolean retorno = resultado.next();
-            selecao.close();
-            return retorno;
+        PreparedStatement selecao = conexao.prepareStatement(comandoSql);
+        selecao.setString(1, login);
+        ResultSet resultado = selecao.executeQuery();
+        boolean retorno = resultado.next();
+        selecao.close();
+        return retorno;
     }
+
 }

@@ -15,7 +15,7 @@ public class ImpressoraDAO extends atributosDAO implements metodosDAO<Impressora
     }
 
     @Override
-    public void cadastrar(Impressora novo) throws SQLException {
+    public boolean cadastrar(Impressora novo) throws SQLException {
         String comandoSql = ""
                 + "insert into "
                 + this.nomeTabela
@@ -31,41 +31,18 @@ public class ImpressoraDAO extends atributosDAO implements metodosDAO<Impressora
         cadastro.setInt(2, novo.getIdSetor());
         cadastro.setString(3, novo.getTipo());
         cadastro.setString(4, novo.getCodigo());
-        cadastro.executeUpdate();
-        cadastro.close();
+        return cadastro.executeUpdate() !=0;
     }
 
     @Override
-    public void atualizar(Impressora atualizado) throws SQLException {
-        String comandoSql = ""
-                + "update "
-                + this.nomeTabela
-                + " set "
-                + "idModeloImpressora=?, "
-                + "idSetor=?, "
-                + "tipo=?, "
-                + "codigo=? "
-                + "where id=?";
-        PreparedStatement atualizacao = conexao.prepareStatement(comandoSql);
-        atualizacao.setInt(1, atualizado.getIdModeloImpressora());
-        atualizacao.setInt(2, atualizado.getIdSetor());
-        atualizacao.setString(3, atualizado.getTipo());
-        atualizacao.setString(4, atualizado.getCodigo());
-        atualizacao.setInt(5, atualizado.getId());
-        atualizacao.executeUpdate();
-        atualizacao.close();
-    }
-
-    @Override
-    public void excluir(Impressora excluido) throws SQLException {
+    public boolean excluir(Impressora excluido) throws SQLException {
         String comandoSql = ""
                 + "delete from "
                 + this.nomeTabela
                 + " where id=?";
         PreparedStatement atualizacao = conexao.prepareStatement(comandoSql);
         atualizacao.setInt(1, excluido.getId());
-        atualizacao.executeUpdate();
-        atualizacao.close();
+        return atualizacao.executeUpdate() !=0;
     }
 
     @Override
@@ -126,6 +103,20 @@ public class ImpressoraDAO extends atributosDAO implements metodosDAO<Impressora
             selecao.setString(2, modeloImpressora);
             ResultSet resultado = selecao.executeQuery();
             return resultado.next();
+    }
+    
+    boolean isUtilizadoModeloImpressora(int id)throws SQLException {
+        String comandoSql = "select * from "+this.nomeTabela+" where idModeloImpressora=?";
+            PreparedStatement selecao = conexao.prepareStatement(comandoSql);
+            selecao.setInt(1, id);
+            return selecao.executeQuery().next();
+    }
+    
+    boolean isUtilizadoSetor(int id)throws SQLException {
+        String comandoSql = "select * from "+this.nomeTabela+" where idSetor=?";
+            PreparedStatement selecao = conexao.prepareStatement(comandoSql);
+            selecao.setInt(1, id);
+            return selecao.executeQuery().next();
     }
 
 }

@@ -15,7 +15,7 @@ public class SetorDAO extends atributosDAO implements metodosDAO<Setor> {
     }
 
     @Override
-    public void cadastrar(Setor novo) throws SQLException {
+    public boolean cadastrar(Setor novo) throws SQLException {
         String comandoSql = ""
                 + "insert into "
                 + this.nomeTabela
@@ -26,38 +26,18 @@ public class SetorDAO extends atributosDAO implements metodosDAO<Setor> {
         PreparedStatement cadastro = conexao.prepareStatement(comandoSql);
         cadastro.setString(1, novo.getNome());
         cadastro.setString(2, novo.getEmpresa());
-        cadastro.executeUpdate();
-        cadastro.close();
+        return cadastro.executeUpdate() !=0;
     }
 
     @Override
-    public void atualizar(Setor atualizado) throws SQLException {
-        String comandoSql = ""
-                + "update "
-                + this.nomeTabela
-                + " set "
-                + "nome=?, "
-                + "empresa=? "
-                + "where id=?";
-        PreparedStatement atualizacao = conexao.prepareStatement(comandoSql);
-        atualizacao.setString(1, atualizado.getNome());
-        atualizacao.setString(2, atualizado.getEmpresa());
-        atualizacao.setInt(3, atualizado.getId());
-        atualizacao.setInt(4, atualizado.getId());
-        atualizacao.executeUpdate();
-        atualizacao.close();
-    }
-
-    @Override
-    public void excluir(Setor excluido) throws SQLException {
+    public boolean excluir(Setor excluido) throws SQLException {
         String comandoSql = ""
                 + "delete from "
                 + this.nomeTabela
                 + " where id=?";
         PreparedStatement atualizacao = conexao.prepareStatement(comandoSql);
         atualizacao.setInt(1, excluido.getId());
-        atualizacao.executeUpdate();
-        atualizacao.close();
+        return atualizacao.executeUpdate() !=0;
     }
 
     @Override

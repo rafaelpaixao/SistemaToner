@@ -15,7 +15,7 @@ public class TonerDAO extends atributosDAO implements metodosDAO<Toner> {
     }
 
     @Override
-    public void cadastrar(Toner novo) throws SQLException {
+    public boolean cadastrar(Toner novo) throws SQLException {
         String comandoSql = ""
                 + "insert into "
                 + this.nomeTabela
@@ -29,22 +29,19 @@ public class TonerDAO extends atributosDAO implements metodosDAO<Toner> {
         PreparedStatement cadastro = conexao.prepareStatement(comandoSql);
         cadastro.setInt(1, novo.getIdModeloImpressora());
         cadastro.setString(2, novo.getTipo());
-        cadastro.executeUpdate();
-        cadastro.close();
+        return cadastro.executeUpdate() !=0;
     }
 
-    @Override
-    public void atualizar(Toner atualizado) throws SQLException {
+    public boolean atualizar(Toner atualizado) throws SQLException {
         String comandoSql = ""
-                + "update "
+                + "update from "
                 + this.nomeTabela
-                + " set "
-                + "idModeloImpressora=?,"
-                + "tipo=?,"
-                + "estoque=?,"
-                + "fora=?,"
+                + " idModeloImpressora=?, "
+                + "tipo=?, "
+                + "estoque=?, "
+                + "fora=?, "
                 + "desabilitado=? "
-                + "where id=?";
+                + " where id=?";
         PreparedStatement atualizacao = conexao.prepareStatement(comandoSql);
         atualizacao.setInt(1, atualizado.getIdModeloImpressora());
         atualizacao.setString(2, atualizado.getTipo());
@@ -52,22 +49,20 @@ public class TonerDAO extends atributosDAO implements metodosDAO<Toner> {
         atualizacao.setInt(4, atualizado.getFora());
         atualizacao.setInt(5, atualizado.getDesabilitado());
         atualizacao.setInt(6, atualizado.getId());
-        atualizacao.executeUpdate();
-        atualizacao.close();
+        return atualizacao.executeUpdate()!=0;
     }
 
     @Override
-    public void excluir(Toner excluido) throws SQLException {
+    public boolean excluir(Toner excluido) throws SQLException {
         String comandoSql = ""
                 + "delete from "
                 + this.nomeTabela
                 + " where id=?";
         PreparedStatement atualizacao = conexao.prepareStatement(comandoSql);
         atualizacao.setInt(1, excluido.getId());
-        atualizacao.executeUpdate();
-        atualizacao.close();
+        return atualizacao.executeUpdate() !=0;
     }
-
+    
     @Override
     public ArrayList<Toner> getTodos() throws SQLException {
         String comandoSql = ""
@@ -117,21 +112,6 @@ public class TonerDAO extends atributosDAO implements metodosDAO<Toner> {
         return r;
     }
 
-    public boolean tonerTemMovimentacao(Toner x) throws SQLException {
-        String comandoSql1 = "select * from entradas where idToner=?";
-        String comandoSql2 = "select * from saidas where idToner=?";
-
-        PreparedStatement selecao1 = conexao.prepareStatement(comandoSql1);
-        selecao1.setInt(1, x.getId());
-        ResultSet resultado1 = selecao1.executeQuery();
-
-        PreparedStatement selecao2 = conexao.prepareStatement(comandoSql2);
-        selecao2.setInt(1, x.getId());
-        ResultSet resultado2 = selecao2.executeQuery();
-
-        return resultado1.next() || resultado2.next();
-    }
-
     public ResultSet getResultSetSituacaoToner() throws SQLException {
         ResultSet retorno = null;
         String comandoSql = "select "
@@ -150,5 +130,12 @@ public class TonerDAO extends atributosDAO implements metodosDAO<Toner> {
         retorno = selecao.executeQuery();
 
         return retorno;
+    }
+    
+    boolean isUtilizadoModeloImpressora(int id)throws SQLException {
+        String comandoSql = "select * from "+this.nomeTabela+" where idModeloImpressora=?";
+            PreparedStatement selecao = conexao.prepareStatement(comandoSql);
+            selecao.setInt(1, id);
+            return selecao.executeQuery().next();
     }
 }
