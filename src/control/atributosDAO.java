@@ -2,7 +2,7 @@ package control;
 
 import java.sql.Connection;
 
-public abstract class atributosDAO {
+public abstract class AtributosDAO {
     Connection conexao;
     String nomeTabela;
 }

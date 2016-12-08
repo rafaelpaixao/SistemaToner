@@ -3,7 +3,7 @@ package control;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public interface metodosDAO <R>{
+public interface MetodosDAO <R>{
     
     public boolean cadastrar(R novo) throws SQLException;
        
